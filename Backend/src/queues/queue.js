@@ -1,12 +1,14 @@
 const { Queue } = require('bullmq');
+const config = require('../config/env');
 const Redis = require('ioredis');
-require('dotenv').config();
 
 const connection = new Redis({
-  host: process.env.REDIS_HOST || '127.0.0.1',
-  port: process.env.REDIS_PORT || 6379,
-  password: process.env.REDIS_PASSWORD || undefined,
-  maxRetriesPerRequest: null // Required by bullmq
+  host: config.redis.host,
+  port: config.redis.port,
+  password: config.redis.password,
+  tls: config.redis.tls,
+  maxRetriesPerRequest: null, // Required by bullmq
+  lazyConnect: true // Prevent immediate connection spam if Redis is down
 });
 
 const defaultJobOptions = {

@@ -1,6 +1,7 @@
 const express = require('express');
 const ProductController = require('../controllers/ProductController');
-const { protect, restrictTo } = require('../middlewares/authMiddleware');
+const protect = require('../middlewares/authMiddleware');
+const restrictTo = require('../middlewares/roleMiddleware');
 
 const router = express.Router();
 

@@ -3,6 +3,10 @@ const logger = require('../utils/logger');
 const { FeatureFlag } = require('../models');
 
 class QueueService {
+  static async init() {
+    logger.info('⚙️ Queue Service Initialized (Hybrid mode ready)');
+  }
+
   static async isAsyncEnabled() {
       try {
           const flag = await FeatureFlag.findByPk('ENABLE_ASYNC_QUEUE');

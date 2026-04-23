@@ -18,7 +18,7 @@ const startServer = async () => {
         logger.info("✅ Database connected");
 
         if (config.nodeEnv === "development") {
-            await db.sequelize.sync();
+            await db.sequelize.sync({ alter: true });
             logger.info("📦 Database synced");
         }
 

@@ -1,0 +1,7 @@
+{"level":"info","message":"✅ Database connected successfully","service":"erp-backend","timestamp":"2026-04-23T21:01:32.555Z"}
+{"level":"info","message":"✅ Database connected","service":"erp-backend","timestamp":"2026-04-23T21:01:32.562Z"}
+{"level":"error","message":"❌ Unable to connect to database:","service":"erp-backend","timestamp":"2026-04-23T21:01:32.662Z"}
+{"level":"info","message":"✅ Database connected successfully","service":"erp-backend","timestamp":"2026-04-23T21:02:49.415Z"}
+{"level":"info","message":"✅ Database connected successfully","service":"erp-backend","timestamp":"2026-04-23T21:08:49.206Z"}
+{"level":"info","message":"✅ Database connected","service":"erp-backend","timestamp":"2026-04-23T21:08:49.212Z"}
+{"level":"error","message":"❌ Unable to connect to database:","service":"erp-backend","timestamp":"2026-04-23T21:08:49.356Z"}

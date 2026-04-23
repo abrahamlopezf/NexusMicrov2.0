@@ -14,6 +14,12 @@ const config = {
     jwt: {
         secret: process.env.JWT_SECRET || 'fallback_secret_key_for_dev_only',
         expiresIn: process.env.JWT_EXPIRES_IN || '1d'
+    },
+    redis: {
+        host: process.env.REDIS_HOST || '127.0.0.1',
+        port: parseInt(process.env.REDIS_PORT, 10) || 6379,
+        password: process.env.REDIS_PASSWORD || undefined,
+        tls: process.env.REDIS_TLS === 'true' ? {} : undefined
     }
 };
 
