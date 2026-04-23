@@ -1,0 +1,433 @@
+--- DOCX ---
+XOCHIPILLI SERRANO
+RESTAURANTE LOS FRESNITOS
+P r e s e n t e
+San Juan del Rio a 16 de enero del 2026.
+Sirva la presente para poner a consideración la siguiente cotización.
+Cantidad
+Descripción
+Costo Unitario
+Total
+13
+Medio mandil de loneta estampada, con dos bolsas de parche del lado derecho con vistas de tela estampada y pretina estampada.
+$375
+$4875
+13
+Filipina de loneta estampada, con 3 bolsas de parche y 5 botones metálicos dorados.
+$595
+$7735
+           TOTAL      $12610
+*El costo incluye mano de obra y todos los materiales necesarios para su elaboración.
+Tiempo de entrega: dos semanas a partir de contar con el anticipo.
+Para cualquier pedido se requiere el 50% de anticipo.
+El precio no incluye IVA.
+Agradezco la atención y quedo a sus órdenes para cualquier duda o comentario.
+ A T E N T A M E N T E 
+_________________________
+L. A. Rocio Hernández Romero
+Representante Comercial 
+XOCHIPILLI SERRANO
+RESTAURANTE LOS FRESNITOS
+P r e s e n t e
+San Juan del Rio a 3 de febrero del 2026.
+Sirva la presente para poner a consideración la siguiente cotización.
+Cantidad
+Descripción
+Costo Unitario
+Total
+8
+Medio mandil de loneta estampada, con dos bolsas de parche del lado derecho con vistas de tela estampada y pretina estampada.
+$375
+$3000
+8
+Filipina de loneta estampada, con 3 bolsas de parche y 5 botones metálicos dorados.
+$595
+$4760
+10
+Mandil de loneta estampada, forrado con manta y tirantes de loneta reforzado, con ojillos y herrajes en parte superior.
+Bolsa delantera capitonada.
+Aplicación de vinipiel gruesa para logotipo, bolsa delantera pequeña y vista superior donde se colocan los ojillos.
+$630
+$6300
+           TOTAL      $14060
+*El costo incluye mano de obra y todos los materiales necesarios para su elaboración.
+Tiempo de entrega: dos semanas a partir de contar con el anticipo.
+Para cualquier pedido se requiere el 50% de anticipo.
+El precio no incluye IVA.
+Agradezco la atención y quedo a sus órdenes para cualquier duda o comentario.
+ A T E N T A M E N T E 
+_________________________
+L. A. Rocio Hernández Romero
+Representante Comercial 
+
+--- ODS ---
+
+Table: base
+ | COSTOS FIJOS |  | COSTOS ADMINITRATIVOS |  | ADICIONALES POR CADA TRABAJO | 
+ | CONSEPTO | POR MES | POR SEMANA |  |  | CONSEPTO | POR MES |  |  | 
+ | RENTA | $5,500.00 | $1,222.22 |  |  | SUELDO AUXILIAR | $6,750.00 |  |  | CONSEPTO | MONTO | 
+ | LUZ | $1,200.00 | $266.67 |  |  | SUELDO COSTURERA | $8,100.00 |  |  | INSUMOS FIJOS | 
+ | AGUA | $204.50 | $45.44 |  |  | SUELDO MODISTA | $8,100.00 |  |  | SENCILLO | $30.00 | 
+ | TELEFONO/INTERNET | $400.00 | $88.89 |  |  | SUELDO DISEÑADORA | $13,500.00 |  |  | REGULAR | $40.00 | 
+ | MAQUINAS | $1,041.00 | $231.33 |  |  | SUELDO AGENTE DE VENTAS Y COMPRAS | $13,500.00 |  |  | ESPECIAL | $50.00 | 
+ | TOTAL | $8,345.50 | $1,854.56 |  |  | IMPUESTOS | $1,000.00 |  |  | SASTRERIA Y ALTA COSTURA | $60.00 | 
+ |  |  |  |  | COMISIONES BANCARIAS | $1,000.00 |  |  | $90.00 | 
+ |  |  |  |  | TOTAL | $51,950.00 |  |  | $100.00 | 
+ |  |  |  |  |  |  |  | $150.00 | 
+ |  |  |  |  |  |  |  | UTILIDAD | 
+ |  |  |  |  |  |  |  | PARA CADA TRABAJO | 20% | 
+ |  |  |  |  |  |  | COSTO FIJO,VARIABLE Y ADMINISTRATIVO PARA CADA TRABAJO | 14% | 
+ | COSTOS VARIABLES |  | COSTOS DE PRODUCCION |  | 
+ | CONSEPTO | POR MES | POR SEMANA |  |  | CONSEPTO | POR SEMANA | POR DIA | POR HORA | POR MES |  | 
+ | PUBLICIDAD | $100.00 | $15.00 |  |  | SUELDO AUXILIAR | $1,500.00 | $295.00 | $36.88 | $6,750.00 |  | 
+ | HERRAMIENTAS | $200.00 | $35.00 |  |  | SUELDO COSTURERA | $1,800.00 | $355.00 | $44.38 | $8,100.00 |  | 
+ | MATERIAL DE OFICINA | $500.00 | $95.00 |  |  | SUELDO MODISTA | $1,800.00 | $355.00 | $44.38 | $8,100.00 |  | 
+ | LIMPIEZA | $100.00 | $15.00 |  |  | SUELDO DISEÑADORA | $3,000.00 | $595.00 | $50.50 | $13,500.00 |  | 
+ | MANTENIMIENTO | $100.00 | $15.00 |  |  | SUELDO AGENTE DE VENTAS Y COMPRAS | $3,000.00 | $595.00 | $50.50 | $13,500.00 |  | 
+ | OTROS | $100.00 | $15.00 |  |  | COSTOS FIJOS | $1,623.22 |  |  | $8,345.50 |  | 
+ | TOTAL | $1,100.00 | $190.00 |  |  | COSTOS VARIABLES | $190.00 |  | $1,100.00 |  | 
+ |  |  | IMPUESTOS | $222.22 |  |  | $1,000.00 |  | 
+ |  |  | COMISIONES | $222.22 |  | $1,000.00 | 
+ |  |  | TOTAL | $13,357.66 |  | $61,395.50 | 
+
+Table: MANTELERIA
+ | LISTA DE PRECIOS | 
+ | MANTELERIA | 
+ | TIPO DE PRENDA | TIEMPO DE CORTE Y CONFECCION | INSUMO FIJO | $44.38 | COSTO OP. EXT 14% ROSY | COSTO BRUTO | COSTO DE OPERACIÓN 14% | PRECIO SUGERIDO 20% | fresnitos | 
+ | MANDIL FORRADO COMPLETO | 3 | $80.00 | $133.14 | $152 | $213.14 | $242.98 |  | 602 | 
+ | MANDIL SIN FORRO COMPLETO | 2 | $30.00 | $88.76 | $101 | $118.76 | $135.39 |  | 382 | 
+ | MEDIO MANDIL CON FORRO | 2 | $40.00 | $88.76 | $101 | $128.76 | $146.79 |  | 
+ | MEDIO MANDIL SIN FORRO | 2 | $30.00 | $88.76 | $101 | $118.76 | $135.39 |  | 
+ | FILIPINA SENCILLA | 2 | $30.00 | $88.76 | $101 | $118.76 | $135.39 |  | 
+ | FILIPINA REGULAR | 3 | $30.00 | $133.14 | $152 | $163.14 | $185.98 |  | 353 | 
+ | FILIPINA ESPECIAL | 4 | $40.00 | $177.52 | $202 | $217.52 | $247.97 |  | 
+ | GORRO FRESNITOS | 1 | $10.00 | $44.38 | $51 | $54.38 | $61.99 |  | 
+ | GORRO JISELA | 1 | $10.00 | $44.38 | $51 | $54.38 | $61.99 |  | 
+ | GORRO ESPECIAL | 1 | $20.00 | $44.38 | $51 | $64.38 | $73.39 |  | 
+ | MANTEL TABLON | 1 | $10.00 | $44.38 | $51 | $54.38 | $61.99 |  | 
+ | MANTEL CUADRADO | 1 | $10.00 | $44.38 | $51 | $54.38 | $61.99 |  | 
+ | MANTEL REDONDO CORTO | 2 | $10.00 | $88.76 | $101 | $98.76 | $112.59 |  | 
+ | MANTEL REDONDO LARGO | 2 | $20.00 | 88.76 | $101 | $108.76 | $123.99 |  | 
+ | CUBRE MANTEL SENCILLO | 1 | $10.00 | 44.38 | $51 | $54.38 | $61.99 |  | 
+ | CUBREMANTEL  | 2 | $20.00 | 88.76 | $101 | $108.76 | $123.99 |  | 
+ | CUBREMANTEL CON VIVADO | 4 | $30.00 | 177.52 | $202 | $207.52 | $236.57 |  | 
+ | CAMINO SENCILLO | 1 | $10.00 | 44.38 | $51 | $54.38 | $61.99 |  | 
+ | CAMINO CON PALOMAS | 2 | $20.00 | 88.76 | $101 | $108.76 | $123.99 |  | 
+ | CAMINO VIVADO | 4 | $30.00 | 177.52 | $202 | $207.52 | $236.57 |  | 
+ | SERVILLETA SENCILLA CHICA | 0.5 | $10.00 | 22.19 | $25 | $32.19 | $36.70 |  | 
+ | SERVILLETA CON PALOMA CHICA | 1 | $10.00 | 44.38 | $51 | $54.38 | $61.99 |  | 
+ | SERVILLETA SENCILLA GRANDE | 0.75 | $10.00 | 33.285 | $38 | $43.29 | $49.34 |  | 
+ | SERVILLETA CON PALOMA GRANDE | 1 | $10.00 | 44.38 | $51 | $54.38 | $61.99 |  | 
+ | OSO GRANDE | 5 | $110.00 | 221.9 | 252.966 | 362.966 | 364 |  | 550 | 
+ | OSO PEQUEÑO | 4 | $100.00 | 177.52 | 202.3728 | 302.3728 | 303.5128 |  | 450 | 
+ | LISTA DE PRECIOS | AGREGAR AL PRECIO SUGERIDO EL MONTO DE MATERIALES ADICIONALES COMO TELA Y/O AVALORIOS | LISTA DE PRECIOS | 
+ | MUESTRAS PARA MANTELERIA Y OTROS | PATRONAJE | 
+ | TIPO DE PRENDA | TIEMPO DE CORTE Y CONFECCION | INSUMO FIJO | $44.38 | COSTO BRUTO | COSTO DE OPERACIÓN 14% | PRECIO SUGERIDO 20% | TIPO DE PRENDA | TIEMPO DE PATRONAJE | INSUMO FIJO | $44.38 | COSTO BRUTO | 
+ | MANDIL FORRADO COMPLETO | 4 | $85.00 | $177.52 | $262.52 | $299.27 |  | MANDIL FORRADO COMPLETO | 1 | $85.00 | $44.38 | $129.38 | 
+ | MANDIL SIN FORRO COMPLETO | 3 | $35.00 | $133.14 | $168.14 | $191.68 |  | MANDIL SIN FORRO COMPLETO | 1 | $35.00 | $44.38 | $79.38 | 
+ | MEDIO MANDIL CON FORRO | 3 | $45.00 | $133.14 | $178.14 | $203.08 |  |  | MEDIO MANDIL CON FORRO | 1 | $45.00 | $44.38 | $89.38 | 
+ | MEDIO MANDIL SIN FORRO | 3 | $35.00 | $133.14 | $168.14 | $191.68 |  |  | MEDIO MANDIL SIN FORRO | 1 | $35.00 | $44.38 | $79.38 | 
+ | FILIPINA SENCILLA | 3 | $35.00 | $133.14 | $168.14 | $191.68 |  |  | FILIPINA SENCILLA | 1 | $35.00 | $44.38 | $79.38 | 
+ | FILIPINA REGULAR | 4 | $35.00 | $177.52 | $212.52 | $242.27 |  |  | FILIPINA REGULAR | 1 | $35.00 | $44.38 | $79.38 | 
+ | FILIPINA ESPECIAL | 5 | $45.00 | $221.90 | $266.90 | $304.27 |  |  | FILIPINA ESPECIAL | 1 | $45.00 | $44.38 | $89.38 | 
+ | GORRO FRESNITOS | 2 | $15.00 | $88.76 | $103.76 | $118.29 |  |  | GORRO FRESNITOS | 1 | $15.00 | $44.38 | $59.38 | 
+ | GORRO JISELA | 2 | $15.00 | $88.76 | $103.76 | $118.29 |  |  | GORRO JISELA | 1 | $15.00 | $44.38 | $59.38 | 
+ | GORRO ESPECIAL | 2 | $20.00 | $88.76 | $108.76 | $123.99 |  |  | GORRO ESPECIAL | 1 | $20.00 | $44.38 | $64.38 | 
+ | MANTEL TABLON | 1 | $10.00 | $44.38 | $54.38 | $61.99 |  |  | MANTEL TABLON | 0.5 | $10.00 | $22.19 | $32.19 | 
+ | MANTEL CUADRADO | 1 | $10.00 | $44.38 | $54.38 | $61.99 |  |  | MANTEL CUADRADO | 0.5 | $10.00 | $22.19 | $32.19 | 
+ | MANTEL REDONDO CORTO | 2 | $10.00 | $88.76 | $98.76 | $112.59 |  |  | MANTEL REDONDO CORTO | 0.5 | $10.00 | $22.19 | $32.19 | 
+ | MANTEL REDONDO LARGO | 2 | $20.00 | 88.76 | $108.76 | $123.99 |  |  | MANTEL REDONDO LARGO | 0.5 | $20.00 | 22.19 | $42.19 | 
+ | CUBRE MANTEL SENCILLO | 1 | $10.00 | 44.38 | $54.38 | $61.99 |  |  | CUBRE MANTEL SENCILLO | 0.5 | $10.00 | 22.19 | $32.19 | 
+ | CUBREMANTEL  | 3 | $20.00 | 133.14 | $153.14 | $174.58 |  |  | CUBREMANTEL  | 1 | $20.00 | 44.38 | $64.38 | 
+ | CUBREMANTEL CON VIVADO | 4 | $30.00 | 177.52 | $207.52 | $236.57 |  |  | CUBREMANTEL CON VIVADO | 1.5 | $30.00 | 66.57 | $96.57 | 
+ | CAMINO SENCILLO | 1 | $10.00 | 44.38 | $54.38 | $61.99 |  |  | CAMINO SENCILLO | 0.5 | $10.00 | 22.19 | $32.19 | 
+ | CAMINO CON PALOMAS | 2 | $20.00 | 88.76 | $108.76 | $123.99 |  |  | CAMINO CON PALOMAS | 1 | $20.00 | 44.38 | $64.38 | 
+ | CAMINO VIVADO | 4 | $30.00 | 177.52 | $207.52 | $236.57 |  |  | CAMINO VIVADO | 1.5 | $30.00 | 66.57 | $96.57 | 
+ | SERVILLETA SENCILLA CHICA | 0.5 | $10.00 | 22.19 | $32.19 | $36.70 |  |  | SERVILLETA SENCILLA CHICA | 0.5 | $10.00 | 22.19 | $32.19 | 
+ | SERVILLETA CON PALOMA CHICA | 1 | $10.00 | 44.38 | $54.38 | $61.99 |  |  | SERVILLETA CON PALOMA CHICA | 0.5 | $10.00 | 22.19 | $32.19 | 
+ | SERVILLETA SENCILLA GRANDE | 0.75 | $10.00 | 33.285 | $43.29 | $49.34 |  |  | SERVILLETA SENCILLA GRANDE | 0.5 | $10.00 | 22.19 | $32.19 | 
+ | SERVILLETA CON PALOMA GRANDE | 1 | $10.00 | 44.38 | $54.38 | $61.99 |  |  | SERVILLETA CON PALOMA GRANDE | 0.5 | $10.00 | 22.19 | $32.19 | 
+ | OSO GRANDE | 5 | $110.00 | 221.9 | 331.9 | 333 |  |  | OSO GRANDE | 2 | $110.00 | 88.76 | 198.76 | 
+ | OSO PEQUEÑO | 4 | $100.00 | 177.52 | 277.52 | 278.66 |  |  | OSO PEQUEÑO | 2 | $100.00 | 88.76 | 188.76 | 
+
+Table: costos
+ | LISTA DE PRECIOS |  | 
+ | BASICOS |  | 
+ | TIPO DE PRENDA | TIEMPO DE ELABORACION | INSUMO FIJO | HORAS PATRONISTA | $50.50 | HORAS CONFECCION | $44.38 | COSTO BRUTO | COSTO DE OPERACIÓN 14% | PRECIO SUGERIDO 20% |  | 
+ | VESTIDO SENCILLO | 4 | $30.00 | 2 | $101.00 | 2 | $88.76 | $219.76 | $250.53 |  |  | 
+ | VESTIDO REGULAR | 6 | $40.00 | 2 | $101.00 | 4 | $177.52 | $318.52 | $363.11 |  |  | 
+ | VESTIDO ESPECIAL O FORRADO | 8 | $50.00 | 3 | $151.50 | 5 | $221.90 | $423.40 | $482.68 |  |  | 
+ | FALDA SENCILLA | 2 | $30.00 | 1 | $50.50 | 1 | $44.38 | $124.88 | $142.36 |  |  | 
+ | FALDA REGULAR | 6 | $40.00 | 2 | $101.00 | 4 | $177.52 | $318.52 | $363.11 |  |  | 
+ | FALDA ESPECIAL O FORRADA | 8 | $50.00 | 3 | $151.50 | 5 | $221.90 | $423.40 | $482.68 |  |  | 
+ | PANTALON SENCILLO | 5 | $30.00 | 2 | $101.00 | 3 | $133.14 | $264.14 | $301.12 |  |  | 
+ | PANTALON REGULAR | 6 | $40.00 | 2 | $101.00 | 4 | $177.52 | $318.52 | $363.11 |  |  | 
+ | PANTALON ESPECIAL O FORRADO | 10 | $50.00 | 2 | $101.00 | 6 | $266.28 | $417.28 | $475.70 |  |  | 
+ | PANTALON PIJAMA | 4 | $40.00 | 1 | $50.50 | 3 | $133.14 | $223.64 | $254.95 |  |  | 
+ | PANTALON DEPORTIVO | 4 | $40.00 | 1 | $50.50 | 3 | $133.14 | $223.64 | $254.95 |  |  | 
+ | LEGGING | 4 | $30.00 | 1 | $50.50 | 3 | $133.14 | $213.64 | $243.55 |  |  | 
+ | LEOTARDO O PANTIBLUSA REGULAR | 4 | $50.00 | 1 | $50.50 | 3 | $133.14 | $233.64 | $266.35 |  | 
+ | LEOTARDO O PANTIBLUSA ESPECIAL | 8 | $50.00 | 2 | $101.00 | 6 | $266.28 | $417.28 | $475.70 |  | 
+ | SHORT SENCILLO | 2 | $30.00 | 1 | $50.50 | 1 | $44.38 | $124.88 | $142.36 |  | 
+ | SHORT REGULAR | 4 | $40.00 | 1 | $50.50 | 3 | $133.14 | $223.64 | $254.95 |  | 
+ | SHORT ESPECIAL O FORRADO | 8 | $50.00 | 2 | $101.00 | 6 | $266.28 | $417.28 | $475.70 |  | 
+ | BLUSA SENCILLA | 4 | $30.00 | 1 | $50.50 | 3 | $133.14 | $213.64 | $243.55 |  | 
+ | BLUSA REGULAR | 6 | $40.00 | 2 | $101.00 | 4 | $177.52 | $318.52 | $363.11 |  | 
+ | BLUSA ESPECIAL O FORRADA | 8 | $60.00 | 3 | $151.50 | 5 | $221.90 | $433.40 | $494.08 |  | 
+ | CAMISA SENCILLA | 4 | $30.00 | 1 | $50.50 | 3 | $133.14 | $213.64 | $243.55 |  | 
+ | CAMISA REGULAR | 6 | $40.00 | 2 | $101.00 | 4 | $177.52 | $318.52 | $363.11 |  | 
+ | CAMISA ESPECIAL | 8 | $50.00 | 3 | $151.50 | 5 | $221.90 | $423.40 | $482.68 |  | 
+ | SUDADERA REGULAR | 4 | $40.00 | 1 | $50.50 | 2 | $88.76 | $179.26 | $204.36 |  | 
+ | SUDADERA HOODIE | 4 | $40.00 | 1 | $50.50 | 4 | $177.52 | $268.02 | $305.54 |  | 
+ | SUDADERA ESPECIAL | 8 | $60.00 | 2 | $101.00 | 6 | $266.28 | $427.28 | $487.10 |  | 
+ | CHAMARRA REGULAR | 5 | $50.00 | 1 | $50.50 | 4 | $177.52 | $278.02 | $316.94 |  | 
+ | CHAMARRA HOODIE | 5 | $60.00 | 1 | $50.50 | 4 | $177.52 | $288.02 | $328.34 |  | 
+ | CHAMARRA ESPECIAL | 10 | $50.00 | 4 | $202.00 | 6 | $266.28 | $518.28 | $590.84 |  | 
+ | PLAYERA SENCILLA | 2 | $30.00 | 1 | $50.50 | 1 | $44.38 | $124.88 | $142.36 |  | 
+ | PLAYERA TIPO POLO | 4 | $40.00 | 1 | $50.50 | 3 | $133.14 | $223.64 | $254.95 |  | 
+ | PLAYERA SIN MANGA | 4 | $40.00 | 1 | $50.50 | 3 | $133.14 | $223.64 | $254.95 |  | 
+ | LISTA DE PRECIOS | 
+ | SASTRERIA Y ALTA COSTURA | 
+ | DAMA | 
+ | TIPO DE PRENDA | TIEMPO DE ELABORACION | INSUMO FIJO | HORAS PATRONISTA | $50.50 | HORAS CONFECCION | $44.38 | COSTO BRUTO | COSTO DE OPERACIÓN 14% | PRECIO SUGERIDO 20% | 
+ | PANTALON SASTRE | 10 | $90.00 | 4 | $202.00 | 6 | $266.28 | $558.28 | $636.44 |  | 
+ | FALDA SASTRE | 8 | $60.00 | 2 | $101.00 | 6 | $266.28 | $427.28 | $487.10 |  | 
+ | CHALECO SENCILLO | 2 | $30.00 | 1 | $50.50 | 1 | $44.38 | $124.88 | $142.36 |  | 
+ | CHALECO REGULAR | 4 | $50.00 | 1 | $50.50 | 3 | $133.14 | $233.64 | $266.35 |  | 
+ | CHALECO ESPECIAL O FORRADO | 8 | $60.00 | 2 | $101.00 | 6 | $266.28 | $427.28 | $487.10 |  | 
+ | BLAZER O SACO SENCILLO | 6 | $50.00 | 2 | $101.00 | 4 | $177.52 | $328.52 | $374.51 |  | 
+ | BLAZER O SACO REGULAR | 8 | $60.00 | 3 | $151.50 | 5 | $221.90 | $433.40 | $494.08 |  | 
+ | BLAZER O SACO ESPECIAL O SASTRE | 16 | $90.00 | 4 | $202.00 | 12 | $532.56 | $824.56 | $940.00 |  | 
+ | ABRIGO SENCILLO | 8 | $40.00 | 2 | $101.00 | 6 | $266.28 | $407.28 | $464.30 |  | 
+ | ABRIGO REGULAR | 10 | $50.00 | 3 | $151.50 | 7 | $310.66 | $512.16 | $583.86 |  | 
+ | ABRIGO ESPECIAL O LARGO | 16 | $100.00 | 4 | $202.00 | 12 | $532.56 | $834.56 | $951.40 |  | 
+ | VESTIDO FINO DAMA | 60 | $100.00 | 10 | $505.00 | 50 | $2,219.00 | $2,824.00 | $3,219.36 |  | 
+ | VESTIDO FINO NIÑA | 40 | $100.00 | 10 | $505.00 | 30 | $1,331.40 | $1,936.40 | $2,207.50 |  | 
+ | VESTIDO SOBRE DISEÑO | 160 | $150.00 | 60 | $3,030.00 | 100 | $4,438.00 | $7,618.00 | $8,684.52 |  | 
+ | CORSET REGULAR | 20 | $100.00 | 8 | $404.00 | 12 | $532.56 | $1,036.56 | $1,181.68 |  | 
+ | CORSET ESPECIAL | 40 | $100.00 | 10 | $505.00 | 30 | $1,331.40 | $1,936.40 | $2,207.50 |  | 
+ | CINTURILLA | 30 | $90.00 | 5 | $252.50 | 15 | $665.70 | $1,008.20 | $1,149.35 |  | 
+ | CABALLERO | 
+ | TIPO DE PRENDA | TIEMPO DE ELABORACION | INSUMO FIJO | HORAS PATRONISTA | $50.50 | HORAS CONFECCION | $44.38 | COSTO BRUTO | COSTO DE OPERACIÓN 14% | PRECIO SUGERIDO 20% | 
+ | PANTALON SASTRE | 10 | $90.00 | 4 | $202.00 | 6 | $266.28 | $558.28 | $636.44 |  | 
+ | CHALECO SENCILLO | 2 | $30.00 | 1 | $50.50 | 1 | $44.38 | $124.88 | $142.36 |  | 
+ | CHALECO REGULAR | 4 | $40.00 | 1 | $50.50 | 3 | $133.14 | $223.64 | $254.95 |  | 
+ | CHALECO ESPECIAL O FORRADO | 8 | $60.00 | 2 | $101.00 | 6 | $266.28 | $427.28 | $487.10 |  | 
+ | BLAZER O SACO SENCILLO | 6 | $50.00 | 2 | $101.00 | 4 | $177.52 | $328.52 | $374.51 |  | 
+ | BLAZER O SACO REGULAR | 8 | $60.00 | 3 | $151.50 | 5 | $221.90 | $433.40 | $494.08 |  | 
+ | BLAZER O SACO ESPECIAL O SASTRE | 16 | $90.00 | 4 | $202.00 | 12 | $532.56 | $824.56 | $940.00 |  | 
+ | ABRIGO SENCILLO | 8 | $30.00 | 2 | $101.00 | 6 | $266.28 | $397.28 | $452.90 |  | 
+ | ABRIGO REGULAR | 10 | $40.00 | 3 | $151.50 | 7 | $310.66 | $502.16 | $572.46 |  | 
+ | ABRIGO ESPECIAL O LARGO | 16 | $100.00 | 4 | $202.00 | 12 | $532.56 | $834.56 | $951.40 |  | 
+ | TRAJE DE 2 PIEZAS | 80 | $100.00 | 16 | $808.00 | 64 | $2,840.32 | $3,748.32 | $4,273.08 |  | 
+ | TRAJE DE 3 PIEZAS | 100 | $150.00 | 24 | $1,212.00 | 76 | $3,372.88 | $4,734.88 | $5,397.76 |  | 
+ | CORBATA O PAJARITA | 4 | $40.00 | 1 | $50.50 | 3 | $133.14 | $223.64 | $254.95 |  | 
+ | PAÑUELO | 1 | $30.00 | 1 | $50.50 | 1 | $44.38 | $124.88 | $142.36 |  | 
+ | LISTA DE PRECIOS | 
+ | COMPLEMENTOS Y ACCESORIOS | 
+ | TIPO DE PRENDA | TIEMPO DE ELABORACION | INSUMO FIJO | HORAS PATRONISTA | $50.50 | HORAS CONFECCION | $44.38 | COSTO BRUTO | COSTO DE OPERACIÓN 14% | PRECIO SUGERIDO 20% | 
+ | PASHMINA | 2 | $30.00 | 1 | $50.50 | 1 | $44.38 | $124.88 | $142.36 |  | 
+ | MASCADA | 2 | $30.00 | 1 | $50.50 | 1 | $44.38 | $124.88 | $142.36 |  | 
+ | CINTURON SENCILLO | 2 | $30.00 | 1 | $50.50 | 1 | $44.38 | $124.88 | $142.36 |  | 
+ | CINTURON REGULAR | 2 | $40.00 | 1 | $50.50 | 1 | $44.38 | $134.88 | $153.76 |  | 
+ | CIMTURON ESPECIAL | 4 | $60.00 | 1 | $50.50 | 3 | $133.14 | $243.64 | $277.75 |  | 
+ | BOLSA SENCILLA | 2 | $30.00 | 1 | $50.50 | 1 | $44.38 | $124.88 | $142.36 |  | 
+ | BOLSA REGULAR | 4 | $40.00 | 1 | $50.50 | 3 | $133.14 | $223.64 | $254.95 |  | 
+ | BOLSA ESPECIAL | 6 | $80.00 | 2 | $101.00 | 4 | $177.52 | $358.52 | $408.71 |  | 
+ | GUANTES | 8 | $80.00 | 2 | $101.00 | 6 | $266.28 | $447.28 | $509.90 |  | 
+ | GORRO SENCILLO | 2 | $30.00 | 1 | $50.50 | 1 | $44.38 | $124.88 | $142.36 |  | 
+ | GORRO REGULAR | 2 | $40.00 | 1 | $50.50 | 1 | $44.38 | $134.88 | $153.76 |  | 
+ | GORRO ESPECIAL | 8 | $80.00 | 2 | $101.00 | 6 | $266.28 | $447.28 | $509.90 |  | 
+
+Table: VTAS
+FECHA RECEP | CLIENTE | DESCRIPCION | PRECIO | SALDO AL 30 JUNIO | ANTICIPOS | TOTAL | SALDO | COSTO CONFECCION | COSTO TOTAL | GASTO FIJO 14% | IMSUMO FIJO | UTILIDAD | OBSERVACIONES |  | 
+SEM. 1 | EFEC | TARJ | SEM. 2 | EFEC | TARJ | SEM. 3 | EFEC | TARJ | SEM. 4 | EFEC | TARJ | SEM. 5 | EFEC | TARJ |  | 
+12. feb. 2025 | Guadalupe Espindola | 2 Pashminas | $340 | $340 |  |  |  |  |  |  |  | 340 | $340 |  |  |  |  | 
+7. feb. 2025 | Caro Estetica | 3 filipinas con estampado | $1,700 | $270 |  |  |  |  |  |  |  | 270 | $270 |  |  |  |  | 
+13. feb. 2025 | Jisela Jimenez | Oso grande La Salle | $380 | $380 |  |  |  |  | 16. jul. 2025 |  | $380 |  | 380 | $0 |  |  |  |  | 
+24. mar. 2025 | PAOLA BRUNI | CHALECO DE SEGURIDAD MUESTRA | $695 | $695 |  |  |  |  |  |  |  | 694.5 | $695 |  |  |  |  | 
+24. abr. 2025 | MUESTRA | 2 OSITOS DORADOS |  |  |  |  |  |  |  |  |  | 0 | $0 |  |  |  |  |  | 
+2. may. 2025 | FABIOLA JOHNSON | 1 PANTALON C/ BOLSAS | $450 | $150 |  |  |  |  |  | 19. jul. 2025 | $150 |  |  | 150 | $0 |  |  |  |  | 
+13. jun. 2025 | ARELI GARCIA | 1 OSO GRANDE | $620 | $620 |  |  |  | 12. jul. 2025 | $620 |  |  |  |  | 620 | $0 |  |  |  |  | 
+13. jun. 2025 | ARELI GARCIA | 1 VESTIDO ARENA | $1,500 | $1,500 | 8. jul. 2025 | $1,500 |  |  |  |  |  |  |  |  |  | 1500 | $0 |  |  |  |  | 
+20. jun. 2025 | EDITH PEREZ | OSO GDE CHAMARRA | $700 | $400 | 10. jul. 2025 | $400 |  |  |  |  |  |  |  |  | 400 | $0 |  |  |  |  | 
+21. jun. 2025 | JOANA BASURTO | 2 OSOS CHICOS | $700 | $380 |  |  |  |  | 18. jul. 2025 | $130 |  |  |  |  |  | 380 | $250 |  |  |  |  |  |  | 
+23. jun. 2025 | AMOR ELENA | 2 osos grandes | $1,310 | $760 |  |  |  |  |  |  |  |  |  |  | 760 | $760 |  |  |  |  |  |  | 
+25. jun. 2025 | LAURA FDZ DE CEBALLOS | 1 VESTIDO FINO | $800 | $450 |  |  |  |  |  |  |  |  |  |  | 450 | $450 |  |  |  |  |  |  | 
+28. jun. 2025 | FABIOLA CANCINO | 1 OSO CHICO | $300 | $300 |  |  |  |  |  |  |  |  | 31. jul. 2025 |  | $300 | 300 | $0 |  |  |  |  |  |  |  | 
+9. jun. 2025 | IFES | 3FILIPINAS, 3 PANTALONES ,UN GORRO Y UN MEDIO MANDIL | $4,040 | $2,020 |  |  |  |  |  |  |  |  |  |  | 2020 | $2,020 |  |  |  |  |  |  |  | 
+10. jun. 2025 | Erika Gordillo | 2 JOMPER ESCOLARES | $600 | $400 |  |  |  |  |  |  |  |  |  |  | 400 | $400 |  | $0 | $0 |  | 600 |  | 
+2. jul. 2025 | ERIKA BELTRAN | 6 ESCUDOS DTF | $590 |  | 2. jul. 2025 |  | $390 | 12. jul. 2025 | $200 |  |  |  |  |  |  |  | 590 | $0 | $60 | $540 | $8 | $0 | $42 |  | 
+8. jul. 2025 | ELSA RIOS | CONJUNTO PANT BLUSA | $600 |  |  |  | 8. jul. 2025 | $200 |  |  |  |  |  |  |  | 600 | $400 | $360 | $360 | $50 | $60 | $130 |  | 
+11. jul. 2025 | LA SALLE | 71 OSOS Y 77 MOÑOS | $50,430 | $3,042 |  |  | 14 y 16 jul 25 |  | $20,193 |  |  | 24. jul. 2025 |  | $27,195 |  |  | 50430 | $0 | $23,577 | $29,544 | $3,301 |  | $17,585 |  | 
+17. jul. 2025 | NAYELLI DELGADO | 6 BANDAS GRADUACION | $420 |  |  |  |  |  | 17. jul. 2025 |  | $420 |  |  |  |  | 420 | $0 | $180 | $240 | $25 | $60 | $95 |  | 
+19. jul. 2025 | FABIOLA JOHNSON | 10 COJINES CON CIERRE | $2,000 |  |  |  |  |  | 19. jul. 2025 | $500 |  |  |  |  |  | 2000 | $1,500 | $500 | $500 | $70 | $300 | $1,130 |  | 
+21. jul. 2025 | GREGORIO XAVIER | 5 PANTALONES SASTRE | $3,420 |  |  |  |  |  |  |  | 21. jul. 2025 | $1,710 |  |  |  | 1710 | 1710 | $2,200 | $2,452 | $308 | $450 | $210 |  | 
+21. jul. 2025 | JULIETA TREJO | JUMPSUIT | $800 |  |  |  |  |  |  |  |  |  |  |  | 0 | 800 |  | $800 |  | 
+30. jul. 2025 | JULIA ARTEMOVA | 2FALDAS ESCOLARES | $400 |  |  |  |  |  |  |  |  |  | 30. jul. 2025 | $200 |  | 200 | 200 | $200 | $266 | $28 | $60 | $46 |  | 
+23. jul. 2025 | LOS FRESNITOS | 10 MANDILES COMPLETOS | $5,900 |  |  |  |  |  |  |  | 23. jul. 2025 |  | $3,000 |  |  | 3000 | 2900 | $2,300 | $2,585 | $322 | $350 | $2,643 |  | 
+30. jul. 2025 | LOS FRESNITOS | 23 MEDIOS MANDILES, 16 GORROS Y 32 FILIPINAS | $26,540 |  |  |  |  |  |  |  |  |  | 30. jul. 2025 |  | $15,393 | 15393.2 | 11146.8 | $4,735 | $12,160 | $663 | $1,580 | $12,137 |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | $0 |  | 0 |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | $0 |  | 0 |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | $0 |  |  |  | 
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 0 |  |  | $0 |  |  |  | 
+TOTAL | $91,100 | $8,665 |  | $1,900 | $390 |  | $1,020 | $20,193 |  | $780 | $800 |  | $1,710 | $30,195 |  | $200 | $15,693 | $83,008 | $23,841 | $34,112 | $48,647 | $4,776 | $2,860 | 35417.07 |  | 
+ | 14535.25 | Insumos |  |  | 
+ | Tarjeta | 67271.2 |  |  |  |  |  | 
+ | Efectivo | 5610 |  |  |  |  |  | 
+
+Table: NOMINAS
+ | MANO DE OBRA ABRIL | 
+NOMBRE | CONCEPTO | MONTO | APLICACION |  | PRENDA | FABY | IRMA | 
+Faby | aretes caritas | 199 | 21/06/25 |  |  | DOS OVEROLES MEZCLILLA | 1142 |  | 
+ | Corte 18 jun | 500 | 18/06/25 |  |  | 4 PLAYERAS | 480 |  | 
+ | Traje de Belly Dance | 1150 | 28/05/25 |  |  | 11 MOÑOS CON FAJILLA | 886 |  | 
+ | Oso chico dorado | 300 | 31/07/25 |  | OSO CHICO AZUL | 150 |  | 
+ | Pago a cuenta de mano de obra confecciones | 1500 | 19/07/25 |  |  | 743 |  | 
+ | Pago traje belly dance | 1150 | 28/05/25 |  | 1 BLAZER  | 654 |  | 
+ | Pago a cuenta de mano de obra confecciones | 2000 | 05/07/25 |  | 2 OSITOS DORADOS | 560 |  | 
+ | arracadas | 311 | 30/06/25 |  | TOTAL | 4615 |  | 
+ | Dije con cadena | 389 | 19/07/25 | 
+ | 7499 | 
+ | MANO DE OBRA MAYO | 
+ | VENTAS |  | PRENDA | FABY | IRMA | 
+ | Arete piedra rosa y blanca | 434 |  | 1 PANTALON C/ BOLSAS | 290 |  | 
+ | Arete gota | 378 |  | BLUSA BEIGE, CAMISA ANIMAL PRINT, BLUSA ESTAMPADA | 330 |  | 
+ | Aretes largos circulos | 394 |  | 2 osos grandes | 500 |  | 
+ | Conjunto gris | 104 |  | TOTAL | 1120 | 
+ | Playera blanca flores | 54 | 
+ | Set verde seco | 104 |  | MANO DE OBRA JUNIO | 
+ | 1467 |  | PRENDA | FABY | IRMA | 
+ | 1 OSO GRANDE | 250 |  | 
+Faby |  | 1 VESTIDO ARENA | 990 |  | 
+12/06/25 | sarga golden | 324.94 | Pendiente |  | CHAMARRA MINI |  | 25 | 18/07/25 | efectivo | 
+ | OSO GDE CHAMARRA | 250 | 25 | 18/07/25 | efectivo | 
+ | 2 OSOS CHICOS | 300 |  | 
+Rocio | dtf Nuevo Hgo | 480 |  | pendiente rembolso |  | 2 osos grandes | 500 |  | 
+ | Razo portugues | 30 | 02/07/25 | pendiente rembolso |  | 1 VESTIDO FINO | 540 |  | 
+ | Confección de pantalones IFES en tiempo de ATM | 360 | 14/07/25 |  | 1 OSO CHICO | 0 |  | venta interna | 
+ | Mascotón azul para camisa muestra | 39 | efectivo |  | 2 JOMPER ESCOLARES | 380 |  | 
+ | Mayki plus 4 playeras | 234.52 | efectivo |  | IFES | 675 |  | 
+ | Mezclilla overoles | 225 | efectivo |  | TOTAL | 3885 | 
+ | Parisina (listón blanco y botones Sra marrufo) | 144.93 | efectivo | 
+ | Parisina – botones Fernando | 23.96 | efectivo |  | MANO DE OBRA JULIO | 
+ | Herrajes stock | 284 | efectivo |  | PRENDA | FABY | IRMA | 
+ | Crin parisina | 40 | efectivo |  | 6 ESCUDOS DTF | 60 |  | 
+ | Tergal tropical IFES | 79.9 | efectivo |  | 6 BANDAS GRADUACION | 120 |  | 
+ | Escudos Osos Irma (La Salle) | 82 | efectivo | pendiente rembolso |  | 70 OSOS, 131 PLAYERAS Y 77 MOÑOS | 8335 |  | 19-jul | 4959 | efectivo | 3376 | 
+ | Playera muestra La Salle | 220 | efectivo | pendiente rembolso | 
+ | Tafetan Bayon Fresnitos | 284.8 | efectivo | pendiente rembolso | 
+ | Tergal Parisina | 119.99 | efectivo | pendiente rembolso |  | ACUMULADO AL 31 JUL | 9800 | 
+ | Albañil | 500 | efectivo | 08-ago |  | COMISIÓN POR VENTAS | 1467 | 
+ | Nomina de Irma | 1800 | efectivo | 10-sep |  | 11267 | 
+ | Mandiles de Fresnitos a Irma | 1300 | efectivo | 12-sep |  | Pagos a cuenta | 7499 | 
+ | Lycra oro osos grandes | 290 | efectivo |  | TOTAL AL 31 DE JULIO | 3768 | pagado por transfencia 2 de agosto | 
+ | Razo portugues solecito | 180 | efectivo | 
+ | Otomi Mantel Ifes | 129 | efectivo | 
+ | Pata de gallo gabardina (inventario) | 430 | efectivo |  | MANO DE OBRA AGOSTO | 
+ | Botones azul marino (5 pantalones) | 20 | efectivo |  | PRENDA | FABY | IRMA | 
+ | Relleno (Amor Elena) | 99.98 | Tarjeta |  | 10 COJINES | 200 | 300 | julio | 
+ | Relleno (stock) | 50 | Tarjeta |  | Vestido escoces, pantalon y casacas | 80 |  | 
+ | Tergal strech gris para bandas | 60 | efectivo |  | 2 chalecos de seguridad | 220 |  | 
+21-nov | Varios Santiago | 76.21 | Modatelas |  | Chamarra | 210 |  | 
+26-nov | Cierres 45 cm | 14.4 | comerc MYCH |  |  | CONJUNTO ROSA | 850 |  | 
+30-nov | Botones rojos | 120 | Parisina |  |  | FOLDERS PERSONALIZADOS | 200 |  | 
+04-dic | Botones rojos | 102 | Parisina |  |  | 5 pantalone sastre | 410 |  | julio | 
+13-dic | Bolsas | 72 | 
+ | Hebilla grinch | 40 |  | 2170 | 
+ | Polar beige | $600 | Modatelas | 
+06-dic | Polar café | 70 | Modatelas |  | MANO DE OBRA SEPTIEMBRE | 
+ | Gastos Puebla | 561 |  | CONJUNTO AZUL | 350 | julio | 
+ | Guata y nube esfera | 169.97 | parisina para inventario |  | 2 FALDAS ESCOLARES | 100 |  | julio | 
+26-dic | Popelina verde, batas IMSS | 24.9 |  | 10 MANDILES COMPLETOS FRESNITOS | 550 |  | julio | 
+26-sep | Arreglo de plancha | 300 |  | PATRONAJE FRESNITOS (medios mandiles, gorros y filipinas) | 400 |  | 
+27-sep | Nomina Faby | 770 |  | oso chico | 120 |  | 
+ | 10428 | efectivo |  | blusa negra | 100 |  | 
+ | vestido, blazer, cinturon | 300 |  | 
+Menos |  | vestido beige | 100 |  | 
+12/05/25 | Pago de Luz ATM | 1274 |  |  |  | 
+04-ago | Bono Irma ATM | 1050 |  | 2020 | 
+ | Moño y fajilla Lluvia | 345 |  | 
+01-oct | Sublimado Lluvis | 400 |  |  | Menos | 500 | Congreso León | EFECTIVO ROCIO | 
+04-nov | Insumos HEKA | 2000 |  | 2000 | 06-sep | A/C MANO DE OBRA (EFECTIVO) | 
+22-nov | Renta nov | 5500 |  | 330 | 27-sep | A/C MANO DE OBRA (EFECTIVO) | 
+22-nov | Sueldo Ofe y lupita | 4000 |  | 770 | 27-sep | mano de obra | 
+23-dic | Personales Rocio | 1500 |  | 217.5 | 27-sep | terramar | 
+30/05/25 | Gastos fijos | 5000 |  | 3817.5 | 
+ | 21069 | 
+ |  |  | total mano de obra jul, ago y sept | 4190 | 
+ | -10641 | Saldo a Favor de HEKA |  | a/c | 3817.5 | 
+ | Saldo a favor Faby | 372.5 | 
+ene-dic | Fijos HEKA | -50100 | 
+sep, oct y dic | Fijos HEKA | -12525 | 
+2024 | Pérdida | -4482 | 
+2025 | Pérdida | -7589 | 
+PENDIENTE DE PAGO ROCIO |  | -74696 | 
+ | -64055 | 
+
+Table: relacion_la_salle
+FECHA | CANTIDAD | DESCRIPCION | P. U. | MONTO | OBSERVACIONES | FACTURAS |  |  | MANO DE OBRA |  | 
+jun | 33 | Osos uniforme La Salle c/personalizado y chamarra | 670 | 22110 | 
+ | 37 | 150923 | 620 | 22940 |  | FECHA | SUBTOTAL | TOTAL | FORMA PAGO |  | FECHA | CANTIDAD | DESCRIPCION | P. U. | MONTO | FORMA PAGO |  | MANO DE OBRA | 
+ | 33 | Descuento por volumen | 50 | 1650 |  | 14/06/25 | Manteleria | $7,000 | $8,032.5 | Transferencia |  | 70 | Armado (Regina) | $70 | $4,900 | Transferencia |  | Regina | $4,900 |  | 
+ | 1 | Oso muestra | 670 | 670 |  | 30/05/25 | Manteleria | $5,000 | $5,737.5 | Transferencia |  | 72 | Corte osos (Faby) | $30 | $2,160 |  | Faby | $8,335 | 19jul efectivo | 
+ | 16/06/25 | playeras | $11,575 | $13,282.0 | Transferencia |  | 1 | Armado, relleno, cesareas, cara y dtf (Faby) | 210 | $210 |  | Irma | $622 | 12 y 18 jul | 570 | 
+TOTAL |  | 45050 |  | 24/06/25 | playeras | $10,109 | $11,600.0 | Transferencia |  | 5 | Armado, cara y dtf (Faby) | 170 | $850 |  | Erika | $330 | 
+Descuento |  | 2320 |  | 30/06/25 | Confeccion uniformes | $7,000 | $8,032.5 | Transferencia |  | 5 | Chamarras (Irma) | $15 | $75 | Efectivo | 12-jul | Monica | $9,240 | 
+TOTAL |  | 42730 |  | $40,684 | $46,684.5 |  | 33 | Corte Chamarras (Faby) | 5 | $165 |  | Irene | $150 | 
+ | 20 | Escudos (Irma) | 5 | $100 | Efectivo | 12-jul |  | $23,577 | 
+16/06/25 | 130 | Playeras blancas con dtf | 165 | 21450 |  | Concepto | Monto |  | Total | Costo |  | 26 | Pespunte chamarras (Irma) | 2.5 | $65 | Efectivo | 18-jul | 
+ | 1 | Playera muestra | 220 | 220 |  | 130 playeras | $21,670 | 24455.46852 |  | $21,112 | Transferencia |  | 30 | Cesareas osos (Irma) | 10 | $300 | Efectivo | 12-jul | 
+TOTAL |  | 21670 |  | Osos | $42,730 | 48222.52745 | $50,430 |  | Escudo osos (Irma) 2 hrs | 40.9 | $82 | pend pagar ATM | 12-jul | 
+ | Moños | $7,700 | 8689.760387 | $29,544 |  | 1 | Chamarra completa (Erika) | 20 | $20 | Efectivo | 18-jul | Insumos | $5,967 | 
+jun | 62 | Moño perla | 100 | 6200 |  | Ajustes ATM | $2,730 | 3080.915046 |  | 31 | Chamarra parcial (Erika) | $10 | $310 | Efectivo | 18-jul | 
+ | 14 | Moño rojo | 100 | 1400 |  | Nice | $5,140 | 5800.697193 |  | 66 | Relleno, cesares, cara y dtf (Monica) | 140 | $9,240 | Transferencia | 17-jul | 
+ | 1 | Moño dorado | 100 | 100 |  | Ropa | $1,050 | 1184.967326 |  | 08/07/25 | 66 | DTF (personalizados) | $15 | $1,131 | Transferencia | checar factura | 
+ | 7700 |  | $81,020 | $66,979 |  |  |  | Nube esfera Parisina |  | $240 | Tarjeta | 
+ |  |  | Irene |  | $150 | Efectivo | 
+TOTAL |  | 72100 |  | 5kg | Relleno | $453 | $2,265 | Tarjeta | 
+ | Saldo | $40,336 | 20294.3674 |  | Ojos |  | $1,063 | Tarjeta | 
+jun/jul |  | Ajustes ATM |  | 2730 |  |  | 
+ | 11-jul | Ajuste prendas |  |  |  | 1 | playera muestra | $220 | $220 | Efectivo Rocio | 
+jun |  | Collar piedra rosa y blanca | 599 |  | 11-jul | Elaboración de moños |  |  |  | 10/07/25 | 1 rollo | Listón blanco |  | $270 | efectivo | 10-jul | 
+ | Arete piedra rosa y blanca | 549 | Faby |  | 11-jul | Confección osos |  |  |  | 10/07/25 |  | Bolsas plastico |  | $48 | efectivo | 10-jul | 
+ | Pulsera piedra rosa y blanca | 599 |  |  |  |  | 75 | Moños perla y rojo (Faby) | 66 | $4,950 | 
+ | Arete perla | 349 |  | 150 | 
+ | 10/05/25 | 100 | Transporte Regina |  | 100 | Efectivo | 
+ | 16/07/25 |  | 9958.57 | tarjeta |  | 24/05/25 | 100 | Transporte Regina |  | 100 | Efectivo | 
+ | Pulsera perlas | 899 |  | 14/07/25 |  | 10235.7 | transferencia |  | Muestra oso |  | 380 | 
+ | Gargantilla | 499 |  | 24-jul |  | 18360.8 | transferencia |  | $29,544 | 
+ | Aretes perla con piedra | 389 |  | 24-jul |  | 8835.75 | transferencia | 
+ | Arete gota | 479 | Faby |  | 47390.82 | 
+ | Collar 3 perlas | 499 |  | Faby | $3,385 | osos | 
+ | Aretes 3 perlas | 279 |  |  |  | Irma | $557 | 
+ | 5140 |  | Erika | $330 | 
+ | Faby | $4,950 | moños | 
+ | Conjunto gris | 690 | 
+ | Playera blanca flores | 360 |  | Faby | $8,335 | 
+TOTAL |  | 1050 |  | 4960 | efectivo confecciones 19 jul | 
+ | 3375 | efectivo tomado de ATM y rembolsado por transf de confecciones | 
+ | 81020 |  | 1500 | efectivo tomado de ATM y rembolsado por transf de confecciones a cuenta de confecciones pend | 
+
+Table: fresnitos
+23 MEDIOS MANDILES, 16 GORROS Y 32 FILIPINAS |  | MANDILES COMPLETOS | 
+FECHA | DESCRIPCIÓN | COSTO |  | Tafetan (forro) | 284.8 | 
+31-ago | Loneta | 5416.96 | tarjeta | 
+ | Tafetan (forro) |  | Confección Irma | $1,300 | pagado de ATM | 
+01-sep | Rollo poliester | 99.8 | tarjeta |  | Corte Faby | 550 | 
+19-ago | Etiquetas | 1620 | tarjeta |  | $1,850 | 
+ | Calado deportextil | 
+ | Botones |  | Mano de obra domingo | 314 | 
+06-ago | Papel caple | 90 | Efectivo |  | Ofelia medio domingo | 136 | 
+10-sep | Papel caple | 120 | Efectivo | 
+07-sep | deportextil | 78 | tarjeta |  | TOTAL | $2,585 | 
+Total insumos |  | 7425 | 
+12-sep | Corte Luisa | $570 | Efectivo | 
+10-sep | Corte Mary | $630 | Efectivo | 
+08-sep | Corte Mary | $525 | Efectivo | 
+05-sep | Corte Luisa | $210 | Efectivo | 
+22-sep | Confección Irma | $1,950 | Efectivo | 
+19-jul | Irma domingo | $314 | Efectivo | 
+19-jul | Ofelia domingo | $136 | Efectivo | 
+ | Patronaje Faby | $400 | pend de pago | 
+Total mano de obra |  | $4,735 | 

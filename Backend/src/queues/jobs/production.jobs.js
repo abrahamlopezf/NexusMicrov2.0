@@ -1,0 +1,4 @@
+module.exports = {
+  CREATE_WORK_ORDER: 'CREATE_WORK_ORDER',
+  COMPLETE_TASK: 'COMPLETE_TASK'
+};

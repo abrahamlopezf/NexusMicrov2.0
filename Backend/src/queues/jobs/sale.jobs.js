@@ -1,0 +1,4 @@
+module.exports = {
+  SALE_CONFIRMED: 'SALE_CONFIRMED',
+  SALE_CANCELLED: 'SALE_CANCELLED'
+};
