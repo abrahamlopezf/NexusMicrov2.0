@@ -96,3 +96,10 @@
 {"level":"info","message":"⚙️ Queue Service Initialized (Hybrid mode ready)","service":"erp-backend","timestamp":"2026-04-23T21:49:09.533Z"}
 {"level":"info","message":"🚀 Server running on port 5000 in development mode","service":"erp-backend","timestamp":"2026-04-23T21:49:09.538Z"}
 {"level":"info","message":"🕒 Inventory expiration job started","service":"erp-backend","timestamp":"2026-04-23T21:49:09.543Z"}
+{"level":"info","message":"✅ Database connected successfully","service":"erp-backend","timestamp":"2026-04-23T21:50:01.627Z"}
+{"level":"info","message":"✅ Database connected","service":"erp-backend","timestamp":"2026-04-23T21:50:01.632Z"}
+{"level":"info","message":"📦 Database synced","service":"erp-backend","timestamp":"2026-04-23T21:50:04.220Z"}
+{"level":"info","message":"✅ Redis connected (Queue system active)","service":"erp-backend","timestamp":"2026-04-23T21:50:04.224Z"}
+{"level":"info","message":"⚙️ Queue Service Initialized (Hybrid mode ready)","service":"erp-backend","timestamp":"2026-04-23T21:50:04.228Z"}
+{"level":"info","message":"🚀 Server running on port 5000 in development mode","service":"erp-backend","timestamp":"2026-04-23T21:50:04.233Z"}
+{"level":"info","message":"🕒 Inventory expiration job started","service":"erp-backend","timestamp":"2026-04-23T21:50:04.237Z"}
