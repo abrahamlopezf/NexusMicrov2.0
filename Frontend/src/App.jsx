@@ -8,6 +8,8 @@ import PendingOrders from "./pages/sales/PendingOrders";
 import Deliveries from "./pages/sales/Deliveries";
 import QuickQuote from "./pages/sales/QuickQuote";
 import CostsSettings from "./pages/admin/CostsSettings";
+import SalesHistory from "./pages/sales/SalesHistory";
+import InventoryAlerts from "./pages/inventory/InventoryAlerts";
 
 function App() {
   return (
@@ -36,8 +38,8 @@ function App() {
         <Route path="/admin/settings" element={<ProtectedRoute><MainLayout><CostsSettings /></MainLayout></ProtectedRoute>} />
         
         {/* Placeholder for future modules */}
-        <Route path="/sales" element={<ProtectedRoute><MainLayout><div className="p-4 rounded-xl bg-white shadow-sm border border-gray-100">Módulo de Ventas Histórico Próximamente</div></MainLayout></ProtectedRoute>} />
-        <Route path="/inventory" element={<ProtectedRoute><MainLayout><div className="p-4 rounded-xl bg-white shadow-sm border border-gray-100">Módulo de Inventario Próximamente</div></MainLayout></ProtectedRoute>} />
+        <Route path="/sales/history" element={<ProtectedRoute><MainLayout><SalesHistory /></MainLayout></ProtectedRoute>} />
+        <Route path="/inventory" element={<ProtectedRoute><MainLayout><InventoryAlerts /></MainLayout></ProtectedRoute>} />
         <Route path="/production" element={<ProtectedRoute><MainLayout><div className="p-4 rounded-xl bg-white shadow-sm border border-gray-100">Módulo de Producción Próximamente</div></MainLayout></ProtectedRoute>} />
         <Route path="/payroll" element={<ProtectedRoute><MainLayout><div className="p-4 rounded-xl bg-white shadow-sm border border-gray-100">Módulo de Nómina Próximamente</div></MainLayout></ProtectedRoute>} />
         <Route path="/reports" element={<ProtectedRoute><MainLayout><div className="p-4 rounded-xl bg-white shadow-sm border border-gray-100">Módulo de Reportes Próximamente</div></MainLayout></ProtectedRoute>} />

@@ -16,12 +16,12 @@ class QueueService {
       }
   }
 
-  static async safeAdd(queueInstance, type, payload) {
+  static async safeAdd(queueInstance, type, payload, options = {}) {
       try {
           const useAsync = await this.isAsyncEnabled();
           if (!useAsync) throw new Error('ASYNC QUEUE DISABLED');
           
-          return await queueInstance.add(type, payload);
+          return await queueInstance.add(type, payload, options);
       } catch (err) {
           logger.warn(`Redis or Queue Failed/Disabled. Running synchronously as fallback for ${type}: ${err.message}`);
           
@@ -49,8 +49,8 @@ class QueueService {
     return await this.safeAdd(saleQueue, type, payload);
   }
 
-  static async addInventoryJob(type, payload) {
-    return await this.safeAdd(inventoryQueue, type, payload);
+  static async addInventoryJob(type, payload, options = {}) {
+    return await this.safeAdd(inventoryQueue, type, payload, options);
   }
 
   static async addProductionJob(type, payload) {

@@ -21,6 +21,47 @@ const worker = new Worker('InventoryQueue', async job => {
         await InventoryService.deductProductionMaterials(realMaterialsUsed, t);
       } else if (job.name === RELEASE_STOCK) {
         // Rollback reservation
+      } else if (job.name === 'LOW_STOCK_ALERT') {
+        const { StockAlert } = require('../../models');
+        const logger = require('../../utils/logger');
+        
+        logger.warn({
+            event: 'LOW_STOCK_ALERT',
+            correlationId: data.correlationId || 'N/A',
+            materialId: data.materialId,
+            current_stock: data.current_stock,
+            min_stock: data.min_stock
+        });
+
+        if (StockAlert) {
+          try {
+            const [alert, created] = await StockAlert.findOrCreate({
+                where: { material_id: data.materialId, resolved: false },
+                defaults: {
+                    message: `Material ${data.materialName} has reached low stock. Current: ${data.current_stock}, Min: ${data.min_stock}`,
+                    level: 'LOW',
+                    current_stock: data.current_stock,
+                    min_stock: data.min_stock,
+                    correlation_id: data.correlationId || null,
+                    processed: false
+                },
+                transaction: t
+            });
+
+            if (!alert.processed) {
+                alert.processed = true;
+                alert.processed_at = new Date();
+                await alert.save({ transaction: t });
+                logger.info(`[LOW_STOCK_ALERT] Successfully processed commit marker for material ${data.materialId}`);
+            }
+          } catch (alertError) {
+            if (alertError.name === 'SequelizeUniqueConstraintError') {
+              logger.info(`[LOW_STOCK_ALERT] Unresolved alert already exists for material ${data.materialId}. Skipping duplicate.`);
+            } else {
+              throw alertError;
+            }
+          }
+        }
       }
     });
 

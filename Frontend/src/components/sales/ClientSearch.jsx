@@ -9,7 +9,10 @@ export default function ClientSearch({ onSelect, selectedClient, onClear }) {
     const wrapperRef = useRef(null);
 
     useEffect(() => {
-        api.get("/customers").then(res => setClients(res.data.data || [])).catch(console.error);
+        api.get("/customers").then(res => {
+            const payload = res.data?.data;
+            setClients(Array.isArray(payload) ? payload : (payload?.rows || payload?.clients || []));
+        }).catch(console.error);
 
         function handleClickOutside(event) {
             if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
@@ -20,7 +23,8 @@ export default function ClientSearch({ onSelect, selectedClient, onClear }) {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    const filtered = clients.filter(c => c.name.toLowerCase().includes(query.toLowerCase()) || (c.phone && c.phone.includes(query)));
+    const safeClients = Array.isArray(clients) ? clients : [];
+    const filtered = safeClients.filter(c => c?.name?.toLowerCase()?.includes(query?.toLowerCase() || '') || (c?.phone && c.phone.includes(query)));
 
     if (selectedClient) {
         return (
@@ -61,7 +65,7 @@ export default function ClientSearch({ onSelect, selectedClient, onClear }) {
                         filtered.map(c => (
                             <div key={c.id} onClick={() => { onSelect(c); setQuery(''); setShowDropdown(false); }} className="p-4 hover:bg-gray-50 cursor-pointer border-b border-gray-50 last:border-0 transition-colors flex justify-between items-center">
                                 <div>
-                                    <p className="font-bold text-gray-900">{c.name}</p>
+                                    <p className="font-bold text-gray-900">{c?.name || 'Cliente'}</p>
                                     <p className="text-sm text-gray-500">{c.phone || 'Sin teléfono'}</p>
                                 </div>
                             </div>

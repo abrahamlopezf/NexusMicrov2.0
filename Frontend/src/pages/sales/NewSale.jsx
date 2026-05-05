@@ -16,7 +16,7 @@ export default function NewSale() {
   const [paymentMethod, setPaymentMethod] = useState('EFECTIVO');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const total = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
+  const total = cart.reduce((acc, i) => acc + ((i?.price || 0) * (i?.qty || 1)), 0);
 
   const handleCobrar = async () => {
     if (!client) return alert("Por favor selecciona un cliente de la lista.");
@@ -28,16 +28,16 @@ export default function NewSale() {
             saleData: { client_id: client.id, type: 'NORMAL' },
             itemsData: cart.map(item => {
                 const parts = [];
-                if (item.measurements.length) parts.push(`Largo: ${item.measurements.length}cm`);
-                if (item.measurements.waist) parts.push(`Cintura: ${item.measurements.waist}cm`);
-                if (item.measurements.sleeves) parts.push(`Manga: ${item.measurements.sleeves}cm`);
-                if (item.notes) parts.push(`Notas: ${item.notes}`);
+                if (item?.measurements?.length) parts.push(`Largo: ${item.measurements.length}cm`);
+                if (item?.measurements?.waist) parts.push(`Cintura: ${item.measurements.waist}cm`);
+                if (item?.measurements?.sleeves) parts.push(`Manga: ${item.measurements.sleeves}cm`);
+                if (item?.notes) parts.push(`Notas: ${item.notes}`);
                 
                 return {
                     product_id: item.id,
-                    quantity: item.qty,
-                    unit_price: item.price,
-                    custom_description: parts.length > 0 ? parts.join(" | ") : item.name
+                    quantity: item.qty || 1,
+                    unit_price: item.price || 0,
+                    custom_description: parts.length > 0 ? parts.join(" | ") : (item.name || 'Producto')
                 };
             }),
             paymentData: { method: paymentMethod, amount: total }
@@ -66,11 +66,16 @@ export default function NewSale() {
 
     try {
         const res = await api.post("/pricing/calculate", { product_id: product.id });
-        if (res.data.success) {
+        if (res?.data?.success) {
             setPricingBreakdown(res.data.data);
+        } else {
+            // Fallback en caso de que la respuesta no sea exitosa pero no lance error
+            setPricingBreakdown({ suggested_price: product.base_price });
         }
     } catch (err) {
         console.error("No se pudo calcular el precio dinamico:", err);
+        // Fallback a precio base en caso de error 500
+        setPricingBreakdown({ suggested_price: product.base_price });
     } finally {
         setIsCalculating(false);
     }
@@ -137,7 +142,7 @@ export default function NewSale() {
                             <p className="text-sm font-medium text-gray-400 mt-1 animate-pulse">Calculando fórmula base...</p>
                         ) : pricingBreakdown ? (
                             <>
-                                <p className="text-sm text-gray-800 font-bold mt-2 tracking-tight">Precio Calculado: <span className="text-[#C9A14A] text-xl">${parseFloat(pricingBreakdown.suggested_price).toFixed(2)}</span></p>
+                                <p className="text-sm text-gray-800 font-bold mt-2 tracking-tight">Precio Calculado: <span className="text-[#C9A14A] text-xl">${parseFloat(pricingBreakdown?.suggested_price || 0).toFixed(2)}</span></p>
                                 
                                 {/* Modo Transparente (Manager / Admin) */}
                                 {pricingBreakdown.breakdown && (
@@ -154,7 +159,7 @@ export default function NewSale() {
                                 )}
                             </>
                         ) : (
-                            <p className="text-sm font-medium text-gray-500 mt-1">Precio Base DB: <span className="text-gray-600 font-bold">${parseFloat(tempProduct.base_price).toFixed(2)}</span></p>
+                            <p className="text-sm font-medium text-gray-500 mt-1">Precio Base DB: <span className="text-gray-600 font-bold">${parseFloat(tempProduct?.base_price || 0).toFixed(2)}</span></p>
                         )}
                     </div>
                     <button onClick={() => { setTempProduct(null); setPricingBreakdown(null); }} className="text-xs font-bold text-gray-400 hover:text-gray-600 p-2 border border-gray-200 rounded-lg bg-gray-50/50">Cancelar</button>
@@ -216,15 +221,15 @@ export default function NewSale() {
                  cart.map((item, idx) => (
                     <div key={idx} className="flex justify-between items-start border-b border-gray-100 pb-4 relative group">
                         <div className="pr-10">
-                            <p className="font-bold text-sm text-gray-800 leading-tight">{item.name}</p>
+                            <p className="font-bold text-sm text-gray-800 leading-tight">{item?.name}</p>
                             {/* Render Measurements Summary */}
-                            {(item.measurements.length || item.measurements.waist || item.measurements.sleeves) && (
+                            {(item?.measurements?.length || item?.measurements?.waist || item?.measurements?.sleeves) && (
                                 <p className="text-xs text-gray-400 mt-1 font-medium">L:{item.measurements.length||'-'} C:{item.measurements.waist||'-'} M:{item.measurements.sleeves||'-'}</p>
                             )}
-                            <p className="text-xs text-gray-500 mt-1 font-medium">{item.qty} un x ${item.price.toFixed(2)}</p>
+                            <p className="text-xs text-gray-500 mt-1 font-medium">{item?.qty || 1} un x ${(item?.price || 0).toFixed(2)}</p>
                         </div>
                         <div className="flex flex-col items-end gap-2">
-                            <p className="font-black text-[#C9A14A]">${(item.qty * item.price).toFixed(2)}</p>
+                            <p className="font-black text-[#C9A14A]">${((item?.qty || 1) * (item?.price || 0)).toFixed(2)}</p>
                             <button onClick={() => removeFromCart(idx)} className="text-rose-300 hover:text-rose-500 transition-colors p-1"><Trash2 size={16} /></button>
                         </div>
                     </div>

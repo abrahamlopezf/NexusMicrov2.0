@@ -10,7 +10,8 @@ export const ProductList = ({ onEdit, onCreate }) => {
         const fetchProducts = async () => {
             try {
                 const res = await api.get('/products');
-                setProducts(res.data.data.products);
+                const payload = res.data?.data;
+                setProducts(Array.isArray(payload) ? payload : (payload?.products || []));
             } catch (error) {
                 console.error("Error fetching products", error);
             } finally {
@@ -42,7 +43,7 @@ export const ProductList = ({ onEdit, onCreate }) => {
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
-                        {products.map(p => (
+                        {(Array.isArray(products) ? products : []).map(p => (
                             <tr key={p.id} className="hover:bg-gray-50 transition-colors">
                                 <td className="p-4 font-medium text-gray-900">{p.name}</td>
                                 <td className="p-4 text-gray-600">{p.category || 'N/A'}</td>

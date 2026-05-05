@@ -3,6 +3,7 @@ import api from "../api/axios";
 import KpiCard from "../components/KpiCard";
 import { TrendingUp, PieChart, Info, AlertTriangle, Settings, ShoppingBag, Package, FileText, BarChart2, Briefcase, Scissors } from "lucide-react";
 import { Link } from "react-router-dom";
+import StockAlertsWidget from "../components/dashboard/StockAlertsWidget";
 
 const Dashboard = () => {
   const [data, setData] = useState(null);
@@ -229,6 +230,11 @@ const Dashboard = () => {
           ) : (
             <p className="text-sm text-gray-400">Selecciona otro rango de fecha.</p>
           )}
+        </div>
+
+        {/* WIDGET DE INVENTARIO (MANAGER/ADMIN) */}
+        <div className="lg:col-span-3">
+           <StockAlertsWidget />
         </div>
 
       </div>

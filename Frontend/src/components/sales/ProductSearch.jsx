@@ -10,7 +10,10 @@ export default function ProductSearch({ onSelect }) {
 
     useEffect(() => {
         api.get("/products")
-           .then(res => setProducts(res.data.data || []))
+           .then(res => {
+               const payload = res.data?.data;
+               setProducts(Array.isArray(payload) ? payload : (payload?.products || []));
+           })
            .catch(err => console.error("Error fetching products", err));
            
         function handleClickOutside(event) {
@@ -22,7 +25,8 @@ export default function ProductSearch({ onSelect }) {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    const filtered = products.filter(p => p.name.toLowerCase().includes(query.toLowerCase()) && p.is_active);
+    const safeProducts = Array.isArray(products) ? products : [];
+    const filtered = safeProducts.filter(p => p?.name?.toLowerCase()?.includes(query?.toLowerCase() || '') && p?.is_active);
 
     return (
         <div className="relative w-full" ref={wrapperRef}>
@@ -41,8 +45,8 @@ export default function ProductSearch({ onSelect }) {
                     {filtered.length > 0 ? (
                         filtered.map(p => (
                             <div key={p.id} onClick={() => { onSelect(p); setQuery(''); setShowDropdown(false); }} className="p-4 hover:bg-gray-50 cursor-pointer border-b border-gray-50 last:border-0 transition-colors flex justify-between items-center group">
-                                <span className="font-bold text-gray-900 group-hover:text-[#C9A14A] transition-colors">{p.name}</span>
-                                <span className="font-bold text-[#C9A14A] bg-[#C9A14A]/10 px-3 py-1 rounded-lg">${parseFloat(p.base_price).toFixed(2)}</span>
+                                <span className="font-bold text-gray-900 group-hover:text-[#C9A14A] transition-colors">{p?.name || 'Producto'}</span>
+                                <span className="font-bold text-[#C9A14A] bg-[#C9A14A]/10 px-3 py-1 rounded-lg">${parseFloat(p?.base_price || 0).toFixed(2)}</span>
                             </div>
                         ))
                     ) : (

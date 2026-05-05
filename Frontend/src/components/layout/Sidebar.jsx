@@ -13,7 +13,7 @@ import { useAuthStore } from "../../store/authStore";
 
 const adminItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
-  { icon: ShoppingCart, label: "Ventas", path: "/sales" },
+  { icon: ShoppingCart, label: "Ventas", path: "/sales/history" },
   { icon: Package, label: "Inventario", path: "/inventory" },
   { icon: Wrench, label: "Producción", path: "/production" },
   { icon: Users, label: "Personal", path: "/payroll" },

@@ -16,13 +16,22 @@ class InventoryService {
         return material;
     }
 
-    static async adjustStock(materialId, quantityDelta, transaction = null) {
+    static async adjustStock(materialId, quantityDelta, contextOrTx = null, tx = null) {
+        let transaction = tx;
+        let context = {};
+        if (contextOrTx && typeof contextOrTx.LOCK !== 'undefined') {
+            transaction = contextOrTx;
+        } else if (contextOrTx) {
+            context = contextOrTx;
+        }
+
         const query = `
             UPDATE materials
             SET current_stock = current_stock + :quantityDelta
             WHERE id = :materialId
             AND (current_stock + :quantityDelta) >= 0
-            RETURNING *;
+            RETURNING *,
+            ((current_stock - :quantityDelta) > min_stock AND current_stock <= min_stock) AS crossed_threshold;
         `;
         const [results] = await sequelize.query(query, {
             replacements: { quantityDelta: parseFloat(quantityDelta), materialId },
@@ -32,6 +41,17 @@ class InventoryService {
 
         if (results.length === 0) {
             throw new AppError(`Quiebre de Inventario para material ID ${materialId} o material no encontrado. Imposible satisfacer demanda.`, 400);
+        }
+
+        if (results[0].crossed_threshold) {
+            const QueueService = require('./QueueService');
+            await QueueService.addInventoryJob('LOW_STOCK_ALERT', {
+                materialId: results[0].id,
+                materialName: results[0].name,
+                current_stock: results[0].current_stock,
+                min_stock: results[0].min_stock,
+                correlationId: context?.correlationId || null
+            }, { jobId: `low-stock-${results[0].id}` });
         }
 
         return results[0];
@@ -147,7 +167,8 @@ class InventoryService {
                 reserved_stock = GREATEST(0, COALESCE(reserved_stock, 0) - :matReservedQty)
             WHERE id = :materialId 
             AND current_stock >= :realQ
-            RETURNING *;
+            RETURNING *,
+            ((current_stock + :realQ) > min_stock AND current_stock <= min_stock) AS crossed_threshold;
         `;
 
         const [results] = await sequelize.query(query, {
@@ -165,7 +186,18 @@ class InventoryService {
             await reservation.save({ transaction });
         }
 
-        return material;
+        if (results[0].crossed_threshold) {
+            const QueueService = require('./QueueService');
+            await QueueService.addInventoryJob('LOW_STOCK_ALERT', {
+                materialId: results[0].id,
+                materialName: results[0].name,
+                current_stock: results[0].current_stock,
+                min_stock: results[0].min_stock,
+                correlationId: context?.correlationId || null
+            }, { jobId: `low-stock-${results[0].id}` });
+        }
+
+        return results[0];
     }
 }
 
