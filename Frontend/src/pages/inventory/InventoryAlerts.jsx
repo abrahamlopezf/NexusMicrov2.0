@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../../api/axios";
-import { AlertTriangle, Package, CheckCircle, RefreshCcw, Bell } from "lucide-react";
+import { AlertTriangle, Package, CheckCircle, RefreshCcw, Bell, Plus } from "lucide-react";
 
 let alertsCache = null;
 let lastFetch = 0;
 const CACHE_TTL = 30000; // 30 seconds
 
 const InventoryAlerts = () => {
+  const navigate = useNavigate();
   const [alerts, setAlerts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -50,13 +52,22 @@ const InventoryAlerts = () => {
           <h1 className="text-3xl font-bold text-[#0A0A0A] tracking-tight">Panel de Inventario</h1>
           <p className="text-gray-500 mt-1 font-medium">Control total de stock y alertas del sistema</p>
         </div>
-        <button 
-          onClick={() => fetchAlerts(true)}
-          className="flex items-center gap-2 bg-white border border-gray-200 text-gray-700 px-4 py-2 rounded-xl hover:bg-gray-50 transition-colors font-medium shadow-sm"
-        >
-          <RefreshCcw size={18} className={loading ? "animate-spin" : ""} />
-          Actualizar
-        </button>
+        <div className="flex items-center gap-3">
+          <button 
+            onClick={() => navigate('/inventory/register')}
+            className="flex items-center gap-2 bg-[#C9A14A] text-white px-4 py-2 rounded-xl hover:bg-[#B38D3A] transition-colors font-medium shadow-sm"
+          >
+            <Plus size={18} />
+            Registrar Inventario
+          </button>
+          <button 
+            onClick={() => fetchAlerts(true)}
+            className="flex items-center gap-2 bg-white border border-gray-200 text-gray-700 px-4 py-2 rounded-xl hover:bg-gray-50 transition-colors font-medium shadow-sm"
+          >
+            <RefreshCcw size={18} className={loading ? "animate-spin" : ""} />
+            Actualizar
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
