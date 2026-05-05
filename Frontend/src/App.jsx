@@ -10,6 +10,8 @@ import QuickQuote from "./pages/sales/QuickQuote";
 import CostsSettings from "./pages/admin/CostsSettings";
 import SalesHistory from "./pages/sales/SalesHistory";
 import InventoryAlerts from "./pages/inventory/InventoryAlerts";
+import ProductCatalog from "./pages/admin/ProductCatalog";
+import StockRegister from "./pages/inventory/StockRegister";
 
 function App() {
   return (
@@ -37,8 +39,9 @@ function App() {
         {/* Modulo de Configuración ERP */}
         <Route path="/admin/settings" element={<ProtectedRoute><MainLayout><CostsSettings /></MainLayout></ProtectedRoute>} />
         
-        {/* Placeholder for future modules */}
-        <Route path="/sales/history" element={<ProtectedRoute><MainLayout><SalesHistory /></MainLayout></ProtectedRoute>} />
+        {/* Master Data & Inventory */}
+        <Route path="/products" element={<ProtectedRoute><MainLayout><ProductCatalog /></MainLayout></ProtectedRoute>} />
+        <Route path="/inventory/register" element={<ProtectedRoute><MainLayout><StockRegister /></MainLayout></ProtectedRoute>} />
         <Route path="/inventory" element={<ProtectedRoute><MainLayout><InventoryAlerts /></MainLayout></ProtectedRoute>} />
         <Route path="/production" element={<ProtectedRoute><MainLayout><div className="p-4 rounded-xl bg-white shadow-sm border border-gray-100">Módulo de Producción Próximamente</div></MainLayout></ProtectedRoute>} />
         <Route path="/payroll" element={<ProtectedRoute><MainLayout><div className="p-4 rounded-xl bg-white shadow-sm border border-gray-100">Módulo de Nómina Próximamente</div></MainLayout></ProtectedRoute>} />

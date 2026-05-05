@@ -16,6 +16,46 @@ class InventoryService {
         return material;
     }
 
+    static async registerStock(data, contextOrTx = null, tx = null) {
+        let transaction = tx;
+        let context = {};
+        if (contextOrTx && typeof contextOrTx.LOCK !== 'undefined') {
+            transaction = contextOrTx;
+        } else if (contextOrTx) {
+            context = contextOrTx;
+        }
+
+        const runTx = async (t) => {
+            const { productId, initial_stock, min_stock } = data;
+            
+            const { Product } = require('../models');
+            const product = await Product.findByPk(productId, { transaction: t });
+            if (!product) throw new AppError('Product Catalog ID not found', 404);
+
+            const material = await Material.findOne({ where: { product_id: productId }, transaction: t });
+
+            if (material) {
+                return await InventoryService.adjustStock(material.id, initial_stock, context, t);
+            } else {
+                const newMaterial = await Material.create({
+                    product_id: productId,
+                    name: product.name,
+                    description: product.description,
+                    current_stock: initial_stock,
+                    min_stock: min_stock || 0,
+                    unit: product.unit || 'pcs'
+                }, { transaction: t });
+                return newMaterial;
+            }
+        };
+
+        if (transaction) {
+            return await runTx(transaction);
+        } else {
+            return await sequelize.transaction(runTx);
+        }
+    }
+
     static async adjustStock(materialId, quantityDelta, contextOrTx = null, tx = null) {
         let transaction = tx;
         let context = {};

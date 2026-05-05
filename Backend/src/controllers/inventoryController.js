@@ -58,9 +58,22 @@ const getLowStockAlerts = async (req, res, next) => {
     }
 };
 
+const registerInventory = async (req, res, next) => {
+    try {
+        const result = await InventoryService.registerStock(req.body);
+        res.status(201).json({
+            success: true,
+            data: result
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     getInventory,
     adjustInventory,
     getInventoryMovements,
-    getLowStockAlerts
+    getLowStockAlerts,
+    registerInventory
 };

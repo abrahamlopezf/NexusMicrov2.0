@@ -79,6 +79,10 @@ class ProductService {
                 name: data.name,
                 category: data.category,
                 description: data.description,
+                sku: data.sku,
+                unit: data.unit || 'pcs',
+                base_cost: data.base_cost || 0,
+                active: data.active !== undefined ? data.active : true,
                 is_custom: data.is_custom || false,
                 attributes: data.attributes || {},
                 created_by: userId
@@ -116,6 +120,10 @@ class ProductService {
                 name: data.name,
                 category: data.category,
                 description: data.description,
+                sku: data.sku,
+                unit: data.unit,
+                base_cost: data.base_cost,
+                active: data.active,
                 is_custom: data.is_custom,
                 attributes: data.attributes,
                 updated_by: userId

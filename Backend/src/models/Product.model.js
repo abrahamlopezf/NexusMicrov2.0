@@ -16,6 +16,26 @@ const Product = sequelize.define("Product", {
         type: DataTypes.TEXT,
         allowNull: true
     },
+    sku: {
+        type: DataTypes.STRING(100),
+        allowNull: true,
+        unique: true
+    },
+    unit: {
+        type: DataTypes.STRING(50),
+        allowNull: true,
+        defaultValue: 'pcs'
+    },
+    base_cost: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: true,
+        defaultValue: 0
+    },
+    active: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
+    },
     base_price: {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: true,

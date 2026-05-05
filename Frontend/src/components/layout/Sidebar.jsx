@@ -14,8 +14,8 @@ import { useAuthStore } from "../../store/authStore";
 const adminItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
   { icon: ShoppingCart, label: "Ventas", path: "/sales/history" },
-  { icon: Package, label: "Inventario", path: "/inventory" },
-  { icon: Wrench, label: "Producción", path: "/production" },
+  { icon: Package, label: "Catálogo", path: "/products" },
+  { icon: Wrench, label: "Inventario", path: "/inventory" },
   { icon: Users, label: "Personal", path: "/payroll" },
   { icon: PieChart, label: "Reportes", path: "/reports" },
 ];
@@ -26,6 +26,7 @@ const salesItems = [
   { icon: Package, label: "Pedidos Pendientes", path: "/sales/pending" },
   { icon: Wrench, label: "Entregas", path: "/sales/deliveries" },
   { icon: PieChart, label: "Cotizaciones", path: "/quotes/new" },
+  { icon: Package, label: "Registro Stock", path: "/inventory/register" },
 ];
 
 const Sidebar = () => {

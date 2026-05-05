@@ -8,6 +8,7 @@ const { ROLES } = require("../utils/permissions");
 
 router.get("/", auth, authorizeRoles(ROLES.ADMIN, ROLES.MANAGER), InventoryController.getInventory);
 router.get("/alerts", auth, authorizeRoles(ROLES.ADMIN, ROLES.MANAGER), InventoryController.getLowStockAlerts);
+router.post("/register", auth, authorizeRoles(ROLES.ADMIN, ROLES.MANAGER), InventoryController.registerInventory);
 router.post("/adjust", auth, authorizeRoles(ROLES.ADMIN, ROLES.MANAGER), InventoryController.adjustInventory);
 router.get("/movements", auth, authorizeRoles(ROLES.ADMIN, ROLES.MANAGER), InventoryController.getInventoryMovements);
 
