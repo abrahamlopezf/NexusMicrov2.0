@@ -1,8 +1,7 @@
 const ROLES = {
     ADMIN: 'ADMIN',
     MANAGER: 'MANAGER',
-    EMPLOYEE: 'EMPLOYEE',
-    CLIENT: 'CLIENT'
+    EMPLOYEE: 'EMPLOYEE'
 };
 
 const PERMISSIONS = {
@@ -11,16 +10,12 @@ const PERMISSIONS = {
         modules: ['ALL']
     },
     [ROLES.MANAGER]: {
-        description: 'Acceso a gestión comercial',
+        description: 'Acceso a gestión comercial y operativa',
         modules: ['sales', 'inventory', 'production', 'customers', 'suppliers', 'products', 'categories', 'reports', 'purchases']
     },
     [ROLES.EMPLOYEE]: {
-        description: 'Acceso a operaciones de planta',
-        modules: ['production', 'tasks']
-    },
-    [ROLES.CLIENT]: {
-        description: 'Acceso solo a visualizar sus pedidos',
-        modules: ['sales_view', 'payments_view']
+        description: 'Acceso a operaciones de planta y tareas',
+        modules: ['production', 'tasks', 'inventory_view']
     }
 };
 

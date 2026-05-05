@@ -16,9 +16,9 @@ const InventoryMovement = sequelize.define("InventoryMovement", {
         }
     },
     type: {
-        type: DataTypes.ENUM('ENTRADA_COMPRA', 'SALIDA_PRODUCCION', 'SALIDA_VENTA', 'AJUSTE', 'DEVOLUCION'),
+        type: DataTypes.ENUM('ENTRADA_COMPRA', 'SALIDA_PRODUCCION', 'SALIDA_VENTA', 'AJUSTE', 'DEVOLUCION', 'ENTRADA_MANUAL', 'SALIDA_MANUAL'),
         allowNull: false,
-        validate: { isIn: [['ENTRADA_COMPRA', 'SALIDA_PRODUCCION', 'SALIDA_VENTA', 'AJUSTE', 'DEVOLUCION']] }
+        validate: { isIn: [['ENTRADA_COMPRA', 'SALIDA_PRODUCCION', 'SALIDA_VENTA', 'AJUSTE', 'DEVOLUCION', 'ENTRADA_MANUAL', 'SALIDA_MANUAL']] }
     },
     quantity: {
         type: DataTypes.DECIMAL(10, 4),

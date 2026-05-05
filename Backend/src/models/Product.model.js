@@ -46,6 +46,16 @@ const Product = sequelize.define("Product", {
         type: DataTypes.JSONB,
         allowNull: true
     },
+    current_stock: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: false,
+        defaultValue: 0
+    },
+    min_stock: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: false,
+        defaultValue: 0
+    },
     created_by: {
         type: DataTypes.INTEGER,
         allowNull: true

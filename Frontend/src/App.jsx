@@ -3,11 +3,13 @@ import Login from "./pages/Login";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import MainLayout from "./layouts/MainLayout";
 import Dashboard from "./pages/Dashboard";
-import NewSale from "./pages/sales/NewSale";
-import PendingOrders from "./pages/sales/PendingOrders";
-import Deliveries from "./pages/sales/Deliveries";
-import QuickQuote from "./pages/sales/QuickQuote";
+import SalesPage from "./pages/sales/SalesPage";
+import QuotesPage from "./pages/sales/QuotesPage";
 import CostsSettings from "./pages/admin/CostsSettings";
+import InventoryLayout from "./pages/inventory/InventoryLayout";
+import ProductionLayout from "./pages/production/ProductionLayout";
+import SuppliersPage from "./pages/suppliers/SuppliersPage";
+import PurchasesPage from "./pages/purchases/PurchasesPage";
 
 function App() {
   return (
@@ -26,19 +28,17 @@ function App() {
             </ProtectedRoute>
           }
         />
-        {/* Modulos de Ventas (Rutas Específicas POS) */}
-        <Route path="/sales/new" element={<ProtectedRoute><MainLayout><NewSale /></MainLayout></ProtectedRoute>} />
-        <Route path="/sales/pending" element={<ProtectedRoute><MainLayout><PendingOrders /></MainLayout></ProtectedRoute>} />
-        <Route path="/sales/deliveries" element={<ProtectedRoute><MainLayout><Deliveries /></MainLayout></ProtectedRoute>} />
-        <Route path="/quotes/new" element={<ProtectedRoute><MainLayout><QuickQuote /></MainLayout></ProtectedRoute>} />
+        {/* Modulos de Ventas e Ingresos */}
+        <Route path="/sales" element={<ProtectedRoute><MainLayout><SalesPage /></MainLayout></ProtectedRoute>} />
+        <Route path="/quotes" element={<ProtectedRoute><MainLayout><QuotesPage /></MainLayout></ProtectedRoute>} />
         
         {/* Modulo de Configuración ERP */}
         <Route path="/admin/settings" element={<ProtectedRoute><MainLayout><CostsSettings /></MainLayout></ProtectedRoute>} />
         
-        {/* Placeholder for future modules */}
-        <Route path="/sales" element={<ProtectedRoute><MainLayout><div className="p-4 rounded-xl bg-white shadow-sm border border-gray-100">Módulo de Ventas Histórico Próximamente</div></MainLayout></ProtectedRoute>} />
-        <Route path="/inventory" element={<ProtectedRoute><MainLayout><div className="p-4 rounded-xl bg-white shadow-sm border border-gray-100">Módulo de Inventario Próximamente</div></MainLayout></ProtectedRoute>} />
-        <Route path="/production" element={<ProtectedRoute><MainLayout><div className="p-4 rounded-xl bg-white shadow-sm border border-gray-100">Módulo de Producción Próximamente</div></MainLayout></ProtectedRoute>} />
+        <Route path="/inventory" element={<ProtectedRoute><MainLayout><InventoryLayout /></MainLayout></ProtectedRoute>} />
+        <Route path="/suppliers" element={<ProtectedRoute><MainLayout><SuppliersPage /></MainLayout></ProtectedRoute>} />
+        <Route path="/purchases" element={<ProtectedRoute><MainLayout><PurchasesPage /></MainLayout></ProtectedRoute>} />
+        <Route path="/production" element={<ProtectedRoute><MainLayout><ProductionLayout /></MainLayout></ProtectedRoute>} />
         <Route path="/payroll" element={<ProtectedRoute><MainLayout><div className="p-4 rounded-xl bg-white shadow-sm border border-gray-100">Módulo de Nómina Próximamente</div></MainLayout></ProtectedRoute>} />
         <Route path="/reports" element={<ProtectedRoute><MainLayout><div className="p-4 rounded-xl bg-white shadow-sm border border-gray-100">Módulo de Reportes Próximamente</div></MainLayout></ProtectedRoute>} />
 

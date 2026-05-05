@@ -5,8 +5,8 @@ import SalesDashboard from "./sales/SalesDashboard";
 const Dashboard = () => {
     const user = useAuthStore(state => state.user);
     
-    // Check if the role is 'EMPLOYEE'
-    const isEmployee = user?.role?.toUpperCase() === 'EMPLOYEE';
+    const role = user?.role?.toUpperCase();
+    const isEmployee = role === 'EMPLOYEE';
 
     return isEmployee ? <SalesDashboard /> : <AdminDashboard />;
 };

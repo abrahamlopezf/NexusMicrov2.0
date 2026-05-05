@@ -1,20 +1,21 @@
 // src/observability/tracer.js
+const { v4: uuidv4 } = require('uuid');
+
 /**
- * Generates and injects a unique trace ID into the request cycle
- * Allows tracking a single request across all logs and services.
+ * Generates and injects a unique trace ID into the request cycle.
+ * Uses the highly compatible uuid package to avoid crypto.randomUUID issues.
  */
-const crypto = require('crypto');
-
 const tracerMiddleware = (req, res, next) => {
-  // Generate a unique ID for this request
-  const traceId = `req-${crypto.randomUUID()}`;
-  
-  // Attach it to the request object so downstream controllers/loggers can access it
-  req.traceId = traceId;
-
-  // It's also a good practice to include it in the response headers
-  res.setHeader('X-Trace-Id', traceId);
-
+  try {
+    // Generate a unique ID for this request
+    const traceId = `req-${uuidv4()}`;
+    
+    req.traceId = traceId;
+    res.setHeader('X-Trace-Id', traceId);
+  } catch (e) {
+    // Fallback if UUID generation fails
+    req.traceId = `req-${Date.now()}`;
+  }
   next();
 };
 

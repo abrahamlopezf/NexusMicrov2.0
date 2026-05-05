@@ -22,3 +22,38 @@
 {"level":"error","message":"❌ Unable to connect to database:","service":"erp-backend","timestamp":"2026-04-23T21:48:01.767Z"}
 {"level":"error","message":"❌ Unable to connect to database:","service":"erp-backend","timestamp":"2026-04-23T21:49:05.604Z"}
 {"level":"error","message":"❌ Unable to connect to database:","service":"erp-backend","timestamp":"2026-04-23T21:49:06.117Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T18:30:28.174Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T18:40:28.072Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T18:50:28.056Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T19:00:28.069Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T19:14:34.706Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T19:24:34.556Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T19:34:34.630Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T19:44:34.562Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T19:54:34.590Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T20:04:34.579Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T20:14:34.573Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T20:24:34.590Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T20:34:34.594Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T20:44:34.605Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T20:54:34.600Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T21:04:34.802Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T21:14:34.608Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T21:24:34.612Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T21:34:34.614Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T21:44:34.629Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T21:54:34.643Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T22:04:34.656Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T22:14:34.662Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T22:24:34.669Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T22:34:34.685Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T22:44:34.707Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T23:15:03.053Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T23:25:02.907Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T23:35:02.917Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-01T23:55:32.941Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-02T00:18:48.240Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-02T00:33:31.209Z"}
+{"level":"error","message":"UNHANDLED REJECTION 💥 Shutting down...","service":"erp-backend","timestamp":"2026-05-02T00:36:21.544Z"}
+{"level":"error","message":"TypeError: Cannot read properties of undefined (reading 'query')","service":"erp-backend","timestamp":"2026-05-02T00:36:21.544Z"}
+{"level":"error","message":"UNHANDLED REJECTION 💥 Shutting down...","service":"erp-backend","timestamp":"2026-05-02T00:36:27.563Z"}
