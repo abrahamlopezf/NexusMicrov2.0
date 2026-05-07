@@ -1,14 +1,13 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
+const purchaseController = require('../controllers/purchaseController');
+const authMiddleware = require('../middlewares/authMiddleware');
 
-const PurchaseController = require("../controllers/purchaseController");
-const auth = require("../middlewares/authMiddleware");
-const authorizeRoles = require("../middlewares/roleMiddleware");
-const { ROLES } = require("../utils/permissions");
+router.use(authMiddleware);
 
-router.post("/", auth, authorizeRoles(ROLES.ADMIN, ROLES.MANAGER), PurchaseController.createPurchase);
-router.get("/", auth, authorizeRoles(ROLES.ADMIN, ROLES.MANAGER), PurchaseController.getPurchases);
-router.get("/:id", auth, authorizeRoles(ROLES.ADMIN, ROLES.MANAGER), PurchaseController.getPurchaseById);
-router.put("/:id/status", auth, authorizeRoles(ROLES.ADMIN, ROLES.MANAGER), PurchaseController.updatePurchaseStatus);
+router.get('/', purchaseController.getPurchaseOrders);
+router.post('/', purchaseController.createPurchaseOrder);
+router.get('/:id', purchaseController.getPurchaseOrderById);
+router.post('/:id/receive', purchaseController.receivePurchaseOrder);
 
 module.exports = router;

@@ -2,7 +2,7 @@ const ProductionService = require("../services/ProductionService");
 
 const startProduction = async (req, res, next) => {
     try {
-        const result = await ProductionService.startProduction(req.params.id);
+        const result = await ProductionService.startProduction(req.params.id, req.user.id);
         res.status(200).json({
             success: true,
             data: result
@@ -14,7 +14,7 @@ const startProduction = async (req, res, next) => {
 
 const completeProduction = async (req, res, next) => {
     try {
-        const result = await ProductionService.completeProduction(req.params.id);
+        const result = await ProductionService.completeProduction(req.params.id, req.user.id);
         res.status(200).json({
             success: true,
             data: result

@@ -1,99 +1,104 @@
-const db = require('../models');
-const inventoryService = require('./InventoryService');
+const { PurchaseOrder, PurchaseItem, Material, Supplier, sequelize } = require('../models');
+const InventoryService = require('./InventoryService');
+const AppError = require('../utils/AppError');
 
-const createPurchaseOrder = async (supplierId, items) => {
-    const transaction = await db.sequelize.transaction();
-    try {
-        const purchaseOrder = await db.PurchaseOrder.create({
-            supplier_id: supplierId,
-            status: 'PENDIENTE',
-            total: 0
-        }, { transaction });
+class PurchaseService {
+    static async createPurchaseOrder(data, userId) {
+        const { supplierId, items, notes } = data;
+        const t = await sequelize.transaction();
 
-        let total = 0;
-        if (items && items.length > 0) {
-            const purchaseItems = items.map(item => {
-                const itemTotal = parseFloat(item.quantity) * parseFloat(item.unit_cost);
-                total += itemTotal;
-                return {
+        try {
+            // 1. Create Purchase Order
+            const purchaseOrder = await PurchaseOrder.create({
+                supplier_id: supplierId,
+                status: 'PENDIENTE',
+                total: items.reduce((sum, item) => sum + (item.quantity * item.unitCost), 0),
+                notes: notes
+            }, { transaction: t });
+
+            // 2. Create Items
+            const purchaseItems = await Promise.all(items.map(item => 
+                PurchaseItem.create({
                     purchase_order_id: purchaseOrder.id,
-                    material_id: item.material_id,
+                    material_id: item.materialId,
                     quantity: item.quantity,
-                    unit_cost: item.unit_cost,
-                    total: itemTotal
-                };
-            });
-            await db.PurchaseItem.bulkCreate(purchaseItems, { transaction });
+                    unit_cost: item.unitCost,
+                    total: item.quantity * item.unitCost
+                }, { transaction: t })
+            ));
+
+            await t.commit();
+            return { purchaseOrder, items: purchaseItems };
+        } catch (error) {
+            await t.rollback();
+            throw error;
         }
-
-        purchaseOrder.total = total;
-        await purchaseOrder.save({ transaction });
-
-        await transaction.commit();
-        return getPurchaseOrderById(purchaseOrder.id);
-    } catch (error) {
-        await transaction.rollback();
-        throw error;
     }
-};
 
-const receivePurchaseOrder = async (purchaseOrderId) => {
-    const transaction = await db.sequelize.transaction();
-    try {
-        const order = await db.PurchaseOrder.findByPk(purchaseOrderId, {
-            include: [{ model: db.PurchaseItem, as: 'items' }],
-            transaction
+    static async getPurchaseOrders(query = {}) {
+        const { supplierId, status } = query;
+        const where = {};
+        if (supplierId) where.supplier_id = supplierId;
+        if (status) where.status = status;
+
+        return await PurchaseOrder.findAll({
+            where,
+            include: [
+                { model: Supplier, as: 'supplier', attributes: ['id', 'name'] },
+                { model: PurchaseItem, as: 'items', include: [{ model: Material, as: 'material', attributes: ['id', 'name', 'unit'] }] }
+            ],
+            order: [['createdAt', 'DESC']]
         });
-
-        if (!order) throw new Error('Purchase order not found');
-        if (order.status === 'RECIBIDA') throw new Error('Purchase order already received');
-
-        for (const item of order.items) {
-            await inventoryService.addMaterialStock(
-                item.material_id,
-                item.quantity,
-                'PURCHASE',
-                order.id,
-                transaction
-            );
-        }
-
-        order.status = 'RECIBIDA';
-        await order.save({ transaction });
-
-        await transaction.commit();
-        return getPurchaseOrderById(order.id);
-    } catch (error) {
-        await transaction.rollback();
-        throw error;
     }
-};
 
-const getPurchaseOrderById = async (id) => {
-    const order = await db.PurchaseOrder.findByPk(id, {
-        include: [
-            { model: db.Supplier, as: 'supplier' },
-            {
-                model: db.PurchaseItem,
-                as: 'items',
-                include: [{ model: db.Material, as: 'material' }]
+    static async getPurchaseOrderById(id) {
+        const order = await PurchaseOrder.findByPk(id, {
+            include: [
+                { model: Supplier, as: 'supplier' },
+                { model: PurchaseItem, as: 'items', include: [{ model: Material, as: 'material' }] }
+            ]
+        });
+        if (!order) throw new AppError('Orden de compra no encontrada', 404);
+        return order;
+    }
+
+    static async receivePurchaseOrder(id, userId) {
+        const t = await sequelize.transaction();
+
+        try {
+            const order = await PurchaseOrder.findByPk(id, {
+                include: [{ model: PurchaseItem, as: 'items' }],
+                transaction: t
+            });
+
+            if (!order) throw new AppError('Orden de compra no encontrada', 404);
+            if (order.status === 'RECIBIDA') throw new AppError('Esta orden ya fue recibida', 400);
+
+            // 1. Update status
+            order.status = 'RECIBIDA';
+            await order.save({ transaction: t });
+
+            // 2. Increase stock for each item using the unified adjustStock
+            for (const item of order.items) {
+                await InventoryService.adjustStock({
+                    materialId: item.material_id,
+                    quantity: item.quantity,
+                    type: 'ENTRADA_COMPRA',
+                    reason: `Entrada por Orden de Compra #${order.id}`,
+                    referenceType: 'PURCHASE_ORDER',
+                    referenceId: order.id,
+                    userId: userId,
+                    transaction: t
+                });
             }
-        ]
-    });
-    if (!order) throw new Error('Purchase order not found');
-    return order;
-};
 
-const getAllPurchaseOrders = async () => {
-    return db.PurchaseOrder.findAll({
-        include: [{ model: db.Supplier, as: 'supplier' }],
-        order: [['created_at', 'DESC']]
-    });
-};
+            await t.commit();
+            return order;
+        } catch (error) {
+            await t.rollback();
+            throw error;
+        }
+    }
+}
 
-module.exports = {
-    createPurchaseOrder,
-    receivePurchaseOrder,
-    getPurchaseOrderById,
-    getAllPurchaseOrders
-};
+module.exports = PurchaseService;

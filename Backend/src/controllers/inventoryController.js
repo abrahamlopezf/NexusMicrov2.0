@@ -14,7 +14,10 @@ const getInventory = async (req, res, next) => {
 
 const adjustInventory = async (req, res, next) => {
     try {
-        const result = await InventoryService.adjustInventory(req.body);
+        const result = await InventoryService.adjustInventory({
+            ...req.body,
+            userId: req.user.id
+        });
         res.status(200).json({
             success: true,
             data: result

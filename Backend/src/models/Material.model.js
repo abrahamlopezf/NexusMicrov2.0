@@ -56,10 +56,19 @@ const Material = sequelize.define("Material", {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: true,
         validate: { min: 0 }
+    },
+    supplier_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+            model: 'suppliers',
+            key: 'id'
+        }
     }
 }, {
     tableName: "materials",
     timestamps: true,
+    paranoid: true,
     underscored: true,
     indexes: [
         { fields: ['name'] }
@@ -70,7 +79,6 @@ Material.associate = function(models) {
     Material.hasMany(models.ProductMaterial, { foreignKey: 'material_id', as: 'product_materials' });
     Material.hasMany(models.InventoryMovement, { foreignKey: 'material_id', as: 'inventory_movements' });
     Material.hasMany(models.PurchaseItem, { foreignKey: 'material_id', as: 'purchase_items' });
-    Material.belongsTo(models.Product, { foreignKey: 'product_id', as: 'product' });
 };
 
 module.exports = Material;

@@ -4,29 +4,43 @@ import {
   Package,
   Wrench,
   Users,
+  Truck,
+  ShoppingBag,
   PieChart,
   Settings,
   LogOut,
+  FileText
 } from "lucide-react";
 import { useLocation, Link } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
 
 const adminItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
-  { icon: ShoppingCart, label: "Ventas", path: "/sales/history" },
-  { icon: Package, label: "Catálogo", path: "/products" },
-  { icon: Wrench, label: "Inventario", path: "/inventory" },
-  { icon: Package, label: "Registro Stock", path: "/inventory/register" },
+  { icon: ShoppingCart, label: "Ventas", path: "/sales" },
+  { icon: Package, label: "Inventario", path: "/inventory" },
+  { icon: Wrench, label: "Producción", path: "/production" },
   { icon: Users, label: "Personal", path: "/payroll" },
   { icon: PieChart, label: "Reportes", path: "/reports" },
 ];
 
-const salesItems = [
+const managerItems = [
+  { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
+  { icon: ShoppingCart, label: "Ventas", path: "/sales" },
+  { icon: FileText, label: "Cotizaciones", path: "/quotes" },
+  { icon: Package, label: "Inventario", path: "/inventory" },
+  { icon: Truck, label: "Proveedores", path: "/suppliers" },
+  { icon: Wrench, label: "Producción", path: "/production" },
+  { icon: PieChart, label: "Reportes", path: "/reports" },
+];
+
+const employeeItems = [
   { icon: LayoutDashboard, label: "Panel Principal", path: "/dashboard" },
-  { icon: ShoppingCart, label: "Nueva Venta", path: "/sales/new" },
-  { icon: Package, label: "Pedidos Pendientes", path: "/sales/pending" },
-  { icon: Wrench, label: "Entregas", path: "/sales/deliveries" },
-  { icon: PieChart, label: "Cotizaciones", path: "/quotes/new" },
+  { icon: ShoppingCart, label: "Ventas", path: "/sales" },
+  { icon: FileText, label: "Cotizaciones", path: "/quotes" },
+  { icon: Truck, label: "Proveedores", path: "/suppliers" },
+  { icon: ShoppingBag, label: "Compras", path: "/purchases" },
+  { icon: Wrench, label: "Producción", path: "/production" },
+  { icon: Package, label: "Inventario", path: "/inventory" },
 ];
 
 const Sidebar = () => {
@@ -34,8 +48,11 @@ const Sidebar = () => {
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
   
-  const isSales = user?.role?.toUpperCase() === 'VENTAS' || user?.role?.toUpperCase() === 'SELLER';
-  const activeNavItems = isSales ? salesItems : adminItems;
+  const role = user?.role?.toUpperCase();
+  
+  let activeNavItems = adminItems;
+  if (role === 'MANAGER') activeNavItems = managerItems;
+  if (role === 'EMPLOYEE') activeNavItems = employeeItems;
 
   return (
     <aside className="w-64 bg-slate-900 text-slate-300 flex flex-col h-full border-r border-slate-800 shadow-xl transition-all">

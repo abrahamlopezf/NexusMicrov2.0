@@ -1,85 +1,92 @@
-const { ProductionTask, WorkOrder, sequelize } = require('../models');
-const PayrollService = require('./PayrollService');
+const { ProductionTask, WorkOrder, Product, Material, sequelize } = require('../models');
 const InventoryService = require('./InventoryService');
 const AppError = require('../utils/AppError');
 
 class ProductionService {
-    static async completeTask(taskId, userId, parentTransaction = null) {
-        
-        const executeLogic = async (t) => {
-            const task = await ProductionTask.findByPk(taskId, {
+    static async startProduction(workOrderId, userId) {
+        return await sequelize.transaction(async (t) => {
+            const workOrder = await WorkOrder.findByPk(workOrderId, {
+                include: [{ model: ProductionTask, as: 'tasks' }],
                 transaction: t,
                 lock: t.LOCK.UPDATE
             });
 
-            if (!task) throw new AppError("Task not found", 404);
-            if (task.status === 'DONE') throw new AppError('Task already completed', 400);
-            if (!task.employee_id) throw new AppError('Task has no assigned employee to generate payroll', 400);
+            if (!workOrder) throw new AppError('Orden de producción no encontrada', 404);
+            if (workOrder.status !== 'PENDING') throw new AppError('La orden ya ha sido iniciada o finalizada', 400);
 
-            task.status = 'DONE';
-            task.completed_at = new Date();
-            
-            if (task.started_at) {
-                const diffMs = task.completed_at - new Date(task.started_at);
-                task.duration = Math.round(diffMs / 60000); 
-            }
+            workOrder.status = 'IN_PROGRESS';
+            workOrder.start_date = new Date();
+            workOrder.updated_by = userId;
+            await workOrder.save({ transaction: t });
 
-            task.updated_by = userId;
-            await task.save({ transaction: t });
-
-            const crypto = require('crypto');
-            const workOrder = await WorkOrder.findByPk(task.work_order_id, { transaction: t });
-            const context = {
-                sale_id: workOrder ? workOrder.sale_id : null,
-                operation_id: crypto.randomUUID()
-            };
-
-            if (task.real_materials_used) {
-                for (const m of task.real_materials_used) {
-                    const realQty = parseFloat(m.quantity) || parseFloat(m.consumedQty) || 0;
-                    if (realQty > 0 && m.material_id) {
-                        await InventoryService.consumeReservedStock(m.material_id, realQty, realQty, context, t);
-                    }
+            // Update all tasks to IN_PROGRESS if they are PENDING
+            for (const task of (workOrder.tasks || [])) {
+                if (task.status === 'PENDING') {
+                    task.status = 'IN_PROGRESS';
+                    task.started_at = new Date();
+                    task.updated_by = userId;
+                    await task.save({ transaction: t });
                 }
             }
 
-            const payroll = await PayrollService.registerAdvanceForTask(task, t);
-            if (!payroll) throw new AppError('Payroll generation failed', 500);
-
-            await ProductionService.checkAndUpdateWorkOrderStatus(task.work_order_id, t);
-            return task;
-        };
-
-        if (parentTransaction) {
-            return await executeLogic(parentTransaction);
-        }
-        
-        return await sequelize.transaction(async (t) => {
-            return await executeLogic(t);
+            return workOrder;
         });
     }
 
-    static async checkAndUpdateWorkOrderStatus(workOrderId, transaction) {
-        const { Sale } = require('../models');
-        const workOrder = await WorkOrder.findByPk(workOrderId, {
-            include: [{ model: ProductionTask, as: 'tasks' }],
-            transaction,
-            lock: transaction.LOCK.UPDATE
-        });
+    static async completeProduction(workOrderId, userId) {
+        return await sequelize.transaction(async (t) => {
+            const workOrder = await WorkOrder.findByPk(workOrderId, {
+                include: [{ model: ProductionTask, as: 'tasks', include: [{ model: Product, as: 'product' }] }],
+                transaction: t,
+                lock: t.LOCK.UPDATE
+            });
 
-        if (!workOrder || !workOrder.tasks) return null;
+            if (!workOrder) throw new AppError('Orden de producción no encontrada', 404);
+            if (workOrder.status === 'DONE') throw new AppError('La orden ya está completada', 400);
 
-        const allDone = workOrder.tasks.every(t => t.status === 'DONE');
-        if (allDone && workOrder.status !== 'DONE') {
+            // 1. Mark everything as DONE
             workOrder.status = 'DONE';
-            await workOrder.save({ transaction });
+            workOrder.end_date = new Date();
+            workOrder.updated_by = userId;
+            await workOrder.save({ transaction: t });
 
-            const sale = await Sale.findByPk(workOrder.sale_id, { transaction, lock: transaction.LOCK.UPDATE });
-            if (sale) {
-                sale.fulfillment_status = 'COMPLETED';
-                await sale.save({ transaction });
+            for (const task of (workOrder.tasks || [])) {
+                if (task.status !== 'DONE') {
+                    // Deduct materials for each task
+                    if (task.real_materials_used) {
+                        await InventoryService.deductProductionMaterials(task.real_materials_used, t);
+                    }
+
+                    // Increment finished product stock
+                    const product = await Product.findByPk(task.product_id, { transaction: t, lock: t.LOCK.UPDATE });
+                    if (product) {
+                        const oldStock = parseFloat(product.current_stock || 0);
+                        product.current_stock = oldStock + parseFloat(task.quantity);
+                        await product.save({ transaction: t });
+                        
+                        // We could log ProductMovement here if we had the model
+                    }
+
+                    task.status = 'DONE';
+                    task.completed_at = new Date();
+                    task.updated_by = userId;
+                    await task.save({ transaction: t });
+                }
             }
-        }
+
+            return workOrder;
+        });
+    }
+
+    static async getProductionStatus(workOrderId) {
+        const workOrder = await WorkOrder.findByPk(workOrderId, {
+            include: [{ 
+                model: ProductionTask, 
+                as: 'tasks',
+                include: [{ model: Product, as: 'product' }] 
+            }]
+        });
+        if (!workOrder) throw new AppError('Orden no encontrada', 404);
         return workOrder;
     }
 }

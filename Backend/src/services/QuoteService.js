@@ -167,7 +167,7 @@ class QuoteService {
               sale_id: sale.id,
               product_id: qi.product_id,
               custom_description: qi.custom_description,
-              quantity: qi.quantity,
+              quantity: Math.round(qi.quantity), // Convert decimal quantity from quote to integer for sale
               unit_price: qi.unit_price,
               unit_cost: qi.unit_cost,
               total: qi.total,

@@ -6,7 +6,7 @@ async function seedUsers() {
         await db.sequelize.authenticate();
         console.log('Database connection established.');
 
-        // The DB enum for user_role is: ["ADMIN", "VENTAS", "PRODUCCION", "FINANZAS"]
+        // The DB enum for user_role is: ["ADMIN", "MANAGER", "EMPLOYEE"]
         const hashedPassword = await bcrypt.hash('password123', 10);
 
         // 1. Admin
@@ -21,41 +21,29 @@ async function seedUsers() {
         });
         console.log(`[${adminCreated ? 'CREATED' : 'EXISTS'}] Admin: ${adminUser.email} / password123`);
 
-        // 2. Ventas (Sales)
-        const [ventasUser, ventasCreated] = await db.User.findOrCreate({
-            where: { email: 'ventas@test.com' },
+        // 2. Manager
+        const [managerUser, managerCreated] = await db.User.findOrCreate({
+            where: { email: 'manager@test.com' },
             defaults: {
-                name: 'Ventas Test',
+                name: 'Manager Test',
                 password: hashedPassword,
-                role: 'VENTAS',
+                role: 'MANAGER',
                 active: true
             }
         });
-        console.log(`[${ventasCreated ? 'CREATED' : 'EXISTS'}] Ventas: ${ventasUser.email} / password123`);
+        console.log(`[${managerCreated ? 'CREATED' : 'EXISTS'}] Manager: ${managerUser.email} / password123`);
 
-        // 3. Produccion (Production)
-        const [prodUser, prodCreated] = await db.User.findOrCreate({
-            where: { email: 'produccion@test.com' },
+        // 3. Employee
+        const [employeeUser, employeeCreated] = await db.User.findOrCreate({
+            where: { email: 'employee@test.com' },
             defaults: {
-                name: 'Produccion Test',
+                name: 'Employee Test',
                 password: hashedPassword,
-                role: 'PRODUCCION',
+                role: 'EMPLOYEE',
                 active: true
             }
         });
-        console.log(`[${prodCreated ? 'CREATED' : 'EXISTS'}] Produccion: ${prodUser.email} / password123`);
-
-        // 4. Finanzas (Finance)
-        const [finanzasUser, finanzasCreated] = await db.User.findOrCreate({
-            where: { email: 'finanzas@test.com' },
-            defaults: {
-                name: 'Finanzas Test',
-                password: 'password123',
-                role: 'FINANZAS',
-                active: true
-            }
-        });
-        console.log(`[${finanzasCreated ? 'CREATED' : 'EXISTS'}] Finanzas: ${finanzasUser.email} / password123`);
+        console.log(`[${employeeCreated ? 'CREATED' : 'EXISTS'}] Employee: ${employeeUser.email} / password123`);
 
         console.log('\nAll test users have been injected successfully!');
 
