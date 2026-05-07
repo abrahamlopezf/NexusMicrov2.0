@@ -466,3 +466,58 @@
 {"level":"info","message":"⚙️ Queue Service Initialized (Hybrid mode ready)","service":"erp-backend","timestamp":"2026-05-05T00:06:02.705Z"}
 {"level":"info","message":"🚀 Server running on port 5000 in development mode","service":"erp-backend","timestamp":"2026-05-05T00:06:02.713Z"}
 {"level":"info","message":"🕒 Inventory expiration job started","service":"erp-backend","timestamp":"2026-05-05T00:06:02.717Z"}
+{"level":"info","message":"Found 2 expired reservations to release.","service":"erp-backend","timestamp":"2026-05-05T00:16:02.746Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-05T00:16:02.779Z"}
+{"level":"info","message":"Found 2 expired reservations to release.","service":"erp-backend","timestamp":"2026-05-05T00:26:02.745Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-05T00:26:02.757Z"}
+{"level":"info","message":"✅ Database connected successfully","service":"erp-backend","timestamp":"2026-05-05T20:49:14.942Z"}
+{"level":"info","message":"✅ Database connected","service":"erp-backend","timestamp":"2026-05-05T20:49:14.948Z"}
+{"level":"info","message":"📦 Database synced","service":"erp-backend","timestamp":"2026-05-05T20:49:18.036Z"}
+{"level":"info","message":"✅ Redis connected (Queue system active)","service":"erp-backend","timestamp":"2026-05-05T20:49:18.040Z"}
+{"level":"info","message":"⚙️ Queue Service Initialized (Hybrid mode ready)","service":"erp-backend","timestamp":"2026-05-05T20:49:18.043Z"}
+{"level":"info","message":"🚀 Server running on port 5000 in development mode","service":"erp-backend","timestamp":"2026-05-05T20:49:18.051Z"}
+{"level":"info","message":"🕒 Inventory expiration job started","service":"erp-backend","timestamp":"2026-05-05T20:49:18.154Z"}
+{"level":"info","message":"✅ Database connected successfully","service":"erp-backend","timestamp":"2026-05-05T22:27:10.267Z"}
+{"level":"info","message":"✅ Database connected","service":"erp-backend","timestamp":"2026-05-05T22:27:10.272Z"}
+{"level":"info","message":"📦 Database synced","service":"erp-backend","timestamp":"2026-05-05T22:27:13.461Z"}
+{"level":"info","message":"✅ Redis connected (Queue system active)","service":"erp-backend","timestamp":"2026-05-05T22:27:13.465Z"}
+{"level":"info","message":"⚙️ Queue Service Initialized (Hybrid mode ready)","service":"erp-backend","timestamp":"2026-05-05T22:27:13.470Z"}
+{"level":"info","message":"🚀 Server running on port 5000 in development mode","service":"erp-backend","timestamp":"2026-05-05T22:27:13.477Z"}
+{"level":"info","message":"🕒 Inventory expiration job started","service":"erp-backend","timestamp":"2026-05-05T22:27:13.481Z"}
+{"level":"info","message":"Found 2 expired reservations to release.","service":"erp-backend","timestamp":"2026-05-06T01:35:07.702Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-06T01:35:07.780Z"}
+{"level":"info","message":"Found 2 expired reservations to release.","service":"erp-backend","timestamp":"2026-05-06T02:38:39.367Z"}
+{"level":"error","message":"Error in expiration job: material is not defined","service":"erp-backend","timestamp":"2026-05-06T02:38:39.915Z"}
+{"level":"warn","message":"⚠️  Redis connection closed","service":"erp-backend","timestamp":"2026-05-06T02:39:19.413Z"}
+{"level":"info","message":"✅ Redis connected (Queue system active)","service":"erp-backend","timestamp":"2026-05-06T02:39:19.472Z"}
+{"level":"warn","message":"⚠️  Redis unavailable: read ECONNRESET — Queue mode may fallback to sync","service":"erp-backend","timestamp":"2026-05-06T02:39:19.480Z"}
+{"level":"warn","message":"⚠️  Redis connection closed","service":"erp-backend","timestamp":"2026-05-06T02:39:19.484Z"}
+{"level":"info","message":"✅ Redis connected (Queue system active)","service":"erp-backend","timestamp":"2026-05-06T02:39:19.594Z"}
+{"level":"warn","message":"⚠️  Redis unavailable: read ECONNRESET — Queue mode may fallback to sync","service":"erp-backend","timestamp":"2026-05-06T02:39:19.596Z"}
+{"level":"warn","message":"⚠️  Redis connection closed","service":"erp-backend","timestamp":"2026-05-06T02:39:19.597Z"}
+{"level":"info","message":"✅ Redis connected (Queue system active)","service":"erp-backend","timestamp":"2026-05-06T02:39:19.765Z"}
+{"level":"warn","message":"⚠️  Redis connection closed","service":"erp-backend","timestamp":"2026-05-06T02:39:19.797Z"}
+{"level":"warn","message":"⚠️  Redis unavailable: connect ECONNREFUSED 127.0.0.1:6379 — Queue mode may fallback to sync","service":"erp-backend","timestamp":"2026-05-06T02:39:20.031Z"}
+{"level":"warn","message":"⚠️  Redis connection closed","service":"erp-backend","timestamp":"2026-05-06T02:39:20.043Z"}
+{"level":"warn","message":"⚠️  Redis unavailable: connect ECONNREFUSED 127.0.0.1:6379 — Queue mode may fallback to sync","service":"erp-backend","timestamp":"2026-05-06T02:39:20.308Z"}
+{"level":"warn","message":"⚠️  Redis connection closed","service":"erp-backend","timestamp":"2026-05-06T02:39:20.309Z"}
+{"level":"warn","message":"⚠️  Redis unavailable: connect ECONNREFUSED 127.0.0.1:6379 — Queue mode may fallback to sync","service":"erp-backend","timestamp":"2026-05-06T02:39:20.620Z"}
+{"level":"warn","message":"⚠️  Redis connection closed","service":"erp-backend","timestamp":"2026-05-06T02:39:20.624Z"}
+{"level":"warn","message":"⚠️  Redis unavailable: connect ECONNREFUSED 127.0.0.1:6379 — Queue mode may fallback to sync","service":"erp-backend","timestamp":"2026-05-06T02:39:20.985Z"}
+{"level":"warn","message":"⚠️  Redis connection closed","service":"erp-backend","timestamp":"2026-05-06T02:39:20.985Z"}
+{"level":"warn","message":"⚠️  Redis unavailable: connect ECONNREFUSED 127.0.0.1:6379 — Queue mode may fallback to sync","service":"erp-backend","timestamp":"2026-05-06T02:39:21.386Z"}
+{"level":"warn","message":"⚠️  Redis connection closed","service":"erp-backend","timestamp":"2026-05-06T02:39:21.387Z"}
+{"level":"warn","message":"⚠️  Redis unavailable: connect ECONNREFUSED 127.0.0.1:6379 — Queue mode may fallback to sync","service":"erp-backend","timestamp":"2026-05-06T02:39:21.842Z"}
+{"level":"warn","message":"⚠️  Redis connection closed","service":"erp-backend","timestamp":"2026-05-06T02:39:21.842Z"}
+{"level":"warn","message":"⚠️  Redis unavailable: connect ECONNREFUSED 127.0.0.1:6379 — Queue mode may fallback to sync","service":"erp-backend","timestamp":"2026-05-06T02:39:22.355Z"}
+{"level":"warn","message":"⚠️  Redis connection closed","service":"erp-backend","timestamp":"2026-05-06T02:39:22.359Z"}
+{"level":"warn","message":"⚠️  Redis unavailable: connect ECONNREFUSED 127.0.0.1:6379 — Queue mode may fallback to sync","service":"erp-backend","timestamp":"2026-05-06T02:39:22.918Z"}
+{"level":"warn","message":"⚠️  Redis connection closed","service":"erp-backend","timestamp":"2026-05-06T02:39:22.918Z"}
+{"level":"warn","message":"⚠️  Redis unavailable: connect ECONNREFUSED 127.0.0.1:6379 — Queue mode may fallback to sync","service":"erp-backend","timestamp":"2026-05-06T02:39:23.524Z"}
+{"level":"warn","message":"⚠️  Redis connection closed","service":"erp-backend","timestamp":"2026-05-06T02:39:23.528Z"}
+{"level":"warn","message":"⚠️  Redis unavailable: connect ECONNREFUSED 127.0.0.1:6379 — Queue mode may fallback to sync","service":"erp-backend","timestamp":"2026-05-06T02:39:24.196Z"}
+{"level":"warn","message":"⚠️  Redis connection closed","service":"erp-backend","timestamp":"2026-05-06T02:39:24.197Z"}
+{"level":"warn","message":"⚠️  Redis unavailable: connect ECONNREFUSED 127.0.0.1:6379 — Queue mode may fallback to sync","service":"erp-backend","timestamp":"2026-05-06T02:39:24.912Z"}
+{"level":"warn","message":"⚠️  Redis connection closed","service":"erp-backend","timestamp":"2026-05-06T02:39:24.914Z"}
+{"level":"warn","message":"⚠️  Redis unavailable: connect ECONNREFUSED 127.0.0.1:6379 — Queue mode may fallback to sync","service":"erp-backend","timestamp":"2026-05-06T02:39:25.681Z"}
+{"level":"warn","message":"⚠️  Redis connection closed","service":"erp-backend","timestamp":"2026-05-06T02:39:25.681Z"}
