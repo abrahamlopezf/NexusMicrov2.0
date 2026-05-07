@@ -88,8 +88,6 @@ const MaterialsPage = () => {
           <thead>
             <tr className="bg-slate-50/50">
               <th className="text-left py-4 px-6 font-bold text-slate-400 text-[10px] uppercase tracking-widest border-b border-slate-100">Material / Insumo</th>
-              <th className="text-left py-4 px-6 font-bold text-slate-400 text-[10px] uppercase tracking-widest border-b border-slate-100">Categoría</th>
-              <th className="text-left py-4 px-6 font-bold text-slate-400 text-[10px] uppercase tracking-widest border-b border-slate-100">Proveedor</th>
               <th className="text-center py-4 px-6 font-bold text-slate-400 text-[10px] uppercase tracking-widest border-b border-slate-100">Stock Actual</th>
               <th className="text-center py-4 px-6 font-bold text-slate-400 text-[10px] uppercase tracking-widest border-b border-slate-100">Min.</th>
               <th className="text-center py-4 px-6 font-bold text-slate-400 text-[10px] uppercase tracking-widest border-b border-slate-100">Estado</th>
@@ -100,13 +98,13 @@ const MaterialsPage = () => {
           <tbody className="divide-y divide-slate-50">
             {loading ? (
               <tr>
-                <td colSpan={7} className="py-20 text-center text-slate-400 font-bold uppercase tracking-widest text-[10px]">
+                <td colSpan={6} className="py-20 text-center text-slate-400 font-bold uppercase tracking-widest text-[10px]">
                    Cargando materiales...
                 </td>
               </tr>
             ) : filteredMaterials.length === 0 ? (
               <tr>
-                <td colSpan={7} className="py-20 text-center text-slate-400 font-medium">No se encontraron materiales.</td>
+                <td colSpan={6} className="py-20 text-center text-slate-400 font-medium">No se encontraron materiales.</td>
               </tr>
             ) : (
               filteredMaterials.map((material) => {
@@ -123,16 +121,6 @@ const MaterialsPage = () => {
                           <p className="text-[10px] text-slate-400 font-medium">{material?.description || 'Sin descripción'}</p>
                         </div>
                       </div>
-                    </td>
-                    <td className="py-4 px-6">
-                      <span className="px-3 py-1 bg-slate-100 text-slate-500 rounded-full text-[10px] font-black uppercase">
-                        {material?.category || 'General'}
-                      </span>
-                    </td>
-                    <td className="py-4 px-6">
-                      <p className={`text-xs font-bold ${material?.supplier?.name ? 'text-indigo-600' : 'text-slate-300 italic'}`}>
-                        {material?.supplier?.name || 'Sin Proveedor'}
-                      </p>
                     </td>
                     <td className="py-4 px-6 text-center">
                       <div className="inline-flex items-center gap-2">

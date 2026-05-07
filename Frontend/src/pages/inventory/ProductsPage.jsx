@@ -74,8 +74,7 @@ const ProductsPage = () => {
             <tr className="bg-slate-50/50 border-b border-slate-100">
               <th className="text-left py-4 px-6 font-bold text-slate-400 text-[10px] uppercase tracking-widest">Producto / Prenda</th>
               <th className="text-left py-4 px-6 font-bold text-slate-400 text-[10px] uppercase tracking-widest">Categoría</th>
-              <th className="text-left py-4 px-6 font-bold text-slate-400 text-[10px] uppercase tracking-widest">Descripción</th>
-              <th className="text-center py-4 px-6 font-bold text-slate-400 text-[10px] uppercase tracking-widest">Receta</th>
+              <th className="text-center py-4 px-6 font-bold text-slate-400 text-[10px] uppercase tracking-widest">Precio Base</th>
               <th className="text-right py-4 px-6 font-bold text-slate-400 text-[10px] uppercase tracking-widest">Acciones</th>
             </tr>
           </thead>
@@ -108,7 +107,10 @@ const ProductsPage = () => {
                       <div className="w-9 h-9 rounded-lg bg-indigo-50 text-indigo-500 flex items-center justify-center font-black">
                         <Hammer size={16} />
                       </div>
-                      <p className="font-bold text-slate-700">{product.name}</p>
+                      <div>
+                        <p className="font-bold text-slate-700">{product.name}</p>
+                        <p className="text-[10px] text-slate-400 line-clamp-1 max-w-xs">{product.description || 'Sin descripción.'}</p>
+                      </div>
                     </div>
                   </td>
                   <td className="py-4 px-6">
@@ -116,14 +118,10 @@ const ProductsPage = () => {
                       {product.category || 'Sin Categoría'}
                     </span>
                   </td>
-                  <td className="py-4 px-6">
-                    <p className="text-xs text-slate-400 line-clamp-1 max-w-xs">{product.description || 'Sin descripción disponible.'}</p>
-                  </td>
                   <td className="py-4 px-6 text-center">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-600 rounded-full text-[10px] font-black uppercase">
-                      <Calculator size={12} />
-                      Configurada
-                    </div>
+                    <p className="font-black text-slate-700">
+                      ${parseFloat(product.base_price || 0).toLocaleString('es-MX', { minimumFractionDigits: 2 })}
+                    </p>
                   </td>
                   <td className="py-4 px-6 text-right">
                     <div className="flex justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">

@@ -6,6 +6,7 @@ const ProductForm = ({ product, onClose, onSuccess }) => {
   const [activeTab, setActiveTab] = useState('basic'); // basic, recipe, config
   const [loading, setLoading] = useState(false);
   const [materials, setMaterials] = useState([]); // All available materials for the select
+  const [globalSettings, setGlobalSettings] = useState(null);
   const [error, setError] = useState(null);
   const isMounted = React.useRef(true);
 
@@ -27,8 +28,8 @@ const ProductForm = ({ product, onClose, onSuccess }) => {
     sewing_hours: 0,
     pattern_hours: 0,
     fixed_supply_cost: 0,
-    operation_margin: 0.2, // Default 20%
-    profit_margin: 0.3     // Default 30%
+    operation_margin: 0.14, // Default 14% (Sincronizado con Excel)
+    profit_margin: 0.20     // Default 20% (Sincronizado con Excel)
   });
 
   useEffect(() => {
@@ -40,6 +41,11 @@ const ProductForm = ({ product, onClose, onSuccess }) => {
       const matResponse = await inventoryService.getMaterials();
       if (matResponse && matResponse.success) {
         setMaterials(matResponse.data);
+      }
+
+      const settingsResponse = await inventoryService.getPricingSettings();
+      if (settingsResponse && settingsResponse.success) {
+        setGlobalSettings(settingsResponse.data);
       }
 
       if (product?.id) {
@@ -78,6 +84,40 @@ const ProductForm = ({ product, onClose, onSuccess }) => {
     const newRecipe = [...recipe];
     newRecipe[index][field] = value;
     setRecipe(newRecipe);
+  };
+
+  const calculateLivePrice = () => {
+    if (!globalSettings) return null;
+
+    // 1. Labor Cost
+    const laborRateSewing = parseFloat(globalSettings.labor_rate_sewing || 44.38);
+    const laborRatePattern = parseFloat(globalSettings.labor_rate_pattern || 50.50);
+    const laborCost = (parseFloat(costConfig.sewing_hours || 0) * laborRateSewing) + 
+                      (parseFloat(costConfig.pattern_hours || 0) * laborRatePattern);
+
+    // 2. Fixed supplies
+    const fixedCost = parseFloat(costConfig.fixed_supply_cost || 0);
+
+    // 3. Materials Cost
+    const materialsCost = recipe.reduce((acc, item) => {
+      const material = materials.find(m => m.id === parseInt(item.material_id));
+      if (!material) return acc;
+      const qty = parseFloat(item.quantity) || 0;
+      const waste = parseFloat(item.waste_percentage) || 0;
+      const price = parseFloat(material.cost) || 0;
+      return acc + (qty * (1 + waste) * price);
+    }, 0);
+
+    const subtotal = laborCost + fixedCost + materialsCost;
+    
+    // 4. Operational Margin
+    const operationalCost = subtotal * parseFloat(costConfig.operation_margin || 0);
+    const totalWithOp = subtotal + operationalCost;
+
+    // 5. Profit Margin
+    const finalPrice = totalWithOp * (1 + parseFloat(costConfig.profit_margin || 0));
+
+    return finalPrice.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   };
 
   const handleSubmit = async (e) => {
@@ -350,9 +390,14 @@ const ProductForm = ({ product, onClose, onSuccess }) => {
                     />
                   </div>
                 </div>
-                <div className="mt-8 p-4 bg-indigo-600 rounded-2xl text-white">
-                   <p className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-1">Precio sugerido basado en config</p>
-                   <p className="text-2xl font-black italic">Auto-Calculado en Guardado</p>
+                <div className="mt-8 p-4 bg-indigo-600 rounded-2xl text-white shadow-lg shadow-indigo-600/30">
+                   <p className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-1">Precio sugerido (Simulación en tiempo real)</p>
+                   <div className="flex items-baseline gap-1">
+                     <span className="text-lg font-bold opacity-80">$</span>
+                     <p className="text-3xl font-black italic">
+                       {calculateLivePrice() || '0.00'}
+                     </p>
+                   </div>
                 </div>
               </div>
             </div>

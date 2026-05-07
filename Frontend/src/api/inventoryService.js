@@ -51,6 +51,10 @@ const inventoryService = {
   getMovements: async (params) => {
     const response = await axios.get('/inventory/movements', { params });
     return response.data;
+  },
+  getPricingSettings: async () => {
+    const response = await axios.get('/pricing/settings');
+    return response.data;
   }
 };
 

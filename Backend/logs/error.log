@@ -57,3 +57,4 @@
 {"level":"error","message":"UNHANDLED REJECTION 💥 Shutting down...","service":"erp-backend","timestamp":"2026-05-02T00:36:21.544Z"}
 {"level":"error","message":"TypeError: Cannot read properties of undefined (reading 'query')","service":"erp-backend","timestamp":"2026-05-02T00:36:21.544Z"}
 {"level":"error","message":"UNHANDLED REJECTION 💥 Shutting down...","service":"erp-backend","timestamp":"2026-05-02T00:36:27.563Z"}
+{"level":"error","message":"❌ Database connection error (Retries left: 4): connect ECONNREFUSED 127.0.0.1:5432","service":"erp-backend","timestamp":"2026-05-06T18:02:31.511Z"}

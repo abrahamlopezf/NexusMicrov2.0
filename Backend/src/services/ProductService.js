@@ -4,12 +4,13 @@ const sequelize = require('../config/database');
 const AppError = require('../utils/AppError');
 
 class CostCalculationService {
-    static async calculateProductPrice(productId) {
+    static async calculateProductPrice(productId, transaction = null) {
         const product = await Product.findByPk(productId, {
             include: [
                 { model: ProductMaterial, as: 'materials', include: [{ model: Material, as: 'material' }] },
                 { model: ProductCostConfig, as: 'cost_config' }
-            ]
+            ],
+            transaction
         });
 
         if (!product) throw new AppError('Producto no encontrado', 404);
@@ -103,6 +104,10 @@ class ProductService {
                 await ProductMaterial.bulkCreate(materialsPayload, { transaction: t });
             }
 
+            // 4. Calculate price and persist it
+            const priceResult = await CostCalculationService.calculateProductPrice(product.id, t);
+            await product.update({ base_price: priceResult.final_price }, { transaction: t });
+
             return product;
         });
     }
@@ -112,6 +117,7 @@ class ProductService {
             const product = await Product.findByPk(id, { transaction: t });
             if (!product) throw new AppError('Producto no encontrado', 404);
 
+            // Update product basic fields
             await product.update({
                 name: data.name,
                 category: data.category,
@@ -120,6 +126,8 @@ class ProductService {
                 attributes: data.attributes,
                 updated_by: userId
             }, { transaction: t });
+
+
 
             if (costConfig) {
                 const oldConfig = await ProductCostConfig.findOne({ where: { product_id: product.id }, transaction: t });
@@ -150,6 +158,10 @@ class ProductService {
                     await ProductMaterial.bulkCreate(materialsPayload, { transaction: t });
                 }
             }
+
+            // After handling cost config and materials, recalculate price
+            const finalPriceResult = await CostCalculationService.calculateProductPrice(product.id, t);
+            await product.update({ base_price: finalPriceResult.final_price }, { transaction: t });
 
             return product;
         });
