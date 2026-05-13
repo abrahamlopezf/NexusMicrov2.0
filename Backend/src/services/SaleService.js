@@ -1,6 +1,7 @@
-const { Sale, SaleItem, WorkOrder, ProductionTask, Product, ProductMaterial, GlobalSetting, User, Material } = require('../models');
+const { Sale, SaleItem, WorkOrder, ProductionTask, Product, ProductMaterial, GlobalSetting, User, Material, Client } = require('../models');
 const AppError = require('../utils/AppError');
 const pricingEngine = require('../core/pricingEngine');
+const LoyaltyService = require('./LoyaltyService');
 
 class SaleService {
     static async createDraft(saleData, itemsData, userId, t) {
@@ -34,6 +35,8 @@ class SaleService {
             paid_amount: 0,
             balance: 0,
             notes: saleData.notes,
+            delivery_date: saleData.delivery_date || null,
+            loyalty_applied: saleData.loyalty_applied || false,
             created_by: userId
         }, { transaction: t, userId });
 
@@ -63,16 +66,15 @@ class SaleService {
             if (item.product_id) {
                 const product = await Product.findByPk(item.product_id, {
                     include: [{ model: ProductMaterial, as: 'materials', include: ['material'] }],
-                    transaction: t,
-                    lock: t.LOCK.UPDATE
+                    transaction: t
                 });
 
                 if (!product) throw new AppError(`Product ${item.product_id} not found`, 404);
 
                 productTemplate = {
-                    hours_sewing: product.hours_sewing,
-                    hours_pattern: product.hours_pattern,
-                    fixed_supply_tier: product.fixed_supply_tier
+                    hours_sewing: parseFloat(product.hours_sewing) || 0,
+                    hours_pattern: parseFloat(product.hours_pattern) || 0,
+                    fixed_supply_tier: product.fixed_supply_tier || 'SENCILLO'
                 };
 
                 if (product.materials && product.materials.length > 0) {
@@ -137,9 +139,29 @@ class SaleService {
             createdItems.push({ ...item, saleItemId: saleItem.id, materials_estimate: materialsEstimate });
         }
 
-        sale.total = totalSaleAmount;
-        sale.balance = totalSaleAmount;
+        // Priorizamos el total manual si el front lo envió, de lo contrario usamos el calculado por el motor
+        const finalTotal = (saleData.total !== undefined && saleData.total !== null) 
+            ? parseFloat(saleData.total) 
+            : totalSaleAmount;
+
+        sale.total = finalTotal;
+        sale.balance = finalTotal;
         await sale.save({ transaction: t, userId });
+
+        // ══════════════════════════════════════════════════════════════════════
+        // LOYALTY PROCESSING
+        // ══════════════════════════════════════════════════════════════════════
+        if (sale.client_id) {
+            const totalItems = itemsData.reduce((sum, item) => sum + parseFloat(item.quantity), 0);
+            
+            if (sale.loyalty_applied) {
+                // If they used their reward, we reset points (LoyaltyService will handle it)
+                await LoyaltyService.redeemReward(sale.client_id, t);
+            }
+            
+            // Add points for the new items
+            await LoyaltyService.processSaleLoyalty(sale.client_id, sale.id, totalItems, t);
+        }
 
         return { sale, createdItems };
     }

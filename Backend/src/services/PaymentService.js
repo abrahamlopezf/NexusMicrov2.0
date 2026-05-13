@@ -1,4 +1,4 @@
-const { Payment, Sale, sequelize } = require('../models');
+const { Payment, Sale, Account, sequelize } = require('../models');
 const AppError = require('../utils/AppError');
 
 class PaymentService {
@@ -39,6 +39,12 @@ class PaymentService {
                 payment_date: new Date(),
                 created_by
             }, { transaction: t });
+
+            const targetAccount = await Account.findByPk(account_id, { transaction: t, lock: t.LOCK.UPDATE });
+            if (targetAccount) {
+                targetAccount.balance = parseFloat(targetAccount.balance) + parsedAmount;
+                await targetAccount.save({ transaction: t });
+            }
 
             const newPaidAmount = parseFloat(sale.paid_amount) + parsedAmount;
             const newBalance = parseFloat(sale.total) - newPaidAmount;

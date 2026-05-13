@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { ShoppingBag, Ruler, CheckCircle, ArrowRight, Trash2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ShoppingBag, Ruler, CheckCircle, ArrowRight, Trash2, Award, Sparkles, Calendar } from "lucide-react";
 import ClientSearch from "../../components/sales/ClientSearch";
 import ProductSearch from "../../components/sales/ProductSearch";
 import api from "../../api/axios";
@@ -7,6 +7,7 @@ import api from "../../api/axios";
 export default function NewSale() {
   const [cart, setCart] = useState([]);
   const [client, setClient] = useState(null);
+  const [isRewardSale, setIsRewardSale] = useState(false);
 
   const [tempProduct, setTempProduct] = useState(null);
   const [measurements, setMeasurements] = useState({ length: '', waist: '', sleeves: '', notes: '' });
@@ -16,16 +17,27 @@ export default function NewSale() {
   const [paymentMethod, setPaymentMethod] = useState('EFECTIVO');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const total = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
+  // Reset reward if client changes or becomes null
+  useEffect(() => {
+    setIsRewardSale(false);
+  }, [client]);
+
+  const rawTotal = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
+  const total = isRewardSale ? 0 : rawTotal;
 
   const handleCobrar = async () => {
     if (!client) return alert("Por favor selecciona un cliente de la lista.");
     if (cart.length === 0) return alert("Tu ticket está vacío. Agrega al menos un producto.");
+    if (isRewardSale && cart.length > 1) return alert("La recompensa de prenda gratis solo se puede aplicar a una prenda por venta.");
 
     setIsSubmitting(true);
     try {
         const payload = {
-            saleData: { client_id: client.id, type: 'NORMAL' },
+            saleData: { 
+                client_id: client.id, 
+                type: isRewardSale ? 'REWARD' : 'NORMAL',
+                loyalty_applied: isRewardSale 
+            },
             itemsData: cart.map(item => {
                 const parts = [];
                 if (item.measurements.length) parts.push(`Largo: ${item.measurements.length}cm`);
@@ -36,25 +48,29 @@ export default function NewSale() {
                 return {
                     product_id: item.id,
                     quantity: item.qty,
-                    unit_price: item.price,
+                    unit_price: isRewardSale ? 0 : item.price,
                     custom_description: parts.length > 0 ? parts.join(" | ") : item.name
                 };
             }),
-            paymentData: { method: paymentMethod, amount: total }
+            paymentData: { 
+                method: isRewardSale ? 'GRATIS' : paymentMethod, 
+                amount: total 
+            }
         };
 
         await api.post("/sales", payload);
-        alert("¡Venta completada exitosamente! Se ha enviado la orden de trabajo a Producción.");
+        alert(isRewardSale ? "¡Felicidades! Se ha procesado el regalo. Los puntos del cliente han sido reseteados." : "¡Venta completada exitosamente!");
         
         // Reset POS
         setCart([]);
         setClient(null);
         setTempProduct(null);
+        setIsRewardSale(false);
     } catch (err) {
-        console.error("Error creating sale:", err);
-        alert("Hubo un error de conexión al procesar la venta.");
+      console.error("Error creating sale:", err);
+      alert("Error: " + (err.response?.data?.message || "No se pudo procesar la venta."));
     } finally {
-        setIsSubmitting(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -78,8 +94,6 @@ export default function NewSale() {
 
   const commitToCart = () => {
     if (!tempProduct || isCalculating) return;
-    
-    // Si no se pudo obtener sugerido, fallback al viejo base_price
     const finalPrice = pricingBreakdown?.suggested_price ? parseFloat(pricingBreakdown.suggested_price) : parseFloat(tempProduct.base_price || 0);
     
     setCart([...cart, {
@@ -96,16 +110,18 @@ export default function NewSale() {
 
   const removeFromCart = (index) => setCart(cart.filter((_, i) => i !== index));
 
+  const canApplyReward = client && (parseInt(client.loyalty_points) || 0) >= 9;
+
   return (
     <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6 h-[calc(100vh-8rem)]">
       {/* LEFT COLUMN: BUSCADOR Y FORMULARIOS */}
       <div className="flex-1 flex flex-col gap-6 overflow-y-auto custom-scrollbar pr-2 pb-6">
         
         {/* BUSCAR CLIENTE */}
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative z-20">
-          <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-            <span className="w-6 h-6 rounded-full bg-[#C9A14A]/10 text-[#C9A14A] flex items-center justify-center text-sm">1</span> 
-            Datos del Cliente
+        <div className="bg-white p-6 rounded-[2rem] shadow-lg border border-slate-100 relative z-[100]">
+          <h2 className="text-lg font-black text-slate-900 mb-4 flex items-center gap-2">
+            <span className="w-6 h-6 rounded-lg bg-[#C9A14A]/10 text-[#C9A14A] flex items-center justify-center text-xs">1</span> 
+            Paso 1: Identificar Cliente
           </h2>
           <ClientSearch 
             selectedClient={client} 
@@ -115,10 +131,10 @@ export default function NewSale() {
         </div>
 
         {/* BUSCAR PRODUCTO Y SASTRERÍA */}
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex-1 relative z-10 flex flex-col">
-          <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-            <span className="w-6 h-6 rounded-full bg-[#C9A14A]/10 text-[#C9A14A] flex items-center justify-center text-sm">2</span> 
-            Agregar Productos
+        <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 flex-1 relative z-[50] flex flex-col">
+          <h2 className="text-lg font-black text-slate-900 mb-6 flex items-center gap-2">
+            <span className="w-6 h-6 rounded-lg bg-[#C9A14A]/10 text-[#C9A14A] flex items-center justify-center text-xs">2</span> 
+            Paso 2: Selección de Prenda
           </h2>
           
           <div className="mb-6">
@@ -126,131 +142,156 @@ export default function NewSale() {
           </div>
 
           {tempProduct ? (
-            <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6 relative overflow-hidden group shadow-inner mb-4 flex-1">
-                <div className="absolute top-0 left-0 w-1.5 h-full bg-[#C9A14A]"></div>
+            <div className="bg-slate-50 border-2 border-slate-100 rounded-[2rem] p-8 relative overflow-hidden group shadow-inner mb-4 flex-1">
+                <div className="absolute top-0 left-0 w-2 h-full bg-[#C9A14A]"></div>
                 
-                <div className="flex justify-between items-start mb-5 border-b border-gray-200 pb-4">
+                <div className="flex justify-between items-start mb-6 border-b border-slate-200 pb-6">
                     <div>
-                        <h3 className="font-black text-xl text-gray-900">{tempProduct.name}</h3>
+                        <h3 className="font-black text-2xl text-slate-900 leading-none">{tempProduct.name}</h3>
                         
                         {isCalculating ? (
-                            <p className="text-sm font-medium text-gray-400 mt-1 animate-pulse">Calculando fórmula base...</p>
+                            <p className="text-sm font-bold text-slate-400 mt-2 animate-pulse">Consultando algoritmos de precio...</p>
                         ) : pricingBreakdown ? (
-                            <>
-                                <p className="text-sm text-gray-800 font-bold mt-2 tracking-tight">Precio Calculado: <span className="text-[#C9A14A] text-xl">${parseFloat(pricingBreakdown.suggested_price).toFixed(2)}</span></p>
-                                
-                                {/* Modo Transparente (Manager / Admin) */}
-                                {pricingBreakdown.breakdown && (
-                                    <div className="mt-3 p-3 bg-white border border-gray-200 rounded-lg text-xs grid grid-cols-2 gap-2 shadow-sm">
-                                        <div className="text-gray-500">Insumos Fijos:</div><div className="text-right font-medium">${pricingBreakdown.breakdown.supply_cost}</div>
-                                        <div className="text-gray-500">Mano Obra Patronista ({pricingBreakdown.breakdown.hours_pattern}h):</div><div className="text-right font-medium">${pricingBreakdown.breakdown.labor_cost_pattern}</div>
-                                        <div className="text-gray-500">Mano Obra Confección ({pricingBreakdown.breakdown.hours_sewing}h):</div><div className="text-right font-medium">${pricingBreakdown.breakdown.labor_cost_sewing}</div>
-                                        <div className="text-gray-500 font-bold border-t pt-1 mt-1">Costo Bruto:</div><div className="text-right font-bold border-t pt-1 mt-1">${pricingBreakdown.gross_cost}</div>
-                                        <div className="text-gray-500">Factor Operacional:</div><div className="text-right font-medium text-orange-500">+ ${pricingBreakdown.operational_cost}</div>
-                                    </div>
-                                )}
-                                {pricingBreakdown.is_mixed_legacy && (
-                                     <span className="text-[10px] uppercase font-bold text-gray-400 mt-1 inline-block bg-gray-200 px-2 rounded-full">Precio Antiguo + Margen Operativo Aplicado</span>
-                                )}
-                            </>
+                            <div className="mt-3 flex items-center gap-3">
+                                <span className="text-xs font-black text-slate-400 uppercase tracking-widest">Precio Calculado</span>
+                                <span className="text-[#C9A14A] text-2xl font-black">${parseFloat(pricingBreakdown.suggested_price).toFixed(2)}</span>
+                            </div>
                         ) : (
-                            <p className="text-sm font-medium text-gray-500 mt-1">Precio Base DB: <span className="text-gray-600 font-bold">${parseFloat(tempProduct.base_price).toFixed(2)}</span></p>
+                            <p className="text-sm font-bold text-slate-500 mt-2">Precio Base: <span className="text-slate-800">${parseFloat(tempProduct.base_price).toFixed(2)}</span></p>
                         )}
                     </div>
-                    <button onClick={() => { setTempProduct(null); setPricingBreakdown(null); }} className="text-xs font-bold text-gray-400 hover:text-gray-600 p-2 border border-gray-200 rounded-lg bg-gray-50/50">Cancelar</button>
+                    <button onClick={() => { setTempProduct(null); setPricingBreakdown(null); }} className="text-xs font-black text-slate-400 hover:text-rose-500 px-4 py-2 border-2 border-slate-200 rounded-xl bg-white transition-all uppercase tracking-widest">Cancelar</button>
                 </div>
 
-                <h4 className="font-bold text-gray-900 flex items-center gap-2 mb-4 text-sm uppercase tracking-wider">
-                <Ruler size={18} className="text-[#C9A14A]" /> Medidas de Sastrería (Opcional)
-                </h4>
-                
-                <div className="grid grid-cols-3 gap-6 mb-5">
-                <div>
-                    <label className="text-xs text-gray-500 font-bold mb-1.5 uppercase tracking-wider block">Largo</label>
-                    <div className="relative"><input value={measurements.length} onChange={e=>setMeasurements({...measurements, length: e.target.value})} type="number" placeholder="00.0" className="w-full p-2.5 border border-gray-200 rounded-xl bg-white focus:ring-2 focus:ring-[#C9A14A]/20 focus:border-[#C9A14A] outline-none" /><span className="absolute right-3 top-2.5 text-gray-400 text-sm font-bold select-none">cm</span></div>
-                </div>
-                <div>
-                    <label className="text-xs text-gray-500 font-bold mb-1.5 uppercase tracking-wider block">Cintura</label>
-                    <div className="relative"><input value={measurements.waist} onChange={e=>setMeasurements({...measurements, waist: e.target.value})} type="number" placeholder="00.0" className="w-full p-2.5 border border-gray-200 rounded-xl bg-white focus:ring-2 focus:ring-[#C9A14A]/20 focus:border-[#C9A14A] outline-none" /><span className="absolute right-3 top-2.5 text-gray-400 text-sm font-bold select-none">cm</span></div>
-                </div>
-                <div>
-                    <label className="text-xs text-gray-500 font-bold mb-1.5 uppercase tracking-wider block">Manga</label>
-                    <div className="relative"><input value={measurements.sleeves} onChange={e=>setMeasurements({...measurements, sleeves: e.target.value})} type="number" placeholder="00.0" className="w-full p-2.5 border border-gray-200 rounded-xl bg-white focus:ring-2 focus:ring-[#C9A14A]/20 focus:border-[#C9A14A] outline-none" /><span className="absolute right-3 top-2.5 text-gray-400 text-sm font-bold select-none">cm</span></div>
-                </div>
-                </div>
-                <div>
-                <label className="text-xs text-gray-500 font-bold mb-1.5 uppercase tracking-wider block">Instrucciones Especiales</label>
-                <textarea value={measurements.notes} onChange={e=>setMeasurements({...measurements, notes: e.target.value})} placeholder="Ej: Entallar más en la espalda..." className="w-full p-3 border border-gray-200 rounded-xl bg-white text-sm focus:ring-2 focus:ring-[#C9A14A]/20 focus:border-[#C9A14A] outline-none" rows="2"></textarea>
+                <div className="flex items-center gap-2 mb-6">
+                    <Ruler size={18} className="text-[#C9A14A]" />
+                    <span className="text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Personalización de Medidas</span>
                 </div>
                 
-                <div className="flex justify-end mt-6">
-                <button onClick={commitToCart} className="w-full sm:w-auto bg-[#C9A14A] hover:bg-[#b58f3f] text-white px-8 py-3.5 rounded-xl font-bold shadow-lg shadow-[#C9A14A]/20 transition-all flex items-center justify-center gap-2 transform active:scale-95">
-                    Añadir al Ticket <ArrowRight size={18} />
+                <div className="grid grid-cols-3 gap-6 mb-6">
+                    {['length', 'waist', 'sleeves'].map((field) => (
+                        <div key={field}>
+                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 block ml-1">{field === 'length' ? 'Largo' : field === 'waist' ? 'Cintura' : 'Manga'}</label>
+                            <div className="relative">
+                                <input 
+                                    value={measurements[field]} 
+                                    onChange={e=>setMeasurements({...measurements, [field]: e.target.value})} 
+                                    type="number" 
+                                    placeholder="0.0" 
+                                    className="w-full p-4 bg-white border-2 border-slate-100 rounded-[1.2rem] focus:border-[#C9A14A] outline-none transition-all font-bold text-slate-700" 
+                                />
+                                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 text-xs font-black uppercase">cm</span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                
+                <div className="mb-8">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 block ml-1">Instrucciones Especiales</label>
+                    <textarea value={measurements.notes} onChange={e=>setMeasurements({...measurements, notes: e.target.value})} placeholder="Ej: Ajuste entallado, puños dobles..." className="w-full p-5 bg-white border-2 border-slate-100 rounded-[1.2rem] text-sm font-bold focus:border-[#C9A14A] outline-none transition-all resize-none" rows="2"></textarea>
+                </div>
+                
+                <button onClick={commitToCart} className="w-full bg-slate-900 hover:bg-slate-800 text-white py-5 rounded-[1.5rem] font-black text-lg shadow-xl shadow-slate-900/10 transition-all flex items-center justify-center gap-3 active:scale-95 group">
+                    Agregar al Ticket <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
                 </button>
-                </div>
             </div>
           ) : (
-            <div className="flex-1 flex flex-col items-center justify-center text-gray-400 border-2 border-dashed border-gray-200 rounded-2xl bg-gray-50/50 p-6">
-                <ShoppingBag size={48} className="text-gray-300 mb-3" />
-                <p className="font-medium text-lg text-gray-500">Busca y selecciona un producto</p>
-                <p className="text-sm">para configurar sus medidas de sastrería.</p>
+            <div className="flex-1 flex flex-col items-center justify-center text-slate-300 border-4 border-dashed border-slate-50 rounded-[2.5rem] bg-slate-50/30 p-12 text-center group transition-colors hover:border-slate-100">
+                <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-sm mb-6 group-hover:scale-110 transition-transform">
+                    <ShoppingBag size={40} className="text-slate-200" />
+                </div>
+                <p className="font-black text-xl text-slate-400 uppercase tracking-widest">Esperando Prenda</p>
+                <p className="text-sm font-bold text-slate-300 mt-2 max-w-xs">Busca un producto arriba para configurar las medidas de sastrería.</p>
             </div>
           )}
         </div>
-
       </div>
 
       {/* RIGHT COLUMN: TICKET DE COBRO */}
-      <div className="w-full lg:w-[420px] flex flex-col gap-4">
-        <div className="bg-white p-6 rounded-2xl shadow-xl flex flex-col h-full relative overflow-hidden border border-gray-100">
-          <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-slate-900 to-[#C9A14A]"></div>
+      <div className="w-full lg:w-[450px] flex flex-col gap-4">
+        <div className="bg-white rounded-[2.5rem] shadow-2xl flex flex-col h-full relative overflow-hidden border border-slate-50">
+          <div className="h-2 bg-gradient-to-r from-slate-900 via-[#C9A14A] to-slate-900"></div>
           
-          <h2 className="text-xl font-black text-gray-900 mb-4 border-b pb-4 mt-2 tracking-tight">Ticket de Compra</h2>
-          
-          <div className="flex-1 overflow-y-auto custom-scrollbar mb-4 space-y-4 pb-4">
-             {cart.length === 0 ? (
-                 <div className="h-full flex flex-col items-center justify-center text-gray-400 opacity-60">
-                     <p className="font-bold text-xl uppercase tracking-widest text-gray-300">Vacío</p>
-                 </div>
-             ) : (
-                 cart.map((item, idx) => (
-                    <div key={idx} className="flex justify-between items-start border-b border-gray-100 pb-4 relative group">
-                        <div className="pr-10">
-                            <p className="font-bold text-sm text-gray-800 leading-tight">{item.name}</p>
-                            {/* Render Measurements Summary */}
-                            {(item.measurements.length || item.measurements.waist || item.measurements.sleeves) && (
-                                <p className="text-xs text-gray-400 mt-1 font-medium">L:{item.measurements.length||'-'} C:{item.measurements.waist||'-'} M:{item.measurements.sleeves||'-'}</p>
-                            )}
-                            <p className="text-xs text-gray-500 mt-1 font-medium">{item.qty} un x ${item.price.toFixed(2)}</p>
-                        </div>
-                        <div className="flex flex-col items-end gap-2">
-                            <p className="font-black text-[#C9A14A]">${(item.qty * item.price).toFixed(2)}</p>
-                            <button onClick={() => removeFromCart(idx)} className="text-rose-300 hover:text-rose-500 transition-colors p-1"><Trash2 size={16} /></button>
+          <div className="p-8 flex flex-col h-full">
+            <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-black text-slate-900 tracking-tight">Caja de Cobro</h2>
+                <div className="flex items-center gap-2 text-slate-300 font-black text-[10px] uppercase tracking-widest">
+                    Ticket #{Math.floor(Math.random()*9000)+1000}
+                </div>
+            </div>
+
+            {/* LOYALTY ALERT IN TICKET */}
+            {canApplyReward && (
+                <div className={`mb-6 p-4 rounded-2xl border-2 flex items-center justify-between transition-all ${isRewardSale ? 'bg-amber-500 border-amber-600 text-white shadow-lg' : 'bg-amber-50 border-amber-200 text-amber-900'}`}>
+                    <div className="flex items-center gap-3">
+                        <Sparkles size={24} className={isRewardSale ? 'text-white' : 'text-amber-500'} />
+                        <div>
+                            <p className="font-black text-xs uppercase leading-none">¡Fidelidad Nexus!</p>
+                            <p className="text-[10px] font-bold opacity-80 mt-0.5">El cliente tiene 10 prendas acumuladas.</p>
                         </div>
                     </div>
-                 ))
-             )}
-          </div>
+                    <button 
+                        onClick={() => setIsRewardSale(!isRewardSale)}
+                        className={`px-4 py-2 rounded-xl text-[10px] font-black transition-all ${isRewardSale ? 'bg-white text-amber-600' : 'bg-amber-500 text-white'}`}
+                    >
+                        {isRewardSale ? 'CANCELAR REGALO' : 'APLICAR REGALO'}
+                    </button>
+                </div>
+            )}
+            
+            <div className="flex-1 overflow-y-auto custom-scrollbar mb-6 space-y-4 pr-1">
+               {cart.length === 0 ? (
+                   <div className="h-full flex flex-col items-center justify-center py-20 opacity-20 grayscale">
+                       <ShoppingBag size={60} className="text-slate-400 mb-2" />
+                       <p className="font-black text-sm uppercase tracking-[0.3em] text-slate-500">Ticket Vacío</p>
+                   </div>
+               ) : (
+                   cart.map((item, idx) => (
+                      <div key={idx} className="flex justify-between items-start p-4 bg-slate-50 rounded-2xl relative group border border-transparent hover:border-slate-200 transition-all">
+                          <div className="pr-10">
+                              <p className="font-black text-slate-900 leading-tight">{item.name}</p>
+                              <p className="text-[10px] font-bold text-slate-400 mt-1 uppercase tracking-wider">{item.qty} un • ${item.price.toFixed(2)} c/u</p>
+                          </div>
+                          <div className="flex flex-col items-end gap-1">
+                              <p className={`font-black ${isRewardSale ? 'text-slate-300 line-through' : 'text-[#C9A14A]'}`}>${(item.qty * item.price).toFixed(2)}</p>
+                              <button onClick={() => removeFromCart(idx)} className="text-slate-300 hover:text-rose-500 transition-colors"><Trash2 size={16} /></button>
+                          </div>
+                      </div>
+                   ))
+               )}
+            </div>
 
-          <div className="mt-auto bg-gray-50 -mx-6 -mb-6 p-6 border-t border-gray-100">
-              <div className="flex justify-between text-gray-500 mb-2"><span className="text-sm font-bold uppercase tracking-wider">Subtotal</span><span className="font-bold text-gray-700">${total.toFixed(2)}</span></div>
-              <div className="flex justify-between items-end mb-6">
-                  <span className="font-black text-gray-900 uppercase">Total Final</span>
-                  <span className="text-4xl font-black text-[#C9A14A] tracking-tighter">${total.toFixed(2)}</span>
-              </div>
+            <div className="bg-slate-50 -mx-8 -mb-8 p-8 border-t border-slate-100">
+                <div className="space-y-2 mb-6">
+                    <div className="flex justify-between text-slate-400"><span className="text-[10px] font-black uppercase tracking-widest">Subtotal</span><span className="font-bold">${rawTotal.toFixed(2)}</span></div>
+                    {isRewardSale && (
+                        <div className="flex justify-between text-emerald-500"><span className="text-[10px] font-black uppercase tracking-widest">Descuento Fidelidad</span><span className="font-bold">-${rawTotal.toFixed(2)}</span></div>
+                    )}
+                    <div className="flex justify-between items-end pt-2">
+                        <span className="font-black text-slate-900 uppercase text-xs tracking-[0.2em]">Total Final</span>
+                        <span className={`text-4xl font-black tracking-tighter ${isRewardSale ? 'text-emerald-500 animate-bounce' : 'text-slate-900'}`}>${total.toFixed(2)}</span>
+                    </div>
+                </div>
 
-              <div className="grid grid-cols-3 gap-3 mb-6">
-                  <button onClick={() => setPaymentMethod('EFECTIVO')} className={`py-3 border-2 rounded-xl text-sm font-bold transition-all ${paymentMethod === 'EFECTIVO' ? 'border-slate-900 bg-slate-900 text-white shadow-md' : 'border-gray-200 bg-white text-gray-600 hover:border-[#C9A14A]'}`}>Efectivo</button>
-                  <button onClick={() => setPaymentMethod('TRANSFERENCIA')} className={`py-3 border-2 rounded-xl text-sm font-bold transition-all ${paymentMethod === 'TRANSFERENCIA' ? 'border-slate-900 bg-slate-900 text-white shadow-md' : 'border-gray-200 bg-white text-gray-600 hover:border-[#C9A14A]'}`}>Transf</button>
-                  <button onClick={() => setPaymentMethod('TARJETA')} className={`py-3 border-2 rounded-xl text-sm font-bold transition-all ${paymentMethod === 'TARJETA' ? 'border-slate-900 bg-slate-900 text-white shadow-md' : 'border-gray-200 bg-white text-gray-600 hover:border-[#C9A14A]'}`}>Tarjeta</button>
-              </div>
+                {!isRewardSale && (
+                    <div className="grid grid-cols-3 gap-2 mb-6">
+                        {['EFECTIVO', 'TRANSFERENCIA', 'TARJETA'].map((m) => (
+                            <button key={m} onClick={() => setPaymentMethod(m)} className={`py-3 rounded-xl text-[10px] font-black transition-all border-2 ${paymentMethod === m ? 'bg-slate-900 border-slate-900 text-white shadow-lg' : 'bg-white border-slate-100 text-slate-400 hover:border-[#C9A14A] hover:text-[#C9A14A]'}`}>{m.substring(0, 5)}</button>
+                        ))}
+                    </div>
+                )}
 
-              <div className="flex gap-3">
-                  <button onClick={() => { setCart([]); setTempProduct(null); setClient(null); }} className="px-5 py-4 rounded-xl font-bold bg-gray-200/60 text-gray-500 hover:bg-gray-300 hover:text-gray-700 transition-colors">Cancelar</button>
-                  <button disabled={isSubmitting || cart.length === 0} onClick={handleCobrar} className="flex-1 py-4 rounded-xl font-black text-lg bg-[#C9A14A] hover:bg-[#b58f3f] disabled:bg-gray-300 disabled:shadow-none text-white shadow-xl shadow-[#C9A14A]/30 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2">
-                       {isSubmitting ? 'Procesando...' : <><CheckCircle size={22} /> Cobrar</>}
-                  </button>
-              </div>
+                <div className="flex gap-3">
+                    <button onClick={() => { setCart([]); setClient(null); setIsRewardSale(false); }} className="px-6 py-4 rounded-2xl font-black text-xs bg-slate-200 text-slate-500 hover:bg-slate-300 transition-all uppercase tracking-widest">Anular</button>
+                    <button 
+                        disabled={isSubmitting || cart.length === 0 || !client} 
+                        onClick={handleCobrar} 
+                        className={`flex-1 py-4 rounded-2xl font-black text-lg transition-all transform active:scale-95 flex items-center justify-center gap-2 shadow-2xl ${isRewardSale ? 'bg-emerald-500 text-white shadow-emerald-500/20 hover:bg-emerald-600' : 'bg-[#C9A14A] text-white shadow-[#C9A14A]/20 hover:bg-[#b58f3f]'}`}
+                    >
+                         {isSubmitting ? 'Procesando...' : <><CheckCircle size={22} /> {isRewardSale ? 'REGALAR PRENDA' : 'FINALIZAR COBRO'}</>}
+                    </button>
+                </div>
+            </div>
           </div>
         </div>
       </div>

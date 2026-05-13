@@ -86,10 +86,56 @@ const deliverSale = async (req, res, next) => {
     } catch (err) { next(err); }
 };
 
+const getSaleById = async (req, res, next) => {
+    try {
+        const { Sale, Client, Payment, SaleItem, Product } = require('../models');
+        const sale = await Sale.findByPk(req.params.id, {
+            include: [
+                { model: Client, as: 'client' },
+                { model: Payment, as: 'payments' },
+                { 
+                    model: SaleItem, 
+                    as: 'items',
+                    include: [{ model: Product, as: 'product', attributes: ['name', 'base_price'] }] 
+                }
+            ]
+        });
+
+        if (!sale) return res.status(404).json({ success: false, message: 'Sale not found' });
+        
+        res.json({ success: true, data: sale });
+    } catch (err) {
+        next(err);
+    }
+};
+
+const addPayment = async (req, res, next) => {
+    try {
+        const { amount, payment_method, account_id } = req.body;
+        const PaymentService = require('../services/PaymentService');
+        const userId = req.user.id;
+
+        const payment = await PaymentService.registerPayment({
+            sale_id: req.params.id,
+            account_id,
+            amount,
+            payment_method,
+            type: 'ABONO',
+            created_by: userId
+        });
+
+        res.status(201).json({ success: true, data: payment, message: 'Abono registrado exitosamente' });
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports = {
     createSale,
     getAllSales,
     getPendingSales,
     getDeliveries,
-    deliverSale
+    deliverSale,
+    getSaleById,
+    addPayment
 };

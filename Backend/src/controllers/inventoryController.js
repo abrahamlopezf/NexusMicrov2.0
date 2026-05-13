@@ -39,8 +39,34 @@ const getInventoryMovements = async (req, res, next) => {
     }
 };
 
+const getLowStockAlerts = async (req, res, next) => {
+    try {
+        const result = await InventoryService.getLowStockAlerts();
+        res.status(200).json({
+            success: true,
+            data: result
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const resolveAlert = async (req, res, next) => {
+    try {
+        const result = await InventoryService.resolveAlert(req.params.id);
+        res.status(200).json({
+            success: true,
+            data: result
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     getInventory,
     adjustInventory,
-    getInventoryMovements
+    getInventoryMovements,
+    getLowStockAlerts,
+    resolveAlert
 };

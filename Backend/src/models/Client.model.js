@@ -18,8 +18,7 @@ const Client = sequelize.define("Client", {
     },
     email: {
         type: DataTypes.STRING(150),
-        allowNull: true,
-        validate: { isEmail: true }
+        allowNull: true
     },
     address: {
         type: DataTypes.TEXT,
@@ -27,9 +26,15 @@ const Client = sequelize.define("Client", {
     },
     loyalty_points: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        defaultValue: 0,
-        validate: { min: 0 }
+        defaultValue: 0
+    },
+    total_purchases: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+    },
+    last_purchase_date: {
+        type: DataTypes.DATE,
+        allowNull: true
     }
 }, {
     tableName: "clients",

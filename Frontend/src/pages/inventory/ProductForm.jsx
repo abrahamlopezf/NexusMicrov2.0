@@ -17,7 +17,7 @@ const ProductForm = ({ product, onClose, onSuccess }) => {
   // Form State
   const [formData, setFormData] = useState({
     name: product?.name || '',
-    category: product?.category || '',
+    category: product?.category || 'Básicos',
     description: product?.description || '',
     is_custom: product?.is_custom || false
   });
@@ -212,13 +212,14 @@ const ProductForm = ({ product, onClose, onSuccess }) => {
                 </div>
                 <div>
                   <label className="block text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Categoría</label>
-                  <input
-                    type="text"
+                  <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                     className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all font-bold"
-                    placeholder="Ej. Seguridad"
-                  />
+                  >
+                    <option value="Básicos">Básicos</option>
+                    <option value="Alta Costura">Alta Costura</option>
+                  </select>
                 </div>
                 <div className="flex items-center gap-3 h-full pt-6">
                   <input

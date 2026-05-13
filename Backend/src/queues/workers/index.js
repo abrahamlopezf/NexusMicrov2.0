@@ -65,23 +65,24 @@ async function startAllWorkers() {
     const connection = getConnection();
     const opts = { connection, concurrency: WORKER_CONCURRENCY };
 
-    const saleWorker = new Worker('sale', makeProcessor({
+    const saleWorker = new Worker('SaleQueue', makeProcessor({
         SALE_CONFIRMED: async (data) => saleHandlers.handleSaleConfirmed(data),
         SALE_CANCELLED: async (data) => saleHandlers.handleSaleCancelled(data)
     }), opts);
 
-    const inventoryWorker = new Worker('inventory', makeProcessor({
+    const inventoryWorker = new Worker('InventoryQueue', makeProcessor({
         RESERVE_STOCK: async (data) => inventoryHandlers.handleReserveStock(data),
         RELEASE_STOCK: async (data) => inventoryHandlers.handleReleaseStock(data),
-        CONSUME_STOCK: async (data) => inventoryHandlers.handleConsumeStock(data)
+        CONSUME_STOCK: async (data) => inventoryHandlers.handleConsumeStock(data),
+        LOW_STOCK_ALERT: async (data) => inventoryHandlers.handleLowStockAlert(data)
     }), opts);
 
-    const productionWorker = new Worker('production', makeProcessor({
+    const productionWorker = new Worker('ProductionQueue', makeProcessor({
         CREATE_WORK_ORDER: async (data) => productionHandlers.handleCreateWorkOrder(data),
         COMPLETE_TASK:     async (data) => productionHandlers.handleCompleteTask(data)
     }), opts);
 
-    const paymentWorker = new Worker('payment', makeProcessor({
+    const paymentWorker = new Worker('PaymentQueue', makeProcessor({
         REGISTER_PAYMENT: async (data) => paymentHandlers.handleRegisterPayment(data),
         PROCESS_REFUND:   async (data) => paymentHandlers.handleProcessRefund(data)
     }), opts);

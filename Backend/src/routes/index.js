@@ -23,6 +23,7 @@ const systemRoutes = require('./systemRoutes');
 const jobRoutes = require('./jobRoutes');
 const pricingRoutes = require('./pricingRoutes');
 const quoteRoutes = require('./quoteRoutes');
+const financeRoutes = require('./financeRoutes');
 
 // Register routes
 router.use('/auth', authRoutes);
@@ -46,6 +47,7 @@ router.use('/system', systemRoutes);
 router.use('/jobs', jobRoutes);
 router.use('/pricing', pricingRoutes);
 router.use('/quotes', quoteRoutes);
+router.use('/finance', financeRoutes);
 
 // Export main router
 module.exports = router;

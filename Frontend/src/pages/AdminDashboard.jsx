@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import KpiCard from "../components/KpiCard";
-import { TrendingUp, PieChart, Info, AlertTriangle, Settings, ShoppingBag, Package, FileText, BarChart2, Briefcase, Scissors } from "lucide-react";
+import { TrendingUp, PieChart, Info, AlertTriangle, Settings, ShoppingBag, Package, FileText, BarChart2, Briefcase, Scissors, Users, Landmark } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useInventoryStore } from "../store/inventoryStore";
 
 const Dashboard = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [range, setRange] = useState("7days");
   const [error, setError] = useState(null);
+  const { alerts, fetchAlerts } = useInventoryStore();
 
   useEffect(() => {
+    fetchAlerts();
     const fetchAdvanced = async () => {
       try {
         setLoading(true);
@@ -74,6 +77,14 @@ const Dashboard = () => {
           <Link to="/inventory" className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 hover:border-[#C9A14A] hover:bg-orange-50/20 transition-all group flex flex-col items-center justify-center text-center">
             <div className="w-12 h-12 bg-teal-50 text-teal-600 rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform"><Package size={24} /></div>
             <span className="font-bold text-sm text-gray-800">Inventario</span>
+          </Link>
+          <Link to="/finance" className="bg-white p-4 rounded-2xl shadow-sm border border-emerald-100 hover:border-emerald-500 hover:bg-emerald-50/50 transition-all group flex flex-col items-center justify-center text-center">
+            <div className="w-12 h-12 bg-emerald-500 text-white rounded-full flex items-center justify-center mb-3 group-hover:scale-110 shadow-lg shadow-emerald-500/30 transition-transform"><Landmark size={24} /></div>
+            <span className="font-bold text-sm text-emerald-800">Caja y Finanzas</span>
+          </Link>
+          <Link to="/clients" className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 hover:border-[#C9A14A] hover:bg-orange-50/20 transition-all group flex flex-col items-center justify-center text-center">
+            <div className="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform"><Users size={24} /></div>
+            <span className="font-bold text-sm text-gray-800">Clientes</span>
           </Link>
           <Link to="/reports" className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 hover:border-[#C9A14A] hover:bg-orange-50/20 transition-all group flex flex-col items-center justify-center text-center">
             <div className="w-12 h-12 bg-rose-50 text-rose-600 rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform"><BarChart2 size={24} /></div>
@@ -148,30 +159,33 @@ const Dashboard = () => {
           </h2>
 
           <div className="space-y-4">
+            {/* Low Stock Alerts */}
+            {alerts.length > 0 && alerts.slice(0, 3).map((alert) => (
+              <div key={alert.id} className="p-4 bg-amber-50 border border-amber-100 rounded-xl text-amber-700 flex items-start group hover:bg-amber-100 transition-colors">
+                <AlertTriangle className="flex-shrink-0 mr-3 text-amber-500 mt-0.5" size={20} />
+                <div>
+                  <h4 className="font-bold text-amber-800 mb-1">Stock Bajo: {alert.material?.name}</h4>
+                  <p className="text-sm">{alert.message}</p>
+                </div>
+              </div>
+            ))}
+
             {Number(data.financials.margin) < 30 && Number(data.financials.revenue) > 0 ? (
               <div className="p-4 bg-red-50 border border-red-100 rounded-xl text-red-700 flex items-start group hover:bg-red-100 transition-colors">
                 <span className="flex-shrink-0 mr-3 text-red-500 font-bold text-lg leading-none mt-0.5">⚠</span>
                 <div>
                   <h4 className="font-bold text-red-800 mb-1">Margen Crítico ({Number(data.financials.margin).toFixed(1)}%)</h4>
-                  <p className="text-sm">La rentabilidad del negocio está por debajo de la meta del 30%. Revisa los costos de producción y materiales para este periodo.</p>
-                </div>
-              </div>
-            ) : Number(data.financials.revenue) > 0 ? (
-              <div className="p-4 bg-emerald-50 border border-emerald-100 rounded-xl text-emerald-700 flex items-start">
-                <span className="flex-shrink-0 mr-3 text-emerald-500 font-bold text-lg leading-none mt-0.5">✓</span>
-                <div>
-                  <h4 className="font-bold text-emerald-800 mb-1">Margen Saludable</h4>
-                  <p className="text-sm">La rentabilidad supera la meta base y se mantiene positiva.</p>
+                  <p className="text-sm">La rentabilidad del negocio está por debajo de la meta del 30%.</p>
                 </div>
               </div>
             ) : null}
 
-            {data.topProducts.length === 0 && (
-              <div className="p-4 bg-blue-50 border border-blue-100 rounded-xl text-blue-700 flex items-start">
-                <Info className="flex-shrink-0 mr-3 text-blue-500 mt-0.5" size={20} />
+            {alerts.length === 0 && Number(data.financials.revenue) > 0 && (
+              <div className="p-4 bg-emerald-50 border border-emerald-100 rounded-xl text-emerald-700 flex items-start">
+                <span className="flex-shrink-0 mr-3 text-emerald-500 font-bold text-lg leading-none mt-0.5">✓</span>
                 <div>
-                  <h4 className="font-bold text-blue-800 mb-1">Sin información</h4>
-                  <p className="text-sm">No hay ventas registradas en el periodo seleccionado.</p>
+                  <h4 className="font-bold text-emerald-800 mb-1">Todo en Orden</h4>
+                  <p className="text-sm">No hay alertas críticas pendientes en este momento.</p>
                 </div>
               </div>
             )}

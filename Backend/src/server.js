@@ -3,6 +3,7 @@ const app = require("./app");
 const db = require("./models");
 const logger = require("./utils/logger");
 const { initConnection } = require('./queues/connection');
+const { startAllWorkers } = require('./queues/workers');
 const QueueService = require('./services/QueueService');
 
 // UNCAUGHT EXCEPTIONS
@@ -25,6 +26,7 @@ const startServer = async () => {
         // Initialize Redis connection and queue system
         await initConnection();
         await QueueService.init();
+        await startAllWorkers();
 
         const port = config.port || 3000;
         const server = app.listen(port, () => {

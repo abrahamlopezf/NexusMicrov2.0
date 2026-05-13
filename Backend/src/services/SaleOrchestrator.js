@@ -16,38 +16,34 @@ class SaleOrchestrator {
         // ══════════════════════════════════════════════════════════════════════
         // STEP 1 — Synchronous DB Transaction
         // ══════════════════════════════════════════════════════════════════════
+        const PaymentService = require('./PaymentService');
+        
         await sequelize.transaction(async (t) => {
             // Create Sale + SaleItems
             ({ sale, createdItems } = await SaleService.createDraft(saleData, itemsData, userId, t));
 
-            // Optional: If Payment needs to be synced as well, the user didn't explicitly forbid payment here,
-            // but the prompt said: "BEFORE: Direct calls to InventoryService, WorkOrder creation, PaymentService."
-            // "AFTER: STEP 1: Create Sale. Create SaleItems. Commit transaction."
-            // We follow literally. The payment registration logic goes into Payment Worker if paymentData exists.
+            // Procesamos el pago INMEDIATAMENTE dentro de la transacción para el POS
+            if (paymentData && paymentData.amount > 0) {
+                await PaymentService.registerPayment({
+                    ...paymentData,
+                    sale_id: sale.id,
+                    type: paymentData.type || 'ANTICIPO',
+                    created_by: userId
+                }, t);
+            }
 
-            // Mark as QUEUED — signals that async processing is pending
-            sale.fulfillment_status = 'QUEUED';
+            // Mark as CONFIRMED directly if it was a POS direct sale
+            sale.fulfillment_status = 'CONFIRMED';
             await sale.save({ transaction: t, userId });
         });
 
         // ══════════════════════════════════════════════════════════════════════
-        // STEP 2 — Enqueue jobs
+        // STEP 2 — Enqueue remaining async jobs (e.g. WorkOrders, Points)
         // ══════════════════════════════════════════════════════════════════════
         const jobId = await QueueService.addSaleJob(SALE_CONFIRMED, {
             saleId: sale.id,
-            userId,
-            paymentData // Passed async to the worker or another queue
+            userId
         });
-
-        if (paymentData && paymentData.amount > 0) {
-            const { REGISTER_PAYMENT } = require('../queues/jobs/payment.jobs');
-            await QueueService.addPaymentJob(REGISTER_PAYMENT, {
-                ...paymentData,
-                sale_id: sale.id,
-                type: paymentData.type || 'ANTICIPO',
-                created_by: userId
-            });
-        }
 
         // ══════════════════════════════════════════════════════════════════════
         // STEP 3 — Return response immediately

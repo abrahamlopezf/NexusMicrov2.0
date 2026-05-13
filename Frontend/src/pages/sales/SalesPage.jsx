@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { ShoppingCart, Plus, Search, Eye, RefreshCw, DollarSign, Calendar, Filter, Download, ArrowUpRight } from 'lucide-react';
 import saleService from '../../api/saleService';
 import OrderFormModal from './OrderFormModal';
+import SaleDetailModal from './SaleDetailModal';
 
 const SalesPage = () => {
   const [sales, setSales] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [selectedSaleId, setSelectedSaleId] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
@@ -17,8 +19,9 @@ const SalesPage = () => {
     try {
       setLoading(true);
       const response = await saleService.getSales();
-      // En este controlador, las ventas vienen directamente en data.data
-      setSales(response.data || []);
+      // El servicio devuelve { success: true, data: [...] }
+      const salesArray = response?.data || [];
+      setSales(Array.isArray(salesArray) ? salesArray : []);
     } catch (error) {
       console.error('Error fetching sales:', error);
       setSales([]);
@@ -180,7 +183,7 @@ const SalesPage = () => {
                       </div>
                     </td>
                     <td className="px-8 py-6 text-right">
-                      <button className="p-4 bg-slate-50 text-slate-400 rounded-2xl hover:bg-slate-100 transition-colors group-hover:text-indigo-600">
+                      <button onClick={() => setSelectedSaleId(sale.id)} className="p-4 bg-slate-50 text-slate-400 rounded-2xl hover:bg-slate-100 transition-colors group-hover:text-indigo-600">
                         <Eye size={18} />
                       </button>
                     </td>
@@ -198,6 +201,16 @@ const SalesPage = () => {
           onClose={() => setShowForm(false)} 
           onSuccess={() => {
             setShowForm(false);
+            fetchSales();
+          }}
+        />
+      )}
+
+      {selectedSaleId && (
+        <SaleDetailModal
+          saleId={selectedSaleId}
+          onClose={() => setSelectedSaleId(null)}
+          onSuccess={() => {
             fetchSales();
           }}
         />

@@ -9,7 +9,9 @@ import {
   PieChart,
   Settings,
   LogOut,
-  FileText
+  FileText,
+  UserCheck,
+  Landmark
 } from "lucide-react";
 import { useLocation, Link } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
@@ -18,11 +20,13 @@ const adminItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
   { icon: ShoppingCart, label: "Ventas", path: "/sales" },
   { icon: FileText, label: "Cotizaciones", path: "/quotes" },
+  { icon: UserCheck, label: "Clientes", path: "/clients" },
   { icon: Package, label: "Inventario", path: "/inventory" },
   { icon: Truck, label: "Proveedores", path: "/suppliers" },
   { icon: ShoppingBag, label: "Compras", path: "/purchases" },
   { icon: Wrench, label: "Producción", path: "/production" },
   { icon: Users, label: "Personal", path: "/payroll" },
+  { icon: Landmark, label: "Finanzas / Caja", path: "/finance" },
   { icon: PieChart, label: "Reportes", path: "/reports" },
 ];
 
@@ -30,9 +34,11 @@ const managerItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
   { icon: ShoppingCart, label: "Ventas", path: "/sales" },
   { icon: FileText, label: "Cotizaciones", path: "/quotes" },
+  { icon: UserCheck, label: "Clientes", path: "/clients" },
   { icon: Package, label: "Inventario", path: "/inventory" },
   { icon: Truck, label: "Proveedores", path: "/suppliers" },
   { icon: Wrench, label: "Producción", path: "/production" },
+  { icon: Landmark, label: "Caja", path: "/finance" },
   { icon: PieChart, label: "Reportes", path: "/reports" },
 ];
 
@@ -40,6 +46,7 @@ const employeeItems = [
   { icon: LayoutDashboard, label: "Panel Principal", path: "/dashboard" },
   { icon: ShoppingCart, label: "Ventas", path: "/sales" },
   { icon: FileText, label: "Cotizaciones", path: "/quotes" },
+  { icon: UserCheck, label: "Clientes", path: "/clients" },
   { icon: Truck, label: "Proveedores", path: "/suppliers" },
   { icon: ShoppingBag, label: "Compras", path: "/purchases" },
   { icon: Wrench, label: "Producción", path: "/production" },

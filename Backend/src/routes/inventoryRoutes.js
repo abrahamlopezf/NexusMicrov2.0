@@ -10,4 +10,8 @@ router.get("/", auth, authorizeRoles(ROLES.ADMIN, ROLES.MANAGER), InventoryContr
 router.post("/adjust", auth, authorizeRoles(ROLES.ADMIN, ROLES.MANAGER), InventoryController.adjustInventory);
 router.get("/movements", auth, authorizeRoles(ROLES.ADMIN, ROLES.MANAGER), InventoryController.getInventoryMovements);
 
+// Alerts endpoints
+router.get("/alerts", auth, authorizeRoles(ROLES.ADMIN, ROLES.MANAGER), InventoryController.getLowStockAlerts);
+router.post("/alerts/:id/resolve", auth, authorizeRoles(ROLES.ADMIN, ROLES.MANAGER), InventoryController.resolveAlert);
+
 module.exports = router;

@@ -23,7 +23,8 @@ const Product = sequelize.define("Product", {
     },
     category: {
         type: DataTypes.STRING(100),
-        allowNull: true
+        allowNull: true,
+        defaultValue: 'Básicos'
     },
     legacy_hours_pattern: {
         type: DataTypes.DECIMAL(5, 2),

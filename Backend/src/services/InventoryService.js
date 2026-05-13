@@ -1,6 +1,7 @@
-const { Material, InventoryReservation, InventoryMovement, Supplier } = require('../models');
+const { Material, InventoryReservation, InventoryMovement, Supplier, StockAlert } = require('../models');
 const AppError = require('../utils/AppError');
 const sequelize = require('../config/database');
+const { LOW_STOCK_ALERT } = require('../queues/jobs/inventory.jobs');
 
 class InventoryService {
     static async validateStock(materialId, requiredQuantity, transaction = null) {
@@ -20,6 +21,8 @@ class InventoryService {
      * Unified method for stock adjustments with movement logging
      */
     static async adjustStock({ materialId, quantity, type, reason, referenceType, referenceId, userId, transaction = null }) {
+        const QueueService = require('./QueueService'); // BREAK CIRCULAR DEP
+
         const executeAdjustment = async (t) => {
             const material = await Material.findByPk(materialId, { transaction: t, lock: t.LOCK.UPDATE });
             if (!material) throw new AppError('Material no encontrado', 404);
@@ -31,6 +34,21 @@ class InventoryService {
             if (newStock < 0) throw new AppError('El stock resultante no puede ser negativo', 400);
 
             await material.update({ current_stock: newStock }, { transaction: t });
+
+            // Check for low stock and trigger alert if necessary (Safely)
+            if (newStock <= parseFloat(material.min_stock)) {
+                try {
+                    QueueService.addInventoryJob(LOW_STOCK_ALERT, {
+                        materialId: material.id,
+                        materialName: material.name,
+                        current_stock: newStock,
+                        min_stock: material.min_stock,
+                        correlationId: `ADJUST-${Date.now()}`
+                    }).catch(err => console.error('Error adding inventory job:', err));
+                } catch (alertErr) {
+                    console.error('Failed to trigger low stock alert:', alertErr);
+                }
+            }
 
             // Create movement record
             await InventoryMovement.create({
@@ -115,7 +133,6 @@ class InventoryService {
 
     static async releaseReservedStock(materialId, quantity, context, transaction) {
         if (!transaction) throw new AppError('releaseReservedStock requires a transaction', 500);
-        // Simplified for brevity
         const material = await Material.findByPk(materialId, { transaction });
         const currentReserved = parseFloat(material.reserved_stock || 0);
         await material.update({ reserved_stock: Math.max(0, currentReserved - parseFloat(quantity)) }, { transaction });
@@ -149,6 +166,45 @@ class InventoryService {
             limit: parseInt(limit),
             offset: parseInt(offset)
         });
+    }
+
+    static async getLowStockAlerts() {
+        const QueueService = require('./QueueService'); // BREAK CIRCULAR DEP
+
+        const lowMaterials = await Material.findAll({
+            where: sequelize.where(
+                sequelize.col('current_stock'),
+                '<=',
+                sequelize.col('min_stock')
+            )
+        });
+
+        for (const material of lowMaterials) {
+            try {
+                QueueService.addInventoryJob(LOW_STOCK_ALERT, {
+                    materialId: material.id,
+                    materialName: material.name,
+                    current_stock: material.current_stock,
+                    min_stock: material.min_stock,
+                    correlationId: `SYNC-${Date.now()}`
+                }).catch(e => console.error('Sync job failed:', e));
+            } catch (err) {
+                console.error('Failed to queue sync job:', err);
+            }
+        }
+
+        return await StockAlert.findAll({
+            where: { resolved: false },
+            include: [{ model: Material, as: 'material', attributes: ['name', 'unit', 'current_stock', 'min_stock'] }],
+            order: [['created_at', 'DESC']]
+        });
+    }
+
+    static async resolveAlert(alertId) {
+        const alert = await StockAlert.findByPk(alertId);
+        if (!alert) throw new AppError('Alerta no encontrada', 404);
+        await alert.update({ resolved: true, resolved_at: new Date() });
+        return alert;
     }
 }
 

@@ -71,6 +71,7 @@ Material.associate = function(models) {
     Material.hasMany(models.ProductMaterial, { foreignKey: 'material_id', as: 'product_materials' });
     Material.hasMany(models.InventoryMovement, { foreignKey: 'material_id', as: 'inventory_movements' });
     Material.hasMany(models.PurchaseItem, { foreignKey: 'material_id', as: 'purchase_items' });
+    Material.hasMany(models.StockAlert, { foreignKey: 'material_id', as: 'stock_alerts' });
     Material.belongsTo(models.Supplier, { foreignKey: 'supplier_id', as: 'supplier' });
 };
 

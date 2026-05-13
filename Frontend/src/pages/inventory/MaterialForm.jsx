@@ -140,10 +140,7 @@ const MaterialForm = ({ material, onClose, onSuccess }) => {
                   className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all font-bold text-slate-700"
                 >
                   <option value="m">Metros (m)</option>
-                  <option value="kg">Kilogramos (kg)</option>
                   <option value="pz">Piezas (pz)</option>
-                  <option value="l">Litros (l)</option>
-                  <option value="yd">Yardas (yd)</option>
                 </select>
               </div>
 

@@ -5,7 +5,7 @@ const createClient = async (req, res, next) => {
         const result = await ClientService.createClient(req.body);
         res.status(201).json({
             success: true,
-            data: result
+            data: result.toJSON ? result.toJSON() : result
         });
     } catch (error) {
         next(error);
@@ -41,7 +41,7 @@ const updateClient = async (req, res, next) => {
         const result = await ClientService.updateClient(req.params.id, req.body);
         res.status(200).json({
             success: true,
-            data: result
+            data: result.toJSON ? result.toJSON() : result
         });
     } catch (error) {
         next(error);

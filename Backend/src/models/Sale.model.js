@@ -73,6 +73,14 @@ const Sale = sequelize.define("Sale", {
     is_paid: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
+    },
+    delivery_date: {
+        type: DataTypes.DATE,
+        allowNull: true
+    },
+    loyalty_applied: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
 }, {
     tableName: "sales",

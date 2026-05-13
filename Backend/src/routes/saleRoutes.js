@@ -66,4 +66,20 @@ router.patch(
     saleController.deliverSale
 );
 
+// GET /api/sales/:id
+router.get(
+    '/:id',
+    auth,
+    authorize(ROLES.ADMIN, ROLES.MANAGER, ROLES.EMPLOYEE),
+    saleController.getSaleById
+);
+
+// POST /api/sales/:id/payments
+router.post(
+    '/:id/payments',
+    auth,
+    authorize(ROLES.ADMIN, ROLES.MANAGER, ROLES.EMPLOYEE),
+    saleController.addPayment
+);
+
 module.exports = router;

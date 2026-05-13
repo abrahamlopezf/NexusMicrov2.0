@@ -10,6 +10,8 @@ import InventoryLayout from "./pages/inventory/InventoryLayout";
 import ProductionLayout from "./pages/production/ProductionLayout";
 import SuppliersPage from "./pages/suppliers/SuppliersPage";
 import PurchasesPage from "./pages/purchases/PurchasesPage";
+import ClientsPage from "./pages/sales/ClientsPage";
+import FinanceDashboard from "./pages/finance/FinanceDashboard";
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
         {/* Modulos de Ventas e Ingresos */}
         <Route path="/sales" element={<ProtectedRoute><MainLayout><SalesPage /></MainLayout></ProtectedRoute>} />
         <Route path="/quotes" element={<ProtectedRoute><MainLayout><QuotesPage /></MainLayout></ProtectedRoute>} />
+        <Route path="/clients" element={<ProtectedRoute><MainLayout><ClientsPage /></MainLayout></ProtectedRoute>} />
+        <Route path="/finance" element={<ProtectedRoute><MainLayout><FinanceDashboard /></MainLayout></ProtectedRoute>} />
         
         {/* Modulo de Configuración ERP */}
         <Route path="/admin/settings" element={<ProtectedRoute><MainLayout><CostsSettings /></MainLayout></ProtectedRoute>} />
