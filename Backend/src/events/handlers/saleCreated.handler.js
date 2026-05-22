@@ -13,7 +13,7 @@ const handleSaleCreated = async (sale) => {
     logger.info(`⚙️ [WORKFLOW] Processing SALE_CREATED for Sale ID: ${sale.id}`);
     
     // Require services lazily to avoid circular module resolution conflicts
-    const WorkOrderService = require('../../services/WorkOrder.service');
+    const WorkOrderService = require('../../modules/workorders/WorkOrderService');
     // const ProductionService = require('../../services/Production.service');
     // const InventoryService = require('../../services/InventoryWrapper.service');
 

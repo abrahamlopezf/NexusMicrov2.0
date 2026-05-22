@@ -2,7 +2,7 @@ const { Worker } = require('bullmq');
 const { connection } = require('../queue');
 const { SALE_CONFIRMED, SALE_CANCELLED } = require('../jobs/sale.jobs');
 const { Sale, SaleItem, WorkOrder } = require('../../models');
-const SaleService = require('../../services/SaleService');
+const SaleService = require('../../modules/sales/SaleService');
 const QueueService = require('../../services/QueueService');
 const logQueueError = require('../utils/errorLogger');
 

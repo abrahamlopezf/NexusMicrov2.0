@@ -58,3 +58,57 @@
 {"level":"error","message":"TypeError: Cannot read properties of undefined (reading 'query')","service":"erp-backend","timestamp":"2026-05-02T00:36:21.544Z"}
 {"level":"error","message":"UNHANDLED REJECTION 💥 Shutting down...","service":"erp-backend","timestamp":"2026-05-02T00:36:27.563Z"}
 {"level":"error","message":"❌ Database connection error (Retries left: 4): connect ECONNREFUSED 127.0.0.1:5432","service":"erp-backend","timestamp":"2026-05-06T18:02:31.511Z"}
+{"level":"error","message":"UNCAUGHT EXCEPTION 💥 Shutting down...","service":"erp-backend","timestamp":"2026-05-12T23:08:03.774Z"}
+{"level":"error","message":"❌ Database connection error (Retries left: 4): no existe la base de datos �erp_test�","service":"erp-backend","timestamp":"2026-05-12T23:17:39.833Z"}
+{"level":"error","message":"❌ Database connection error (Retries left: 4): no existe la base de datos �erp_test�","service":"erp-backend","timestamp":"2026-05-12T23:17:39.848Z"}
+{"level":"error","message":"❌ Database connection error (Retries left: 4): no existe la base de datos �erp_test�","service":"erp-backend","timestamp":"2026-05-12T23:17:40.027Z"}
+{"level":"error","message":"❌ Database connection error (Retries left: 4): no existe la base de datos �erp_test�","service":"erp-backend","timestamp":"2026-05-12T23:17:40.623Z"}
+{"level":"error","message":"❌ Database connection error (Retries left: 4): no existe la base de datos �erp_test�","service":"erp-backend","timestamp":"2026-05-12T23:17:40.695Z"}
+{"level":"error","message":"❌ Database connection error (Retries left: 4): no existe la base de datos �erp_test�","service":"erp-backend","timestamp":"2026-05-12T23:17:40.746Z"}
+{"level":"error","message":"❌ Database connection error (Retries left: 4): no existe la base de datos �erp_test�","service":"erp-backend","timestamp":"2026-05-12T23:17:40.812Z"}
+{"level":"error","message":"❌ Database connection error (Retries left: 4): no existe la base de datos �erp_test�","service":"erp-backend","timestamp":"2026-05-12T23:17:40.845Z"}
+{"level":"error","message":"❌ Database connection error (Retries left: 4): no existe la base de datos �erp_test�","service":"erp-backend","timestamp":"2026-05-12T23:17:40.885Z"}
+{"level":"error","message":"❌ Database connection error (Retries left: 4): no existe la base de datos �erp_test�","service":"erp-backend","timestamp":"2026-05-12T23:17:40.993Z"}
+{"level":"error","message":"❌ Database connection error (Retries left: 4): no existe la base de datos �erp_test�","service":"erp-backend","timestamp":"2026-05-12T23:17:41.294Z"}
+{"level":"error","message":"❌ Database connection error (Retries left: 4): no existe la base de datos �erp_test�","service":"erp-backend","timestamp":"2026-05-12T23:17:41.424Z"}
+{"level":"error","message":"❌ Database connection error (Retries left: 4): no existe la base de datos �erp_test�","service":"erp-backend","timestamp":"2026-05-12T23:17:41.476Z"}
+{"level":"error","message":"❌ Database connection error (Retries left: 4): no existe la base de datos �erp_test�","service":"erp-backend","timestamp":"2026-05-12T23:17:41.607Z"}
+{"level":"error","message":"❌ Database connection error (Retries left: 4): no existe la base de datos �erp_test�","service":"erp-backend","timestamp":"2026-05-12T23:17:41.630Z"}
+{"level":"error","message":"❌ Database connection error (Retries left: 4): no existe la base de datos �erp_test�","service":"erp-backend","timestamp":"2026-05-12T23:17:41.631Z"}
+{"level":"error","message":"❌ Database connection error (Retries left: 4): no existe la base de datos �erp_test�","service":"erp-backend","timestamp":"2026-05-12T23:17:42.016Z"}
+{"level":"error","message":"❌ Database connection error (Retries left: 4): no existe la base de datos �erp_test�","service":"erp-backend","timestamp":"2026-05-12T23:17:42.029Z"}
+{"level":"error","message":"❌ Database connection error (Retries left: 4): no existe la base de datos �erp_test�","service":"erp-backend","timestamp":"2026-05-12T23:17:42.200Z"}
+{"level":"error","message":"❌ Database connection error (Retries left: 4): no existe la base de datos �erp_test�","service":"erp-backend","timestamp":"2026-05-12T23:17:42.206Z"}
+{"level":"error","message":"❌ Database connection error (Retries left: 4): no existe la base de datos �erp_test�","service":"erp-backend","timestamp":"2026-05-12T23:17:42.232Z"}
+{"level":"error","message":"❌ Database connection error (Retries left: 4): no existe la base de datos �erp_test�","service":"erp-backend","timestamp":"2026-05-12T23:17:42.244Z"}
+{"level":"error","message":"❌ Database connection error (Retries left: 4): no existe la base de datos �erp_test�","service":"erp-backend","timestamp":"2026-05-12T23:17:42.272Z"}
+{"level":"error","message":"❌ Unable to connect to database:","service":"erp-backend","timestamp":"2026-05-13T01:26:05.854Z"}
+{"level":"error","message":"❌ Unable to connect to database:","service":"erp-backend","timestamp":"2026-05-13T01:26:12.839Z"}
+{"level":"error","message":"❌ Unable to connect to database:","service":"erp-backend","timestamp":"2026-05-13T01:26:22.454Z"}
+{"level":"error","message":"❌ Unable to connect to database:","service":"erp-backend","timestamp":"2026-05-13T01:27:57.243Z"}
+{"level":"error","message":"❌ Unable to connect to database:","service":"erp-backend","timestamp":"2026-05-13T01:33:54.623Z"}
+{"level":"error","message":"❌ Unable to connect to database:","service":"erp-backend","timestamp":"2026-05-13T01:34:03.723Z"}
+{"level":"error","message":"❌ Unable to connect to database:","service":"erp-backend","timestamp":"2026-05-14T00:30:19.080Z"}
+{"level":"error","message":"❌ Unable to connect to database:","service":"erp-backend","timestamp":"2026-05-14T00:32:23.293Z"}
+{"level":"error","message":"❌ Unable to connect to database:","service":"erp-backend","timestamp":"2026-05-14T00:49:10.539Z"}
+{"level":"error","message":"Error in expiration job: no existe la columna «sku»","service":"erp-backend","timestamp":"2026-05-20T04:16:08.950Z"}
+{"level":"error","message":"Error in expiration job: no existe la columna «sku»","service":"erp-backend","timestamp":"2026-05-20T04:26:08.875Z"}
+{"level":"error","message":"Error in expiration job: InventoryService.releaseReservedStock is not a function","service":"erp-backend","timestamp":"2026-05-20T05:21:43.378Z"}
+{"level":"error","message":"Error in expiration job: InventoryService.releaseReservedStock is not a function","service":"erp-backend","timestamp":"2026-05-20T05:31:43.367Z"}
+{"level":"error","message":"Error in expiration job: InventoryService.releaseReservedStock is not a function","service":"erp-backend","timestamp":"2026-05-20T05:56:48.104Z"}
+{"level":"error","message":"Error in expiration job: InventoryService.releaseReservedStock is not a function","service":"erp-backend","timestamp":"2026-05-20T06:13:13.146Z"}
+{"level":"error","message":"Error in expiration job: InventoryService.releaseReservedStock is not a function","service":"erp-backend","timestamp":"2026-05-20T06:23:13.145Z"}
+{"level":"error","message":"Error in expiration job: InventoryService.releaseReservedStock is not a function","service":"erp-backend","timestamp":"2026-05-21T15:32:34.210Z"}
+{"level":"error","message":"Error in expiration job: InventoryService.releaseReservedStock is not a function","service":"erp-backend","timestamp":"2026-05-21T15:42:34.180Z"}
+{"level":"error","message":"Error in expiration job: InventoryService.releaseReservedStock is not a function","service":"erp-backend","timestamp":"2026-05-21T15:58:46.362Z"}
+{"level":"error","message":"Error in expiration job: InventoryService.releaseReservedStock is not a function","service":"erp-backend","timestamp":"2026-05-21T16:26:50.515Z"}
+{"level":"error","message":"Error in expiration job: InventoryService.releaseReservedStock is not a function","service":"erp-backend","timestamp":"2026-05-21T16:46:53.791Z"}
+{"level":"error","message":"Error in expiration job: InventoryService.releaseReservedStock is not a function","service":"erp-backend","timestamp":"2026-05-21T16:56:53.780Z"}
+{"level":"error","message":"Error in expiration job: InventoryService.releaseReservedStock is not a function","service":"erp-backend","timestamp":"2026-05-21T17:06:53.782Z"}
+{"level":"error","message":"Error in expiration job: InventoryService.releaseReservedStock is not a function","service":"erp-backend","timestamp":"2026-05-21T17:16:54.064Z"}
+{"level":"error","message":"Error in expiration job: InventoryService.releaseReservedStock is not a function","service":"erp-backend","timestamp":"2026-05-21T17:41:01.909Z"}
+{"level":"error","message":"Error in expiration job: InventoryService.releaseReservedStock is not a function","service":"erp-backend","timestamp":"2026-05-21T17:52:58.983Z"}
+{"level":"error","message":"Error in expiration job: InventoryService.releaseReservedStock is not a function","service":"erp-backend","timestamp":"2026-05-21T18:24:40.456Z"}
+{"level":"error","message":"Error in expiration job: InventoryService.releaseReservedStock is not a function","service":"erp-backend","timestamp":"2026-05-21T18:41:33.489Z"}
+{"level":"error","message":"Error in expiration job: InventoryService.releaseReservedStock is not a function","service":"erp-backend","timestamp":"2026-05-21T18:59:28.716Z"}
+{"level":"error","message":"Error in expiration job: InventoryService.releaseReservedStock is not a function","service":"erp-backend","timestamp":"2026-05-21T19:55:07.120Z"}

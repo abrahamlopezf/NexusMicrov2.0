@@ -1,6 +1,6 @@
 const { InventoryReservation, sequelize } = require('../models');
 const { Op } = require('sequelize');
-const InventoryService = require('../services/InventoryService');
+const InventoryService = require('../modules/inventory/InventoryService');
 const logger = require('../utils/logger');
 
 const startExpirationJob = () => {

@@ -1,7 +1,7 @@
 const { Worker } = require('bullmq');
 const { connection } = require('../queue');
 const { RESERVE_STOCK, RELEASE_STOCK, CONSUME_STOCK } = require('../jobs/inventory.jobs');
-const InventoryService = require('../../services/InventoryService');
+const InventoryService = require('../../modules/inventory/InventoryService');
 const logQueueError = require('../utils/errorLogger');
 const { sequelize } = require('../../models');
 
