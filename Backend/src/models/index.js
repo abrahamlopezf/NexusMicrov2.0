@@ -13,6 +13,22 @@ fs.readdirSync(__dirname)
     db[model.name] = model;
   });
 
+// Cargar dinámicamente desde módulos
+const modulesPath = path.join(__dirname, '../modules');
+if (fs.existsSync(modulesPath)) {
+    fs.readdirSync(modulesPath).forEach(moduleDir => {
+        const modulePath = path.join(modulesPath, moduleDir);
+        if (fs.statSync(modulePath).isDirectory()) {
+            fs.readdirSync(modulePath)
+              .filter(file => file.endsWith('.model.js'))
+              .forEach(file => {
+                  const model = require(path.join(modulePath, file));
+                  db[model.name] = model;
+              });
+        }
+    });
+}
+
 // Configurar asociaciones (relaciones Enterprise)
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {

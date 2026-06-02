@@ -19,8 +19,7 @@ const startServer = async () => {
         logger.info("✅ Database connected");
 
         if (config.nodeEnv === "development") {
-            await db.sequelize.sync({ alter: true });
-            logger.info("📦 Database synced");
+            logger.info("📦 Using Sequelize migrations");
         }
 
         // Initialize Redis connection and queue system
@@ -31,7 +30,7 @@ const startServer = async () => {
         const port = config.port || 3000;
         const server = app.listen(port, () => {
             logger.info(`🚀 Server running on port ${port} in ${config.nodeEnv} mode`);
-            
+
             // Start background jobs
             const { startExpirationJob } = require('./jobs/inventoryJobs');
             startExpirationJob();

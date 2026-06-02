@@ -1,7 +1,7 @@
 const { Worker } = require('bullmq');
 const { connection } = require('../queue');
 const { CREATE_WORK_ORDER, COMPLETE_TASK } = require('../jobs/production.jobs');
-const ProductionService = require('../../services/ProductionService');
+const ProductionService = require('../../modules/production/ProductionService');
 const QueueService = require('../../services/QueueService');
 const logQueueError = require('../utils/errorLogger');
 

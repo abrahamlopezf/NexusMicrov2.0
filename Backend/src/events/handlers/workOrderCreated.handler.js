@@ -9,7 +9,7 @@ const logger = require('../../middlewares/loggerMiddleware');
 const handleWorkOrderCreated = async (workOrder) => {
     logger.info(`⚙️ [WORKFLOW] Processing WORK_ORDER_CREATED for WO ID: ${workOrder.id}`);
 
-    const TaskService = require('../../services/Task.service');
+    const TaskService = require('../../modules/tasks/TaskService');
 
     try {
         logger.info(`⚙️ [WORKFLOW] Generating Production Tasks for WO ${workOrder.id}`);
