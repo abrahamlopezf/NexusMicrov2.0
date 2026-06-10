@@ -1,44 +1,44 @@
-import React, { useState, useEffect } from 'react';
-import { ShoppingBag, Plus, Search, Eye, CheckCircle2, Clock, AlertCircle } from 'lucide-react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { ShoppingBag, Plus, Search, Eye, CheckCircle2, Clock, AlertCircle, Package } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 import purchaseService from '../../api/purchaseService';
 import PurchaseOrderForm from './PurchaseOrderForm';
+import PurchaseDetailModal from './PurchaseDetailModal';
+import ErrorBoundary from '../../components/ErrorBoundary';
 
 const PurchasesPage = () => {
+  const { pathname } = useLocation();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [selectedPurchaseId, setSelectedPurchaseId] = useState(null);
 
-  useEffect(() => {
-    let isMounted = true;
-    const fetchOrders = async () => {
-      try {
-        setLoading(true);
-        const response = await purchaseService.getPurchaseOrders();
-        if (isMounted && response && response.success) {
-          setOrders(Array.isArray(response.data) ? response.data : []);
-        }
-      } catch (error) {
-        console.error('Error fetching purchases:', error);
-      } finally {
-        if (isMounted) setLoading(false);
+  const fetchOrders = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await purchaseService.getPurchaseOrders();
+      if (response && response.success) {
+        setOrders(Array.isArray(response.data) ? response.data : []);
       }
-    };
-    fetchOrders();
-    return () => { isMounted = false; };
+    } catch (error) {
+      console.error('Error fetching purchases:', error);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  const handleReceive = async (id) => {
-    if (window.confirm('¿Confirmas la recepción de esta mercancía? El stock se sumará al inventario automáticamente.')) {
-      try {
-        await purchaseService.receivePurchaseOrder(id);
-        alert('Mercancía recibida e inventario actualizado.');
-        window.location.reload();
-      } catch (error) {
-        alert('Error: ' + (error.response?.data?.message || error.message));
-      }
+  useEffect(() => {
+    fetchOrders();
+  }, [fetchOrders, pathname]);
+
+  const prevShowModal = useRef(showModal);
+  useEffect(() => {
+    if (prevShowModal.current && !showModal) {
+      fetchOrders();
     }
-  };
+    prevShowModal.current = showModal;
+  }, [showModal, fetchOrders]);
 
   const getStatusBadge = (status) => {
     const configs = {
@@ -95,6 +95,7 @@ const PurchasesPage = () => {
           <thead>
             <tr className="bg-slate-50/50 border-b border-slate-100">
               <th className="text-left py-5 px-8 font-black text-slate-400 text-[10px] uppercase tracking-[0.15em]">Folio / Proveedor</th>
+              <th className="text-left py-5 px-6 font-black text-slate-400 text-[10px] uppercase tracking-[0.15em]">Materiales</th>
               <th className="text-center py-5 px-6 font-black text-slate-400 text-[10px] uppercase tracking-[0.15em]">Total</th>
               <th className="text-center py-5 px-6 font-black text-slate-400 text-[10px] uppercase tracking-[0.15em]">Estado</th>
               <th className="text-center py-5 px-6 font-black text-slate-400 text-[10px] uppercase tracking-[0.15em]">Fecha</th>
@@ -102,17 +103,28 @@ const PurchasesPage = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-50">
-            {loading ? (
-              <tr><td colSpan={5} className="py-24 text-center text-[10px] font-black text-slate-300 uppercase tracking-[0.2em] animate-pulse">Consultando historial de compras...</td></tr>
+              {loading ? (
+              <tr><td colSpan={6} className="py-24 text-center text-[10px] font-black text-slate-300 uppercase tracking-[0.2em] animate-pulse">Consultando historial de compras...</td></tr>
             ) : orders.length === 0 ? (
-              <tr><td colSpan={5} className="py-24 text-center text-slate-400 font-medium">No hay órdenes de compra registradas.</td></tr>
+              <tr><td colSpan={6} className="py-24 text-center text-slate-400 font-medium">No hay órdenes de compra registradas.</td></tr>
             ) : (
               orders.map((order) => (
                 <tr key={order.id} className="group hover:bg-slate-50/50 transition-colors">
                   <td className="py-5 px-8">
                     <div>
-                      <p className="font-black text-slate-900 text-sm">OC-{String(order.id).padStart(5, '0')}</p>
+                      <p className="font-black text-slate-900 text-sm">{order.purchase_number || `OC-${String(order.id).padStart(5, '0')}`}</p>
                       <p className="text-xs font-bold text-indigo-500 uppercase tracking-tight">{order.supplier?.name || 'Proveedor N/A'}</p>
+                      {order.reference && <p className="text-[10px] text-slate-400 font-mono">Ref: {order.reference}</p>}
+                    </div>
+                  </td>
+                  <td className="py-5 px-6">
+                    <div className="flex items-center gap-2">
+                      <Package size={12} className="text-slate-300" />
+                      <span className="text-xs font-bold text-slate-600">{order.items?.length || 0} material(es)</span>
+                    </div>
+                    <div className="text-[10px] text-slate-400 mt-1 line-clamp-1">
+                      {order.items?.slice(0, 2).map(i => i.material?.name).filter(Boolean).join(', ')}
+                      {(order.items?.length || 0) > 2 ? '...' : ''}
                     </div>
                   </td>
                   <td className="py-5 px-6 text-center">
@@ -123,20 +135,16 @@ const PurchasesPage = () => {
                   </td>
                   <td className="py-5 px-6 text-center">
                     <p className="text-xs font-bold text-slate-400 uppercase tracking-tighter">
-                      {new Date(order.createdAt).toLocaleDateString()}
+                      {new Date(order.created_at || order.createdAt).toLocaleDateString()}
                     </p>
                   </td>
                   <td className="py-5 px-8 text-right">
                     <div className="flex justify-end gap-2">
-                      {order.status === 'PENDIENTE' && (
-                        <button 
-                          onClick={() => handleReceive(order.id)}
-                          className="px-4 py-2 bg-emerald-50 text-emerald-600 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-emerald-100 transition-all"
-                        >
-                          Recibir
-                        </button>
-                      )}
-                      <button className="p-2.5 text-slate-400 hover:bg-slate-100 rounded-xl transition-all">
+                      <button
+                        onClick={() => setSelectedPurchaseId(order.id)}
+                        className="p-2.5 bg-slate-50 text-slate-400 hover:bg-indigo-50 hover:text-indigo-600 rounded-xl transition-all"
+                        title="Ver detalle"
+                      >
                         <Eye size={18} />
                       </button>
                     </div>
@@ -149,8 +157,17 @@ const PurchasesPage = () => {
       </div>
 
       {showModal && (
-        <PurchaseOrderForm 
-          onClose={() => setShowModal(false)}
+        <ErrorBoundary>
+          <PurchaseOrderForm 
+            onClose={() => setShowModal(false)}
+          />
+        </ErrorBoundary>
+      )}
+
+      {selectedPurchaseId && (
+        <PurchaseDetailModal
+          purchaseId={selectedPurchaseId}
+          onClose={() => setSelectedPurchaseId(null)}
         />
       )}
     </div>

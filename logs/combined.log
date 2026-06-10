@@ -1,0 +1,1 @@
+{"level":"error","message":"❌ Database connection error (Retries left: 4): SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string","service":"erp-backend","timestamp":"2026-06-10T21:05:12.998Z"}

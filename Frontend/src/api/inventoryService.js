@@ -28,6 +28,10 @@ const inventoryService = {
     const response = await axios.get(`/products/${id}/full`);
     return response.data;
   },
+  getProductRecipe: async (productId) => {
+    const response = await axios.get(`/products/${productId}/material-rules`);
+    return response.data;
+  },
   createProduct: async (payload) => {
     // payload should be { data, materials, costConfig }
     const response = await axios.post('/products', payload);
@@ -44,16 +48,54 @@ const inventoryService = {
     return response.data;
   },
   adjustStock: async (data) => {
-    // data should be { materialId, quantity, type, reason }
-    const response = await axios.post('/inventory/adjust', data);
+    const response = await axios.post('/inventory/movements', data);
     return response.data;
   },
   getMovements: async (params) => {
     const response = await axios.get('/inventory/movements', { params });
     return response.data;
   },
+  // Categories
+  getCategories: async (params) => {
+    const response = await axios.get('/materials/categories', { params });
+    return response.data;
+  },
+  createCategory: async (data) => {
+    const response = await axios.post('/materials/categories', data);
+    return response.data;
+  },
+  createSubcategory: async (data) => {
+    const response = await axios.post('/materials/subcategories', data);
+    return response.data;
+  },
+
+  // Low Stock
+  getLowStockMaterials: async () => {
+    const response = await axios.get('/materials/low-stock');
+    return response.data;
+  },
+
+  // Material Detail (includes lots, cost history)
+  getMaterialDetail: async (id) => {
+    const response = await axios.get(`/materials/${id}`);
+    return response.data;
+  },
+
+  // Material Lots
+  getMaterialLots: async (params) => {
+    const response = await axios.get('/inventory/lots', { params });
+    return response.data;
+  },
+
   getPricingSettings: async () => {
     const response = await axios.get('/pricing/settings');
+    return response.data;
+  },
+
+  // Production / Consumption
+  consumePlannedMaterials: async (saleId, saleItemId, quantities) => {
+    const payload = quantities ? { quantities } : {};
+    const response = await axios.post(`/inventory/sales/${saleId}/items/${saleItemId}/consume-planned-materials`, payload);
     return response.data;
   }
 };

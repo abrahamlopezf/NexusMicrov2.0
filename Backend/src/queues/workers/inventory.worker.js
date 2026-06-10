@@ -1,3 +1,5 @@
+const { Worker } = require('bullmq');
+const { connection } = require('../queue');
 const { RESERVE_STOCK, RELEASE_STOCK, CONSUME_STOCK } = require('../jobs/inventory.jobs');
 const InventoryService = require('../../modules/inventory/InventoryService');
 const logQueueError = require('../utils/errorLogger');
@@ -32,9 +34,4 @@ worker.on('failed', (job, err) => {
   console.error(`Inventory Job ${job.id} failed: ${err.message}`);
 });
 
-module.exports = {
-  handleReserveStock,
-  handleReleaseStock,
-  handleConsumeStock,
-  handleLowStockAlert
-};
+module.exports = worker;

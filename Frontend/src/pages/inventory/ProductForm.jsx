@@ -2,10 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { X, Save, Plus, Trash2, Calculator, Info, Package, Settings, AlertCircle } from 'lucide-react';
 import inventoryService from '../../api/inventoryService';
 
+const MATERIAL_ROLES = [
+  { value: 'SUPPLY', label: 'Insumo / Accesorio' },
+  { value: 'MAIN_FABRIC', label: 'Tela Principal' },
+  { value: 'THREAD', label: 'Hilo' },
+];
+
 const ProductForm = ({ product, onClose, onSuccess }) => {
-  const [activeTab, setActiveTab] = useState('basic'); // basic, recipe, config
+  const [activeTab, setActiveTab] = useState('basic');
   const [loading, setLoading] = useState(false);
-  const [materials, setMaterials] = useState([]); // All available materials for the select
+  const [materials, setMaterials] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [globalSettings, setGlobalSettings] = useState(null);
   const [error, setError] = useState(null);
   const isMounted = React.useRef(true);
@@ -14,7 +21,6 @@ const ProductForm = ({ product, onClose, onSuccess }) => {
     return () => { isMounted.current = false; };
   }, []);
 
-  // Form State
   const [formData, setFormData] = useState({
     name: product?.name || '',
     category: product?.category || 'Básicos',
@@ -22,48 +28,69 @@ const ProductForm = ({ product, onClose, onSuccess }) => {
     is_custom: product?.is_custom || false
   });
 
-  const [recipe, setRecipe] = useState([]); // [{ material_id, quantity, waste_percentage }]
-  
+  const [recipe, setRecipe] = useState([]);
+
   const [costConfig, setCostConfig] = useState({
     sewing_hours: 0,
     pattern_hours: 0,
     fixed_supply_cost: 0,
-    operation_margin: 0.14, // Default 14% (Sincronizado con Excel)
-    profit_margin: 0.20     // Default 20% (Sincronizado con Excel)
+    operation_margin: 0.14,
+    profit_margin: 0.20
   });
-
-  useEffect(() => {
-    fetchInitialData();
-  }, []);
 
   const fetchInitialData = async () => {
     try {
-      const matResponse = await inventoryService.getMaterials();
+      const [matResponse, catResponse, settingsResponse] = await Promise.all([
+        inventoryService.getMaterials(),
+        inventoryService.getCategories(),
+        inventoryService.getPricingSettings()
+      ]);
+
       if (matResponse && matResponse.success) {
         setMaterials(matResponse.data);
       }
 
-      const settingsResponse = await inventoryService.getPricingSettings();
+      if (catResponse && catResponse.success) {
+        setCategories(catResponse.data);
+      }
+
       if (settingsResponse && settingsResponse.success) {
         setGlobalSettings(settingsResponse.data);
       }
 
       if (product?.id) {
-        const detailResponse = await inventoryService.getProductDetail(product.id);
+        const [detailResponse, recipeResponse] = await Promise.all([
+          inventoryService.getProductDetail(product.id),
+          inventoryService.getProductRecipe(product.id)
+        ]);
+
+        // Load recipe from material-rules endpoint (has full fields)
+        if (recipeResponse && recipeResponse.success && recipeResponse.data) {
+          const rules = recipeResponse.data.materials || [];
+          if (rules.length > 0) {
+            setRecipe(rules.map(m => ({
+              material_id: m.material_id || '',
+              material_role: m.material_role || 'SUPPLY',
+              quantity: parseFloat(m.quantity || 1),
+              waste_percentage: parseFloat(m.waste_percentage || 0),
+              is_selectable: m.is_selectable || false,
+              auto_add: m.auto_add !== undefined ? m.auto_add : true,
+              is_required: m.is_required !== undefined ? m.is_required : true,
+              required_category_id: m.required_category_id || '',
+              required_subcategory_id: m.required_subcategory_id || '',
+              notes: m.notes || ''
+            })));
+          }
+        }
+
+        // Load cost config from product detail snapshot
         if (detailResponse && detailResponse.status === 'success') {
           const detail = detailResponse.data;
-          if (detail.snapshot && Array.isArray(detail.snapshot.materials)) {
-            setRecipe(detail.snapshot.materials.map(m => ({
-              material_id: m.material_id,
-              quantity: m.quantity,
-              waste_percentage: m.waste_percentage
-            })));
-            if (detail.snapshot.cost_config) {
-              setCostConfig({
-                ...costConfig,
-                ...detail.snapshot.cost_config
-              });
-            }
+          if (detail.snapshot && detail.snapshot.cost_config) {
+            setCostConfig({
+              ...costConfig,
+              ...detail.snapshot.cost_config
+            });
           }
         }
       }
@@ -72,8 +99,23 @@ const ProductForm = ({ product, onClose, onSuccess }) => {
     }
   };
 
+  useEffect(() => {
+    fetchInitialData();
+  }, []);
+
   const addMaterialToRecipe = () => {
-    setRecipe([...recipe, { material_id: '', quantity: 1, waste_percentage: 0 }]);
+    setRecipe([...recipe, {
+      material_id: '',
+      material_role: 'SUPPLY',
+      quantity: 1,
+      waste_percentage: 0,
+      is_selectable: false,
+      auto_add: true,
+      is_required: true,
+      required_category_id: '',
+      required_subcategory_id: '',
+      notes: ''
+    }]);
   };
 
   const removeMaterialFromRecipe = (index) => {
@@ -83,7 +125,32 @@ const ProductForm = ({ product, onClose, onSuccess }) => {
   const updateRecipeItem = (index, field, value) => {
     const newRecipe = [...recipe];
     newRecipe[index][field] = value;
+
+    if (field === 'material_role' && value === 'MAIN_FABRIC') {
+      newRecipe[index].is_selectable = true;
+      newRecipe[index].auto_add = false;
+    }
+
+    if (field === 'material_role' && value === 'THREAD') {
+      newRecipe[index].auto_add = true;
+    }
+
+    if (field === 'required_category_id') {
+      newRecipe[index].required_subcategory_id = '';
+    }
+
     setRecipe(newRecipe);
+  };
+
+  const getSubcategoriesForCategory = (categoryId) => {
+    if (!categoryId) return [];
+    const result = [];
+    (categories || []).forEach(cat => {
+      if (cat.id === parseInt(categoryId) && cat.subcategories) {
+        cat.subcategories.forEach(sub => result.push(sub));
+      }
+    });
+    return result;
   };
 
   const calculateLivePrice = () => {
@@ -122,8 +189,9 @@ const ProductForm = ({ product, onClose, onSuccess }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (recipe.some(r => !r.material_id)) {
-      setError('Asegúrate de que todos los materiales de la receta estén seleccionados.');
+    const invalid = recipe.some(r => r.auto_add && !r.material_id);
+    if (invalid) {
+      setError('Los materiales con "Auto" activado deben tener un material específico seleccionado.');
       setActiveTab('recipe');
       return;
     }
@@ -263,52 +331,154 @@ const ProductForm = ({ product, onClose, onSuccess }) => {
                   <p className="text-slate-400 text-sm font-medium">No has agregado materiales a la receta aún.</p>
                 </div>
               ) : (
-                <div className="space-y-3">
+                <div className="space-y-4">
                   {recipe.map((item, index) => (
-                    <div key={index} className="flex gap-4 items-end bg-slate-50/50 p-4 rounded-2xl border border-slate-100 animate-in fade-in slide-in-from-top-2">
-                      <div className="flex-1">
-                        <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Insumo / Material</label>
-                        <select
-                          value={item.material_id}
-                          onChange={(e) => updateRecipeItem(index, 'material_id', e.target.value)}
-                          className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 outline-none font-bold text-sm"
+                    <div key={index} className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                      <div className="flex justify-between items-center mb-4">
+                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Regla #{index + 1}</span>
+                        <button
+                          type="button"
+                          onClick={() => removeMaterialFromRecipe(index)}
+                          className="p-2 text-rose-400 hover:bg-rose-50 rounded-xl transition-colors"
                         >
-                          <option value="">Seleccionar...</option>
-                          {(materials || []).map(m => (
-                            <option key={m.id} value={m.id}>{m.name || 'Sin nombre'} ({m.unit || 'un'})</option>
-                          ))}
-                        </select>
+                          <Trash2 size={16} />
+                        </button>
                       </div>
-                      <div className="w-28">
-                        <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Cant. Base</label>
-                        <input
-                          type="number"
-                          step="0.01"
-                          value={item.quantity}
-                          onChange={(e) => updateRecipeItem(index, 'quantity', e.target.value)}
-                          className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 outline-none font-bold text-sm"
-                        />
-                      </div>
-                      <div className="w-28">
-                        <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">% Desperdicio</label>
-                        <div className="relative">
+
+                      <div className="grid grid-cols-12 gap-3">
+                        {/* Role */}
+                        <div className="col-span-3">
+                          <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Rol</label>
+                          <select
+                            value={item.material_role}
+                            onChange={(e) => updateRecipeItem(index, 'material_role', e.target.value)}
+                            className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 outline-none font-bold text-sm"
+                          >
+                            {MATERIAL_ROLES.map(r => (
+                              <option key={r.value} value={r.value}>{r.label}</option>
+                            ))}
+                          </select>
+                        </div>
+
+                        {/* Material */}
+                        <div className="col-span-5">
+                          <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Insumo / Material</label>
+                          <select
+                            value={item.material_id}
+                            onChange={(e) => updateRecipeItem(index, 'material_id', e.target.value)}
+                            className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 outline-none font-bold text-sm"
+                          >
+                            <option value="">Seleccionar...</option>
+                            {(materials || []).map(m => (
+                              <option key={m.id} value={m.id}>{m.name} ({m.unit})</option>
+                            ))}
+                          </select>
+                        </div>
+
+                        {/* Quantity */}
+                        <div className="col-span-2">
+                          <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Cantidad</label>
                           <input
                             type="number"
-                            step="1"
-                            value={item.waste_percentage * 100}
-                            onChange={(e) => updateRecipeItem(index, 'waste_percentage', e.target.value / 100)}
-                            className="w-full pl-4 pr-8 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 outline-none font-bold text-sm"
+                            step="0.01"
+                            value={item.quantity}
+                            onChange={(e) => updateRecipeItem(index, 'quantity', e.target.value)}
+                            className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 outline-none font-bold text-sm"
                           />
-                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs">%</span>
+                        </div>
+
+                        {/* Waste */}
+                        <div className="col-span-2">
+                          <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">% Merma</label>
+                          <div className="relative">
+                            <input
+                              type="number"
+                              step="1"
+                              value={item.waste_percentage * 100}
+                              onChange={(e) => updateRecipeItem(index, 'waste_percentage', e.target.value / 100)}
+                              className="w-full pl-3 pr-7 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 outline-none font-bold text-sm"
+                            />
+                            <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs">%</span>
+                          </div>
                         </div>
                       </div>
-                      <button
-                        type="button"
-                        onClick={() => removeMaterialFromRecipe(index)}
-                        className="p-2.5 text-rose-400 hover:bg-rose-50 rounded-xl transition-colors mb-0.5"
-                      >
-                        <Trash2 size={18} />
-                      </button>
+
+                      {/* Category / Subcategory */}
+                      <div className="grid grid-cols-12 gap-3 mt-3">
+                        <div className="col-span-5">
+                          <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Categoría requerida</label>
+                          <select
+                            value={item.required_category_id}
+                            onChange={(e) => updateRecipeItem(index, 'required_category_id', e.target.value)}
+                            className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 outline-none font-bold text-sm"
+                          >
+                            <option value="">Sin categoría</option>
+                            {(categories || []).map(c => (
+                              <option key={c.id} value={c.id}>{c.name}</option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="col-span-4">
+                          <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Subcategoría requerida</label>
+                          <select
+                            value={item.required_subcategory_id}
+                            onChange={(e) => updateRecipeItem(index, 'required_subcategory_id', e.target.value)}
+                            className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 outline-none font-bold text-sm"
+                            disabled={!item.required_category_id}
+                          >
+                            <option value="">Sin subcategoría</option>
+                            {getSubcategoriesForCategory(item.required_category_id).map(s => (
+                              <option key={s.id} value={s.id}>{s.name}</option>
+                            ))}
+                          </select>
+                        </div>
+
+                        {/* Toggles */}
+                        <div className="col-span-3 flex items-end gap-3 pb-1">
+                          <label className="flex items-center gap-1.5 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={item.is_selectable}
+                              onChange={(e) => updateRecipeItem(index, 'is_selectable', e.target.checked)}
+                              disabled={item.material_role === 'MAIN_FABRIC'}
+                              className="w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                            />
+                            <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider">Seleccionable</span>
+                          </label>
+                          <label className="flex items-center gap-1.5 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={item.auto_add}
+                              onChange={(e) => updateRecipeItem(index, 'auto_add', e.target.checked)}
+                              disabled={item.material_role === 'MAIN_FABRIC'}
+                              className="w-4 h-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"
+                            />
+                            <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider">Auto</span>
+                          </label>
+                          <label className="flex items-center gap-1.5 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={item.is_required}
+                              onChange={(e) => updateRecipeItem(index, 'is_required', e.target.checked)}
+                              className="w-4 h-4 rounded border-slate-300 text-rose-600 focus:ring-rose-500"
+                            />
+                            <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider">Req.</span>
+                          </label>
+                        </div>
+                      </div>
+
+                      {/* Notes */}
+                      {item.notes !== undefined && (
+                        <div className="mt-3">
+                          <input
+                            type="text"
+                            placeholder="Notas opcionales sobre esta regla..."
+                            value={item.notes}
+                            onChange={(e) => updateRecipeItem(index, 'notes', e.target.value)}
+                            className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 outline-none text-xs font-medium"
+                          />
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>

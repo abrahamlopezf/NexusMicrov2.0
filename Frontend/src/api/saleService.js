@@ -26,6 +26,24 @@ const saleService = {
     } catch (error) {
       throw error;
     }
+  },
+
+  getPosSummary: async (id) => {
+    try {
+      const response = await axios.get(`/sales/${id}/pos-summary`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  getCostSummary: async (id) => {
+    try {
+      const response = await axios.get(`/sales/${id}/cost-summary`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   }
 };
 

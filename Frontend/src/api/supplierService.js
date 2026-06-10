@@ -35,6 +35,27 @@ const supplierService = {
     } catch (error) {
       throw error;
     }
+  },
+
+  // External Services
+  getExternalServices: async (params) => {
+    const response = await axios.get('/suppliers/external-services', { params });
+    return response.data;
+  },
+
+  createExternalService: async (data) => {
+    const response = await axios.post('/suppliers/external-services', data);
+    return response.data;
+  },
+
+  getExternalServiceById: async (id) => {
+    const response = await axios.get(`/suppliers/external-services/${id}`);
+    return response.data;
+  },
+
+  updateExternalServiceStatus: async (id, data) => {
+    const response = await axios.patch(`/suppliers/external-services/${id}/status`, data);
+    return response.data;
   }
 };
 

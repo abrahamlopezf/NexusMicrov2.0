@@ -38,7 +38,7 @@ const getAllSales = async (req, res, next) => {
                 {
                     model: Client,
                     as: 'client',
-                    attributes: ['id', 'name', 'last_name', 'phone', 'email']
+                    attributes: ['id', 'name', 'phone', 'email']
                 }
             ]
         });

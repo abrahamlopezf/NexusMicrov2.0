@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
-import { Bell, Search, User, AlertTriangle, Check } from "lucide-react";
+import { Bell, Search, User, AlertTriangle, Check, Wallet } from "lucide-react";
 import { useAuthStore } from "../../store/authStore";
 import { useInventoryStore } from "../../store/inventoryStore";
+import CashSessionModal from "./CashSessionModal";
 
 const Header = () => {
   const user = useAuthStore((state) => state.user);
   const { alerts, fetchAlerts, resolveAlert } = useInventoryStore();
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showCashModal, setShowCashModal] = useState(false);
 
   useEffect(() => {
     fetchAlerts();
@@ -27,6 +29,16 @@ const Header = () => {
       </div>
 
       <div className="flex items-center gap-4">
+        <button
+          onClick={() => setShowCashModal(true)}
+          className="p-2 rounded-full transition-colors text-gray-500 hover:bg-emerald-100 hover:text-emerald-600"
+          title="Abrir / Cerrar Caja"
+        >
+          <Wallet size={20} />
+        </button>
+
+        {showCashModal && <CashSessionModal onClose={() => setShowCashModal(false)} />}
+
         <div className="relative">
           <button 
             onClick={() => setShowNotifications(!showNotifications)}

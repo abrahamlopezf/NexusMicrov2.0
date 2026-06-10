@@ -3,7 +3,7 @@ import axios from './axios';
 const purchaseService = {
   getPurchaseOrders: async (params) => {
     try {
-      const response = await axios.get('/purchases', { params });
+      const response = await axios.get('/suppliers/purchases', { params });
       return response.data;
     } catch (error) {
       throw error;
@@ -12,16 +12,16 @@ const purchaseService = {
 
   createPurchaseOrder: async (data) => {
     try {
-      const response = await axios.post('/purchases', data);
+      const response = await axios.post('/suppliers/purchases/materials', data);
       return response.data;
     } catch (error) {
       throw error;
     }
   },
 
-  receivePurchaseOrder: async (id) => {
+  getPurchaseById: async (id) => {
     try {
-      const response = await axios.post(`/purchases/${id}/receive`);
+      const response = await axios.get(`/suppliers/purchases/${id}`);
       return response.data;
     } catch (error) {
       throw error;

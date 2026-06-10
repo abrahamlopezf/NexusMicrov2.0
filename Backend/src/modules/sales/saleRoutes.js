@@ -57,7 +57,7 @@ router.post(
 );
 
 // GET /api/sales?page=1&limit=10
-router.get('/', auth, authorize(ROLES.ADMIN, ROLES.MANAGER), saleController.getAllSales);
+router.get('/', auth, authorize(ROLES.ADMIN, ROLES.MANAGER, ROLES.EMPLOYEE), saleController.getAllSales);
 
 // GET /api/sales/pending
 router.get(

@@ -1,57 +1,144 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/database");
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
 
-const PurchaseItem = sequelize.define("PurchaseItem", {
+const PurchaseItem = sequelize.define('PurchaseItem', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
+
+    purchase_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+
     purchase_order_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'purchase_orders',
-            key: 'id'
-        },
-        onDelete: 'CASCADE'
+        allowNull: true
     },
+
     material_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'materials',
-            key: 'id'
-        }
+        allowNull: false
     },
+
+    material_lot_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+
+    inventory_movement_id: {
+        type: DataTypes.BIGINT,
+        allowNull: true
+    },
+
     quantity: {
-        type: DataTypes.DECIMAL(10, 4),
-        allowNull: false,
-        validate: { min: 0 }
+        type: DataTypes.DECIMAL(12, 4),
+        allowNull: false
     },
+
     unit_cost: {
+        type: DataTypes.DECIMAL(12, 4),
+        allowNull: false
+    },
+
+    subtotal: {
         type: DataTypes.DECIMAL(12, 2),
         allowNull: false,
-        validate: { min: 0 }
+        defaultValue: 0
     },
+
+    tax: {
+        type: DataTypes.DECIMAL(12, 2),
+        allowNull: false,
+        defaultValue: 0
+    },
+
+    discount: {
+        type: DataTypes.DECIMAL(12, 2),
+        allowNull: false,
+        defaultValue: 0
+    },
+
     total: {
         type: DataTypes.DECIMAL(12, 2),
         allowNull: false,
-        validate: { min: 0 }
+        defaultValue: 0
+    },
+
+    scope_type: {
+        type: DataTypes.STRING(40),
+        allowNull: false,
+        defaultValue: 'GENERAL'
+    },
+
+    sale_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+
+    sale_item_id: {
+        type: DataTypes.BIGINT,
+        allowNull: true
+    },
+
+    notes: {
+        type: DataTypes.TEXT,
+        allowNull: true
+    },
+
+    created_by: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+
+    updated_by: {
+        type: DataTypes.INTEGER,
+        allowNull: true
     }
 }, {
-    tableName: "purchase_items",
+    tableName: 'purchase_items',
     timestamps: true,
-    underscored: true,
-    indexes: [
-        { fields: ['purchase_order_id'] },
-        { fields: ['material_id'] }
-    ]
+    paranoid: true,
+    underscored: true
 });
 
 PurchaseItem.associate = function(models) {
-    PurchaseItem.belongsTo(models.PurchaseOrder, { foreignKey: 'purchase_order_id', as: 'purchase_order' });
-    PurchaseItem.belongsTo(models.Material, { foreignKey: 'material_id', as: 'material' });
+    PurchaseItem.belongsTo(models.Purchase, {
+        foreignKey: 'purchase_id',
+        as: 'purchase'
+    });
+
+    PurchaseItem.belongsTo(models.PurchaseOrder, {
+        foreignKey: 'purchase_order_id',
+        as: 'purchase_order'
+    });
+
+    PurchaseItem.belongsTo(models.Material, {
+        foreignKey: 'material_id',
+        as: 'material'
+    });
+
+    PurchaseItem.belongsTo(models.MaterialLot, {
+        foreignKey: 'material_lot_id',
+        as: 'lot'
+    });
+
+    PurchaseItem.belongsTo(models.InventoryMovement, {
+        foreignKey: 'inventory_movement_id',
+        as: 'inventory_movement'
+    });
+
+    PurchaseItem.belongsTo(models.Sale, {
+        foreignKey: 'sale_id',
+        as: 'sale'
+    });
+
+    PurchaseItem.belongsTo(models.SaleItem, {
+        foreignKey: 'sale_item_id',
+        as: 'saleItem'
+    });
 };
 
 module.exports = PurchaseItem;

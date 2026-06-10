@@ -97,9 +97,17 @@ class ProductService {
             if (materials && materials.length > 0) {
                 const materialsPayload = materials.map(m => ({
                     product_id: product.id,
-                    material_id: m.material_id,
+                    material_id: m.material_id || null,
+                    required_category_id: m.required_category_id || null,
+                    required_subcategory_id: m.required_subcategory_id || null,
+                    material_role: m.material_role || 'SUPPLY',
                     quantity: m.quantity,
-                    waste_percentage: m.waste_percentage || 0
+                    waste_percentage: m.waste_percentage || 0,
+                    is_required: m.is_required !== undefined ? m.is_required : true,
+                    is_selectable: m.is_selectable || false,
+                    auto_add: m.auto_add !== undefined ? m.auto_add : true,
+                    active: true,
+                    notes: m.notes || null
                 }));
                 await ProductMaterial.bulkCreate(materialsPayload, { transaction: t });
             }
@@ -151,9 +159,17 @@ class ProductService {
                 if (materials.length > 0) {
                     const materialsPayload = materials.map(m => ({
                         product_id: product.id,
-                        material_id: m.material_id,
+                        material_id: m.material_id || null,
+                        required_category_id: m.required_category_id || null,
+                        required_subcategory_id: m.required_subcategory_id || null,
+                        material_role: m.material_role || 'SUPPLY',
                         quantity: m.quantity,
-                        waste_percentage: m.waste_percentage || 0
+                        waste_percentage: m.waste_percentage || 0,
+                        is_required: m.is_required !== undefined ? m.is_required : true,
+                        is_selectable: m.is_selectable || false,
+                        auto_add: m.auto_add !== undefined ? m.auto_add : true,
+                        active: true,
+                        notes: m.notes || null
                     }));
                     await ProductMaterial.bulkCreate(materialsPayload, { transaction: t });
                 }

@@ -2,6 +2,7 @@ const {
     sequelize,
     Supplier,
     Purchase,
+    PurchaseOrder,
     PurchaseItem,
     Material,
     MaterialCostHistory,
@@ -83,6 +84,19 @@ class PurchaseService {
                 }
             );
 
+            const purchaseOrder = await PurchaseOrder.create(
+                {
+                    supplier_id: supplier.id,
+                    status: 'RECIBIDA',
+                    total: 0,
+                    created_by: actor?.id || null
+                },
+                {
+                    transaction: t,
+                    userId: actor?.id || null
+                }
+            );
+
             const createdItems = [];
 
             for (const item of data.items) {
@@ -147,6 +161,7 @@ class PurchaseService {
                 const purchaseItem = await PurchaseItem.create(
                     {
                         purchase_id: purchase.id,
+                        purchase_order_id: purchaseOrder.id,
                         material_id: material.id,
                         quantity,
                         unit_cost: unitCost,
@@ -246,6 +261,17 @@ class PurchaseService {
                     subtotal: this.money(subtotal),
                     tax,
                     discount,
+                    total,
+                    updated_by: actor?.id || null
+                },
+                {
+                    transaction: t,
+                    userId: actor?.id || null
+                }
+            );
+
+            await purchaseOrder.update(
+                {
                     total,
                     updated_by: actor?.id || null
                 },

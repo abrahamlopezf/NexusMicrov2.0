@@ -3,6 +3,7 @@ import { usePosStore } from '../../store/posStore';
 import { POSTable } from '../../components/POS/POSTable';
 import { POSSummary } from '../../components/POS/POSSummary';
 import api from '../../api/axios';
+import saleService from '../../api/saleService';
 import { Plus, X, Loader2, AlertCircle, Wifi, Activity } from 'lucide-react';
 
 export const POSPage = () => {
@@ -22,6 +23,18 @@ export const POSPage = () => {
   // Extract active session
   const activeSession = sessions[activeSessionId];
 
+  // Fetch POS summary for a completed sale
+  const fetchPosSummary = useCallback(async (saleId, sessionId) => {
+    try {
+      const response = await saleService.getPosSummary(saleId);
+      if (response?.success && response.data) {
+        updateSessionState(sessionId, { posSummary: response.data });
+      }
+    } catch (error) {
+      console.error('Error fetching pos-summary:', error);
+    }
+  }, [updateSessionState]);
+
   // 1. Polling Logic for Async Jobs
   const pollJobStatus = useCallback(async (jobId, sessionId, currentRetries = 0) => {
     if (currentRetries > 15) {
@@ -35,9 +48,12 @@ export const POSPage = () => {
       const { status, sale_id, error } = response.data;
 
       if (status === 'completed') {
-        updateSessionState(sessionId, { status: 'valid', jobId: null, isDirty: false });
+        updateSessionState(sessionId, { status: 'valid', jobId: null, isDirty: false, saleId: sale_id });
+
+        // Fetch enriched POS summary with material_planning data
+        if (sale_id) fetchPosSummary(sale_id, sessionId);
+
         setConnectionState({ queue: 'ok' });
-        // Optional: show toast notification
       } else if (status === 'failed') {
         updateSessionState(sessionId, { status: 'error', error });
       } else {
@@ -78,7 +94,18 @@ export const POSPage = () => {
         // Start polling in background
         pollJobStatus(processing.jobId, sessionId, 0);
       } else {
-        updateSessionState(sessionId, { status: 'valid', isDirty: false });
+        const saleId = res.data?.data?.id || res.data?.sale?.id || res.data?.id;
+        const posSummary = res.data?.data?.pos_summary || res.data?.pos_summary || null;
+
+        updateSessionState(sessionId, {
+          status: 'valid',
+          isDirty: false,
+          saleId: saleId || null,
+          posSummary: posSummary || null
+        });
+
+        // Fetch pos-summary if not included in response
+        if (saleId && !posSummary) fetchPosSummary(saleId, sessionId);
       }
 
     } catch (err) {

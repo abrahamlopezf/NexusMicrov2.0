@@ -153,6 +153,8 @@ const OrderFormModal = ({ mode = 'QUOTE', onClose, onSuccess }) => {
         }
       };
 
+      let newSaleId = null;
+
       if (mode === 'QUOTE') {
           await api.post('/quotes', {
               client_id: selectedClient.id,
@@ -160,11 +162,11 @@ const OrderFormModal = ({ mode = 'QUOTE', onClose, onSuccess }) => {
               notes
           });
       } else {
-          await saleService.createSale(payload);
+          const res = await saleService.createSale(payload);
+          newSaleId = res?.data?.sale?.id || res?.data?.id || null;
       }
 
-      alert('¡Orden registrada con éxito!');
-      if (onSuccess) onSuccess();
+      if (onSuccess) onSuccess(newSaleId);
     } catch (err) {
       console.error('Error saving sale:', err);
       const serverError = err.response?.data?.message || err.response?.data?.errors || err.response?.data || err.message;

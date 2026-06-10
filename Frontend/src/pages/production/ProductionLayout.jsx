@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
-import { Wrench, ClipboardList, TrendingUp, History } from 'lucide-react';
+import { Wrench, ClipboardList, TrendingUp, History, Shirt, ListOrdered } from 'lucide-react';
 import WorkOrdersPage from './WorkOrdersPage';
+import OperationalGarments from './OperationalGarments';
+import ProductionQueuePage from './ProductionQueuePage';
+import ProductionStats from './ProductionStats';
+import ProductionHistory from './ProductionHistory';
 
 const ProductionLayout = () => {
   const [activeTab, setActiveTab] = useState('orders');
 
   const tabs = [
     { id: 'orders', label: 'Órdenes Activas', icon: ClipboardList, description: 'Seguimiento de producción' },
+    { id: 'garments', label: 'Prendas en Operación', icon: Shirt, description: 'Estado individual de prendas' },
+    { id: 'queue', label: 'Cola de Producción', icon: ListOrdered, description: 'Órdenes pendientes priorizadas' },
     { id: 'stats', label: 'Rendimiento', icon: TrendingUp, description: 'Eficiencia y tiempos' },
     { id: 'history', label: 'Historial', icon: History, description: 'Órdenes finalizadas' },
   ];
@@ -32,7 +38,7 @@ const ProductionLayout = () => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex-1 min-w-[200px] p-4 rounded-2xl border transition-all text-left group ${
+              className={`flex-1 min-w-[160px] p-4 rounded-2xl border transition-all text-left group ${
                 isActive
                   ? 'bg-white border-indigo-500 shadow-xl shadow-indigo-500/10 ring-1 ring-indigo-500/20'
                   : 'bg-slate-50 border-slate-200 hover:border-slate-300 hover:bg-white'
@@ -62,24 +68,10 @@ const ProductionLayout = () => {
       {/* Tab Content */}
       <div className="bg-white rounded-3xl border border-slate-100 shadow-xl shadow-slate-200/50 overflow-hidden min-h-[600px]">
         {activeTab === 'orders' && <WorkOrdersPage />}
-        {activeTab === 'stats' && (
-          <div className="p-20 text-center">
-            <div className="p-6 bg-slate-50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 text-slate-300">
-               <TrendingUp size={40} />
-            </div>
-            <h2 className="text-xl font-black text-slate-900">Módulo de Estadísticas</h2>
-            <p className="text-slate-500">Próximamente: Análisis de productividad y tiempos por empleado.</p>
-          </div>
-        )}
-        {activeTab === 'history' && (
-          <div className="p-20 text-center">
-            <div className="p-6 bg-slate-50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 text-slate-300">
-               <History size={40} />
-            </div>
-            <h2 className="text-xl font-black text-slate-900">Historial de Producción</h2>
-            <p className="text-slate-500">Próximamente: Consulta de órdenes finalizadas y consumos reales.</p>
-          </div>
-        )}
+        {activeTab === 'garments' && <OperationalGarments />}
+        {activeTab === 'queue' && <ProductionQueuePage />}
+        {activeTab === 'stats' && <ProductionStats />}
+        {activeTab === 'history' && <ProductionHistory />}
       </div>
     </div>
   );

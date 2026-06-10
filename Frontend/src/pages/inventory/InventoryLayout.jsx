@@ -1,26 +1,46 @@
 import React, { useState } from 'react';
-import { Package, Hammer, History, Info } from 'lucide-react';
+import { Package, Hammer, History, Info, Layers, RotateCcw, AlertTriangle, FolderTree } from 'lucide-react';
 import MaterialsPage from './MaterialsPage';
+import MaterialDetailPage from './MaterialDetailPage';
+import MaterialForm from './MaterialForm';
 import ProductsPage from './ProductsPage';
 import InventoryMovements from './InventoryMovements';
+import InventoryLots from './InventoryLots';
+import LowStockPage from './LowStockPage';
+import CategoriesPage from './CategoriesPage';
+import ReusableReturnModal from './ReusableReturnModal';
 
 const InventoryLayout = () => {
   const [activeTab, setActiveTab] = useState('materials');
+  const [selectedMaterialId, setSelectedMaterialId] = useState(null);
+  const [editingMaterial, setEditingMaterial] = useState(null);
+  const [showReusableReturn, setShowReusableReturn] = useState(false);
 
   const tabs = [
     { id: 'materials', label: 'Insumos', icon: Package, description: 'Materia prima y stock base' },
+    { id: 'categories', label: 'Categorías', icon: FolderTree, description: 'Clasificación y taxonomía' },
     { id: 'products', label: 'Catálogo', icon: Hammer, description: 'Prendas terminadas y recetas' },
+    { id: 'lots', label: 'Lotes', icon: Layers, description: 'Traza y costeo por lote' },
+    { id: 'lowstock', label: 'Stock Bajo', icon: AlertTriangle, description: 'Alertas de inventario crítico' },
     { id: 'movements', label: 'Historial', icon: History, description: 'Auditoría de movimientos' },
   ];
 
   return (
     <div className="p-6 max-w-[1600px] mx-auto">
       <header className="mb-8">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="p-2 bg-indigo-500/10 rounded-lg text-indigo-400">
-            <Package size={24} />
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-indigo-500/10 rounded-lg text-indigo-400">
+              <Package size={24} />
+            </div>
+            <h1 className="text-3xl font-black text-slate-900 tracking-tight">Gestión de Inventarios</h1>
           </div>
-          <h1 className="text-3xl font-black text-slate-900 tracking-tight">Gestión de Inventarios</h1>
+          <button
+            onClick={() => setShowReusableReturn(true)}
+            className="flex items-center gap-2 px-5 py-3 bg-emerald-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-lg shadow-emerald-600/20 hover:bg-emerald-700 transition-all active:scale-95"
+          >
+            <RotateCcw size={16} /> Registrar Sobrante
+          </button>
         </div>
         <p className="text-slate-500 font-medium">Control total de materiales, productos y trazabilidad operativa.</p>
       </header>
@@ -63,10 +83,42 @@ const InventoryLayout = () => {
 
       {/* Tab Content */}
       <div className="bg-white rounded-3xl border border-slate-100 shadow-xl shadow-slate-200/50 overflow-hidden min-h-[600px]">
-        {activeTab === 'materials' && <MaterialsPage />}
-        {activeTab === 'products' && <ProductsPage />}
-        {activeTab === 'movements' && <InventoryMovements />}
+        {selectedMaterialId ? (
+          <MaterialDetailPage
+            materialId={selectedMaterialId}
+            onBack={() => setSelectedMaterialId(null)}
+            onEdit={(mat) => { setEditingMaterial(mat); }}
+          />
+        ) : activeTab === 'materials' ? (
+          <MaterialsPage onSelectMaterial={setSelectedMaterialId} />
+        ) : activeTab === 'categories' ? (
+          <CategoriesPage />
+        ) : activeTab === 'products' ? (
+          <ProductsPage />
+        ) : activeTab === 'lots' ? (
+          <InventoryLots />
+        ) : activeTab === 'lowstock' ? (
+          <LowStockPage />
+        ) : activeTab === 'movements' ? (
+          <InventoryMovements />
+        ) : null}
       </div>
+
+      {editingMaterial && (
+        <MaterialForm
+          key={`edit-${editingMaterial.id}`}
+          material={editingMaterial}
+          onClose={() => setEditingMaterial(null)}
+          onSuccess={() => setEditingMaterial(null)}
+        />
+      )}
+
+      {showReusableReturn && (
+        <ReusableReturnModal
+          onClose={() => setShowReusableReturn(false)}
+          onSuccess={() => setShowReusableReturn(false)}
+        />
+      )}
     </div>
   );
 };

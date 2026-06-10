@@ -1,43 +1,51 @@
-import React, { useState, useEffect } from 'react';
-import { ShoppingCart, Plus, Search, Eye, RefreshCw, DollarSign, Calendar, Filter, Download, ArrowUpRight } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { ShoppingCart, Plus, Search, Eye, RefreshCw, DollarSign, Calendar, Filter, Download, ArrowUpRight, AlertCircle } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 import saleService from '../../api/saleService';
 import OrderFormModal from './OrderFormModal';
 import SaleDetailModal from './SaleDetailModal';
 
 const SalesPage = () => {
+  const { pathname } = useLocation();
   const [sales, setSales] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [selectedSaleId, setSelectedSaleId] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-  useEffect(() => {
-    fetchSales();
-  }, []);
-
-  const fetchSales = async () => {
+  const fetchSales = useCallback(async () => {
     try {
       setLoading(true);
+      setLoadError(null);
       const response = await saleService.getSales();
-      // El servicio devuelve { success: true, data: [...] }
       const salesArray = response?.data || [];
       setSales(Array.isArray(salesArray) ? salesArray : []);
     } catch (error) {
       console.error('Error fetching sales:', error);
+      const msg = error.response?.data?.message || error.response?.statusText || error.message || 'Error al cargar ventas. Verifica tu conexión.';
+      setLoadError(msg);
       setSales([]);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchSales();
+  }, [fetchSales, pathname]);
 
   const getStatusStyle = (status) => {
     switch (status) {
       case 'PAID': return 'bg-emerald-50 text-emerald-600 border-emerald-100';
       case 'PARTIAL': return 'bg-amber-50 text-amber-600 border-amber-100';
+      case 'UNPAID': return 'bg-slate-50 text-slate-400 border-slate-100';
       case 'CANCELLED': return 'bg-rose-50 text-rose-600 border-rose-100';
-      default: return 'bg-slate-50 text-slate-400 border-slate-100'; // PENDING
+      default: return 'bg-slate-50 text-slate-400 border-slate-100';
     }
   };
+
+  const finStatus = (sale) => sale.financial_status || sale.status;
 
   const filteredSales = sales.filter(s => 
     s.sale_number.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -72,12 +80,23 @@ const SalesPage = () => {
         </div>
       </div>
 
+      {loadError && (
+        <div className="p-5 bg-rose-50 border border-rose-100 rounded-3xl flex items-center gap-3 text-rose-600 text-sm font-bold">
+          <AlertCircle size={20} />
+          {loadError}
+        </div>
+      )}
+
       {/* Stats Quick View */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white p-8 rounded-[3rem] shadow-xl shadow-slate-200/40 border border-slate-100">
               <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-2">Ventas Totales</p>
               <h4 className="text-3xl font-black text-slate-900 tracking-tighter">
-                  ${sales.reduce((acc, s) => acc + parseFloat(s.total), 0).toLocaleString()}
+                {loading ? (
+                  <div className="h-9 w-36 bg-slate-200 rounded-lg animate-pulse" />
+                ) : (
+                  `$${sales.reduce((acc, s) => acc + parseFloat(s.total), 0).toLocaleString()}`
+                )}
               </h4>
               <div className="mt-4 flex items-center gap-2 text-emerald-500 font-black text-[10px] uppercase tracking-widest">
                   <ArrowUpRight size={14} /> +12% vs mes anterior
@@ -86,13 +105,21 @@ const SalesPage = () => {
           <div className="bg-white p-8 rounded-[3rem] shadow-xl shadow-slate-200/40 border border-slate-100">
               <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-2">Por Cobrar (Saldos)</p>
               <h4 className="text-3xl font-black text-rose-600 tracking-tighter">
-                  ${sales.reduce((acc, s) => acc + parseFloat(s.balance), 0).toLocaleString()}
+                {loading ? (
+                  <div className="h-9 w-36 bg-slate-200 rounded-lg animate-pulse" />
+                ) : (
+                  `$${sales.reduce((acc, s) => acc + parseFloat(s.balance), 0).toLocaleString()}`
+                )}
               </h4>
           </div>
           <div className="bg-white p-8 rounded-[3rem] shadow-xl shadow-slate-200/40 border border-slate-100">
               <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-2">Órdenes Activas</p>
               <h4 className="text-3xl font-black text-indigo-600 tracking-tighter">
-                  {sales.filter(s => s.status !== 'PAID').length}
+                {loading ? (
+                  <div className="h-9 w-24 bg-slate-200 rounded-lg animate-pulse" />
+                ) : (
+                  sales.filter(s => !s.is_paid).length
+                )}
               </h4>
           </div>
       </div>
@@ -177,8 +204,8 @@ const SalesPage = () => {
                     </td>
                     <td className="px-8 py-6">
                       <div className="flex justify-center">
-                        <span className={`px-4 py-2 rounded-2xl border text-[10px] font-black uppercase tracking-widest ${getStatusStyle(sale.status)}`}>
-                          {sale.status}
+                        <span className={`px-4 py-2 rounded-2xl border text-[10px] font-black uppercase tracking-widest ${getStatusStyle(finStatus(sale))}`}>
+                          {finStatus(sale) === 'PAID' ? 'LIQUIDADO' : finStatus(sale) === 'PARTIAL' ? 'PARCIAL' : finStatus(sale) === 'UNPAID' ? 'PENDIENTE' : finStatus(sale)}
                         </span>
                       </div>
                     </td>
@@ -199,9 +226,12 @@ const SalesPage = () => {
         <OrderFormModal 
           mode="SALE"
           onClose={() => setShowForm(false)} 
-          onSuccess={() => {
+          onSuccess={(newSaleId) => {
             setShowForm(false);
             fetchSales();
+            if (newSaleId) {
+              setSelectedSaleId(newSaleId);
+            }
           }}
         />
       )}

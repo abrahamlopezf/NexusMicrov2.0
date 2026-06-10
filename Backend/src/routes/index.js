@@ -50,7 +50,7 @@ router.use('/system', systemRoutes);
 router.use('/jobs', jobRoutes);
 router.use('/pricing', pricingRoutes);
 router.use('/quotes', quoteRoutes);
-router.use('/finance', financeRoutes);
+// router.use('/finance', financeRoutes);
 
 // Export main router
 module.exports = router;

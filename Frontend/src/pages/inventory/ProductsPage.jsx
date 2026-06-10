@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Search, Filter, Hammer, Edit2, Trash2, ChevronRight, Calculator } from 'lucide-react';
+import { Plus, Search, Filter, Hammer, Edit2, Trash2, ChevronRight, Calculator, BookOpen } from 'lucide-react';
 import inventoryService from '../../api/inventoryService';
 import ProductForm from './ProductForm';
+import RecipeViewModal from './RecipeViewModal';
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
@@ -9,6 +10,8 @@ const ProductsPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showRecipe, setShowRecipe] = useState(false);
+  const [recipeProduct, setRecipeProduct] = useState(null);
 
   const handleSuccess = () => {
     alert('Producto guardado con éxito.');
@@ -126,6 +129,13 @@ const ProductsPage = () => {
                   <td className="py-4 px-6 text-right">
                     <div className="flex justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                       <button 
+                        onClick={() => { setRecipeProduct(product); setShowRecipe(true); }}
+                        className="p-2 text-indigo-400 hover:bg-indigo-50 rounded-lg transition-colors"
+                        title="Ver Receta"
+                      >
+                        <BookOpen size={18} />
+                      </button>
+                      <button 
                         onClick={() => { setSelectedProduct(product); setShowModal(true); }}
                         className="p-2 text-slate-400 hover:bg-slate-100 rounded-lg transition-colors"
                         title="Editar Producto"
@@ -153,6 +163,13 @@ const ProductsPage = () => {
           product={selectedProduct} 
           onClose={() => setShowModal(false)} 
           onSuccess={handleSuccess} 
+        />
+      )}
+
+      {showRecipe && recipeProduct && (
+        <RecipeViewModal
+          product={recipeProduct}
+          onClose={() => setShowRecipe(false)}
         />
       )}
     </div>

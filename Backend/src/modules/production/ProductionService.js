@@ -5,16 +5,21 @@ const AppError = require('../../utils/AppError');
 class ProductionService {
     static async startProduction(workOrderId, userId) {
         return await sequelize.transaction(async (t) => {
-            const workOrder = await WorkOrder.findByPk(workOrderId, {
-                include: [{ model: ProductionTask, as: 'tasks' }],
+            const locked = await WorkOrder.findByPk(workOrderId, {
                 transaction: t,
                 lock: t.LOCK.UPDATE
             });
 
-            if (!workOrder) throw new AppError('Orden de producción no encontrada', 404);
-            if (workOrder.status !== 'PENDING') {
+            if (!locked) throw new AppError('Orden de producción no encontrada', 404);
+            const status = (locked.status || '').toUpperCase();
+            if (status !== 'PENDING' && status !== 'PENDIENTE') {
                 throw new AppError('La orden ya ha sido iniciada o finalizada', 400);
             }
+
+            const workOrder = await WorkOrder.findByPk(workOrderId, {
+                include: [{ model: ProductionTask, as: 'tasks' }],
+                transaction: t
+            });
 
             workOrder.status = 'IN_PROGRESS';
             workOrder.start_date = new Date();
@@ -36,16 +41,19 @@ class ProductionService {
 
     static async completeProduction(workOrderId, userId) {
         return await sequelize.transaction(async (t) => {
-            const workOrder = await WorkOrder.findByPk(workOrderId, {
-                include: [{ model: ProductionTask, as: 'tasks', include: [{ model: Product, as: 'product' }] }],
+            const locked = await WorkOrder.findByPk(workOrderId, {
                 transaction: t,
                 lock: t.LOCK.UPDATE
             });
 
-            if (!workOrder) throw new AppError('Orden de producción no encontrada', 404);
-            if (workOrder.status === 'DONE') throw new AppError('La orden ya está completada', 400);
+            if (!locked) throw new AppError('Orden de producción no encontrada', 404);
+            if (locked.status === 'DONE') throw new AppError('La orden ya está completada', 400);
 
-            // 1. Mark everything as DONE
+            const workOrder = await WorkOrder.findByPk(workOrderId, {
+                include: [{ model: ProductionTask, as: 'tasks', include: [{ model: Product, as: 'product' }] }],
+                transaction: t
+            });
+
             workOrder.status = 'DONE';
             workOrder.end_date = new Date();
             workOrder.updated_by = userId;

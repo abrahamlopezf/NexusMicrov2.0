@@ -18,19 +18,20 @@ const ClientsPage = () => {
     name: '', phone: '', email: '', address: '', loyalty_points: 0
   });
 
-  const fetchClients = async () => {
+  const fetchClients = async (isInitial = false) => {
+    if (isInitial) setLoading(true);
     try {
-      const data = await clientService.getAllClients();
-      setClients(Array.isArray(data) ? data : []);
+      const response = await clientService.getAllClients();
+      setClients(Array.isArray(response) ? response : []);
     } catch (error) {
       console.error("Error fetching clients:", error);
     } finally {
-      setLoading(false);
+      if (isInitial) setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchClients();
+    fetchClients(true);
   }, []);
 
   const handleOpenCreate = () => {
@@ -64,8 +65,8 @@ const ClientsPage = () => {
       } else {
         await clientService.createClient(formData);
       }
-      setShowModal(false);
       await fetchClients();
+      setShowModal(false);
     } catch (error) {
       alert("Error al guardar: " + (error.response?.data?.message || error.message));
     } finally {

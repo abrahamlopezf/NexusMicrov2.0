@@ -7,8 +7,10 @@ function createEmptySession(clientName = '') {
   return {
     id: Date.now().toString(),
     name,
-    status: 'draft', // 'draft' | 'processing' | 'timeout'
+    status: 'draft', // 'draft' | 'processing' | 'timeout' | 'valid'
     jobId: null,
+    saleId: null,
+    posSummary: null,
     items: [],
     client: clientName,
     isDirty: false,

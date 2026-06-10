@@ -1,33 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Plus, Hammer, Play, CheckCircle2, Clock, Eye, AlertCircle } from 'lucide-react';
 import productionService from '../../api/productionService';
 import ProductionModal from './ProductionModal';
+import WorkOrderDetailModal from './WorkOrderDetailModal';
 
 const WorkOrdersPage = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [detailOrderId, setDetailOrderId] = useState(null);
+
+  const fetchOrders = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await productionService.getWorkOrders();
+      if (response && response.success) {
+        setOrders(Array.isArray(response.data) ? response.data : []);
+      }
+    } catch (error) {
+      console.error('Error fetching work orders:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    let isMounted = true;
-    const fetchOrders = async () => {
-      try {
-        setLoading(true);
-        const response = await productionService.getWorkOrders();
-        if (isMounted && response && response.success) {
-          // Garantizar que sea un array
-          setOrders(Array.isArray(response.data) ? response.data : []);
-        }
-      } catch (error) {
-        console.error('Error fetching work orders:', error);
-      } finally {
-        if (isMounted) setLoading(false);
-      }
-    };
-
     fetchOrders();
-    return () => { isMounted = false; };
-  }, []);
+  }, [fetchOrders]);
 
   const handleAction = async (id, type) => {
     const msg = type === 'start' ? '¿Iniciar producción?' : '¿Finalizar producción? Se actualizarán inventarios.';
@@ -40,7 +39,7 @@ const WorkOrdersPage = () => {
       
       if (response && response.success) {
         alert('Operación exitosa.');
-        window.location.reload();
+        fetchOrders();
       }
     } catch (error) {
       alert('Error: ' + (error.response?.data?.message || error.message));
@@ -130,7 +129,7 @@ const WorkOrdersPage = () => {
                             <CheckCircle2 size={16} />
                           </button>
                         )}
-                        <button className="p-2 text-slate-300 hover:bg-slate-50 rounded-lg transition-colors">
+                        <button onClick={() => setDetailOrderId(order.id)} className="p-2 text-slate-300 hover:bg-slate-50 rounded-lg transition-colors" title="Detalle">
                           <Eye size={16} />
                         </button>
                       </div>
@@ -146,7 +145,14 @@ const WorkOrdersPage = () => {
       {showModal && (
         <ProductionModal 
           onClose={() => setShowModal(false)} 
-          onSuccess={() => {}} 
+          onSuccess={() => { fetchOrders(); }} 
+        />
+      )}
+      {detailOrderId && (
+        <WorkOrderDetailModal
+          workOrderId={detailOrderId}
+          onClose={() => setDetailOrderId(null)}
+          onSuccess={() => { fetchOrders(); }}
         />
       )}
     </div>
